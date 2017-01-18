@@ -10,6 +10,7 @@
   - Add blocks
   - Add interaction with the blocks
   - Add random box drops
+  - Add movement
   - Jump physics
   - Add detection algo to see how many blocks are there on the lowest ground
   - Leaderboards
@@ -22,7 +23,10 @@ void setup()
   background(0);
 }
 
+// Global declaration area
+Map background=new Map();
+
 void draw()
 {
-  
+  background.grid();
 }
