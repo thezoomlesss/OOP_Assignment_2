@@ -20,7 +20,7 @@
 void setup()
 {
   fullScreen();
-  background(0);
+  background(0,0,13);
 }
 
 // Global declaration area
