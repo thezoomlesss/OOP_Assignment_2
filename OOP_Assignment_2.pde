@@ -19,14 +19,24 @@
 
 void setup()
 {
-  fullScreen();
+  fullScreen(P2D);
   background(0,0,13);
+  int[][] array_rows=new int[(int)background.no_boxes][(int)background.no_vert_lines];
 }
 
 // Global declaration area
-Map background=new Map();
 
+
+Map background=new Map();
+Machine mech= new Machine(60, 60);
 void draw()
 {
   background.grid();
+  mech.disp();
+}
+
+void mouseClicked()
+{
+  // This is just a function that helps me understand where everything should be placed
+  //println("x:"+mouseX+" y:"+ mouseY);
 }
