@@ -20,19 +20,30 @@
 void setup()
 {
   fullScreen(P2D);
-  background(0,0,13);
-  int[][] array_rows=new int[(int)background.no_boxes][(int)background.no_vert_lines];
+  background(0,0,17);
+  array_rows=new int[(int)background.no_boxes][(int)background.no_vert_lines]; // no_boxes and no_vert_lines are floats so we cast them into int
+  
+  
+  boxes.add(box);
+
 }
 
 // Global declaration area
+int[][] array_rows;
 
-
+// Creating the objects that will be added into the ArrayLists
 Map background=new Map();
-Machine mech= new Machine(60, 60);
+Box box= new Box();
+Mech mech= new Mech();
+
+// ArrayLists
+ArrayList <Box> boxes= new ArrayList <Box>();
+ArrayList <Mech> mechs= new ArrayList <Mech>();
+
 void draw()
 {
   background.grid();
-  mech.disp();
+  box.disp();
 }
 
 void mouseClicked()
