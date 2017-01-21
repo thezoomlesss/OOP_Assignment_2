@@ -1,7 +1,8 @@
 class Map
 {
   int width_margin=30, height_margin=20;
-  float no_boxes,no_vert_lines; 
+  int track_height=height_margin-5;
+  float no_boxes, no_vert_lines; 
   Map()
   {
     
@@ -32,13 +33,11 @@ class Map
     fill(0);
     strokeWeight(2);
     stroke(160,82,45);
-    //stroke(139,69,19);
-    
     beginShape();
-    vertex(width_margin-10,height_margin);
-    vertex(width_margin-15,height_margin+6);
-    vertex(width-(width_margin-15),height_margin+6);
-    vertex(width-(width_margin-10),height_margin);
+    vertex(width_margin-10,track_height);
+    vertex(width_margin-15,track_height+6);
+    vertex(width-(width_margin-15),track_height+6);
+    vertex(width-(width_margin-10),track_height);
     endShape(CLOSE);
     
     /*

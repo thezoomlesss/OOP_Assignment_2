@@ -24,7 +24,11 @@ void setup()
   // Doing this here because the setup runs before the Map class and we need those values initialised before we create the array
   background.grid();
   array_rows=new int[(int)background.no_boxes][(int)background.no_vert_lines]; // no_boxes and no_vert_lines are floats so we cast them into int
+  mech.spawn_m();
   mech.spawn_box();
+  
+  println("width=",width);
+  
 }
 
 // Global declaration area
@@ -43,6 +47,7 @@ void draw()
 {
   background.grid();
   box.disp();
+  mech.draw_m();
 }
 
 void mouseClicked()
