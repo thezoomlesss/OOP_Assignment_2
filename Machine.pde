@@ -1,19 +1,43 @@
 class Mech
 {
+  int array_index;
+  float m_x_pos, m_y_pos;
   
+  Mech()
+  {
+    this.array_index=0;
+    // add values for m_x_pos and m_y_pos
+  }
+  
+  void spawn_box()
+  {
+    box.held=1;
+    boxes.add(box);
+    array_rows[1][1]=1;
+  }
+  
+  void change_pos()
+  {
+    
+  }
+  
+  void draw_m()
+  {
+    
+  }
 }
 
 class Box
 {
   // x position in the array and held=1 means that it's held by the machine
-  int x, held=1; 
-  int x_pos, y_pos, box_size=30;
+  int x, held; 
+  int x_pos, y_pos, box_size=60;
   
   Box()
   { // The 0 values will be changed with the position of the Mech once it will be done
-    this.x_pos=(background.width_margin*2) + (box_size*0);
-    this.y_pos=background.height_margin*3 + (box_size*0);
-    array_rows[1][1]=1;    // [1][1] to be changed to the position of the mech
+    this.x_pos=background.width_margin+(box_size) + (box_size*0);
+    this.y_pos=background.height_margin*3;
+
   }
   void disp()
   {

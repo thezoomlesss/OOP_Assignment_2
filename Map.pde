@@ -1,7 +1,7 @@
 class Map
 {
   int width_margin=30, height_margin=20;
-  float no_boxes, no_vert_lines;  
+  float no_boxes,no_vert_lines; 
   Map()
   {
     
@@ -11,8 +11,7 @@ class Map
   { 
     // grid lines
     no_boxes= ((float)width- width_margin*2)/box.box_size;
-    no_vert_lines= (height-height_margin*2)/20;
-    
+    no_vert_lines= (height-height_margin*2)/20;    // making it box.box_size makes it look weird because of the for j down below
     // this for loop draws the grey background lines and the little white lines that can be found on the floor
     for(int i=2; i<no_boxes-1; i++)
     {
@@ -29,7 +28,18 @@ class Map
     } // end outer for loop
     
     
+    // Mech track
+    fill(0);
+    strokeWeight(2);
+    stroke(160,82,45);
+    //stroke(139,69,19);
     
+    beginShape();
+    vertex(width_margin-10,height_margin);
+    vertex(width_margin-15,height_margin+6);
+    vertex(width-(width_margin-15),height_margin+6);
+    vertex(width-(width_margin-10),height_margin);
+    endShape(CLOSE);
     
     /*
         The floor goes from the width margin + 1 box  ***-2 pixels so it looks better*** 
