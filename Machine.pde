@@ -13,14 +13,15 @@ class Mech
   {
     box.held=1;
     boxes.add(box);
+    box.x_pos=100;
+    box.y_pos=100;
     array_rows[1][1]=1;
   }
   void spawn_m()
   {
     this.array_index=0;
     // add values for m_x_pos and m_y_pos
-    this.m_x_pos=random(background.width_margin, width- background.width_margin);
-    println("width=",width);
+    this.m_x_pos=random(background.width_margin +5, width- background.width_margin-5);
     this.m_y_pos=background.track_height - 1;  // -1 so it goes a little over the track
 
   }
@@ -42,13 +43,35 @@ class Mech
     vertex(this.m_x_pos+mech_size, m_y_pos+8);
     vertex(this.m_x_pos, m_y_pos+8);
     endShape(CLOSE);
-    fill(0,80,20);
-    stroke(0,255,0);
+     /* 
+      Arms of the mech
+      We start from m_x_pos + half of the mech size so we get to the exact middle of the mech
+    */
+    noFill();
+    stroke(255,0,0);
+    beginShape();
+    vertex(this.m_x_pos + (mech_size*0.5f), this.m_y_pos+8);   // Point that connects arms to box
+    vertex(this.m_x_pos + (mech_size*0.5f), this.m_y_pos+20);  // lower point that connects arms
+    vertex(this.m_x_pos - (box.box_size *0.5), this.m_y_pos+30); // left arm top
+    vertex(this.m_x_pos - (box.box_size *0.5), this.m_y_pos+50); // left arm lower
+    vertex(this.m_x_pos - (box.box_size *0.25), this.m_y_pos+60); // left arm connection to box
+    endShape();
+    beginShape();
+    vertex(this.m_x_pos + (mech_size) + (box.box_size *0.25), this.m_y_pos+60); // right arm connection to box
+    vertex(this.m_x_pos + (mech_size) + (box.box_size *0.5), this.m_y_pos+50); // right arm lower
+    vertex(this.m_x_pos + (mech_size) + (box.box_size *0.5), this.m_y_pos+30); // right arm top
+    vertex(this.m_x_pos + (mech_size*0.5f), this.m_y_pos+20);  // lower point that connects arms 
+    endShape();
+   
+    
     /* Wheels of the mech
        m_y_pos + 4 so the wheel is exactly in the middle of the bar of the mech
        
        Change this to PI and make them move
     */
+    fill(0,80,20);
+    stroke(0,255,0);
+    
     ellipse(this.m_x_pos, this.m_y_pos+4, wheel_size,wheel_size);
     ellipse(this.m_x_pos + mech_size, this.m_y_pos+4, wheel_size, wheel_size);
     line(this.m_x_pos, this.m_y_pos+4, this.m_x_pos+mech_size, this.m_y_pos+4); // Line that connects the wheels

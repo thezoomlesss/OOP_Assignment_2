@@ -27,8 +27,6 @@ void setup()
   mech.spawn_m();
   mech.spawn_box();
   
-  println("width=",width);
-  
 }
 
 // Global declaration area
