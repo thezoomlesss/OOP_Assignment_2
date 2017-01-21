@@ -13,15 +13,21 @@ class Mech
   {
     box.held=1;
     boxes.add(box);
-    box.x_pos=100;
-    box.y_pos=100;
+    box.x_pos=(int) this.m_x_pos-10;
+    box.y_pos=(int) this.m_y_pos+45;
     array_rows[1][1]=1;
   }
   void spawn_m()
   {
-    this.array_index=0;
-    // add values for m_x_pos and m_y_pos
-    this.m_x_pos=random(background.width_margin +5, width- background.width_margin-5);
+    /*
+        Here we are spawning one machine
+        it will randomize an index where it wants to spawn
+        it will mark that index as occupied 
+        it will display at the location of width_margin + the index multiplied by the size of a single box + *** 10 pixels so the box will be alligned ***
+    */
+    int rand_i=(int)random(1,background.no_boxes);
+    this.array_index=rand_i;
+    this.m_x_pos=background.width_margin+ 10 +(rand_i*box.box_size);
     this.m_y_pos=background.track_height - 1;  // -1 so it goes a little over the track
 
   }
@@ -54,10 +60,10 @@ class Mech
     vertex(this.m_x_pos + (mech_size*0.5f), this.m_y_pos+20);  // lower point that connects arms
     vertex(this.m_x_pos - (box.box_size *0.5), this.m_y_pos+30); // left arm top
     vertex(this.m_x_pos - (box.box_size *0.5), this.m_y_pos+50); // left arm lower
-    vertex(this.m_x_pos - (box.box_size *0.25), this.m_y_pos+60); // left arm connection to box
+    vertex(this.m_x_pos + 4- (box.box_size *0.25), this.m_y_pos+60); // left arm connection to box
     endShape();
     beginShape();
-    vertex(this.m_x_pos + (mech_size) + (box.box_size *0.25), this.m_y_pos+60); // right arm connection to box
+    vertex(this.m_x_pos + (mech_size) - 4 + (box.box_size *0.25), this.m_y_pos+60); // right arm connection to box
     vertex(this.m_x_pos + (mech_size) + (box.box_size *0.5), this.m_y_pos+50); // right arm lower
     vertex(this.m_x_pos + (mech_size) + (box.box_size *0.5), this.m_y_pos+30); // right arm top
     vertex(this.m_x_pos + (mech_size*0.5f), this.m_y_pos+20);  // lower point that connects arms 
@@ -88,8 +94,8 @@ class Box
   
   Box()
   { // The 0 values will be changed with the position of the Mech once it will be done
-    this.x_pos=background.width_margin+(box_size) + (box_size*0);
-    this.y_pos=background.height_margin*3;
+    //this.x_pos=background.width_margin+(box_size) + (box_size*0);
+    //this.y_pos=background.height_margin*3;
 
   }
   void disp()
