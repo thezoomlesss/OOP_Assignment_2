@@ -11,11 +11,7 @@ class Mech
   
   void spawn_box()
   {
-    box.held=1;
-    boxes.add(box);
-    box.x_pos=(int) this.m_x_pos-10;
-    box.y_pos=(int) this.m_y_pos+45;
-    array_rows[1][1]=1;
+    box.spawn_b();
   }
   void spawn_m()
   {
@@ -51,8 +47,6 @@ class Mech
       {
         this.m_x_pos -=1;
         if(this.m_x_pos == background.width_margin+ 10 +(new_rand_i*box.box_size)) this.exists_move_cond=0;
-
-        
       } // end else
       
     } // end outer if
@@ -120,6 +114,16 @@ class Box
     //this.y_pos=background.height_margin*3;
 
   }
+  
+  void spawn_b()
+  {
+    this.held=1;
+    boxes.add(box);
+    this.x_pos=(int) mech.m_x_pos-10;
+    this.y_pos=(int) mech.m_y_pos+45;
+    array_rows[1][1]=1;
+  }
+  
   void disp()
   {
     // Remmber to work on the colors here
