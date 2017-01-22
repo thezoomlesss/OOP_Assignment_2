@@ -43,9 +43,17 @@ ArrayList <Mech> mechs= new ArrayList <Mech>();
 
 void draw()
 {
+  
   background.grid();
   box.disp();
   mech.draw_m();
+  update();
+}
+
+void update()
+{
+  mech.move_m();
+  box.move_b();
 }
 
 void mouseClicked()

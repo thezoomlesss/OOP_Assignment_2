@@ -1,6 +1,6 @@
 class Mech
 {
-  int array_index;
+  int array_index, move_cond, exists_move_cond, rand_i, new_rand_i;
   float m_x_pos, m_y_pos;
   float mech_size=40, wheel_size=20;
   
@@ -25,16 +25,38 @@ class Mech
         it will mark that index as occupied 
         it will display at the location of width_margin + the index multiplied by the size of a single box + *** 10 pixels so the box will be alligned ***
     */
-    int rand_i=(int)random(1,background.no_boxes);
+    this.rand_i=(int)random(1,background.no_boxes);
     this.array_index=rand_i;
     this.m_x_pos=background.width_margin+ 10 +(rand_i*box.box_size);
     this.m_y_pos=background.track_height - 1;  // -1 so it goes a little over the track
-
+    this.move_cond=1;
+    this.exists_move_cond=0;
   }
-  void change_pos()
+  void move_m()
   {
-    
-  }
+    if(this.move_cond==1)
+    {
+      if(this.exists_move_cond==0)
+      {
+        this.new_rand_i=(int)random(1,background.no_boxes);
+        this.exists_move_cond=1;
+      }
+      
+      if( this.m_x_pos < background.width_margin+ 10 +(new_rand_i*box.box_size) )
+      {
+        this.m_x_pos +=1;
+        if(this.m_x_pos == background.width_margin+ 10 +(new_rand_i*box.box_size)) this.exists_move_cond=0;
+      }
+      else
+      {
+        this.m_x_pos -=1;
+        if(this.m_x_pos == background.width_margin+ 10 +(new_rand_i*box.box_size)) this.exists_move_cond=0;
+
+        
+      } // end else
+      
+    } // end outer if
+  } // end move_m
   
   void draw_m()
   {
@@ -111,12 +133,8 @@ class Box
     vertex(this.x_pos, this.y_pos + box_size);
     endShape(CLOSE);
   } 
-  void update()
+  void move_b()
   {
-    // Every second we will check if any box has to be dropped lower
-    if(frameCount % 60 == 0)
-    {
-      
-    }
+    
   }
 }// end Machine class

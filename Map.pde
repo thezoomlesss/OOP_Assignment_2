@@ -11,6 +11,8 @@ class Map
   void grid()
   { 
     // grid lines
+    
+    background(0,0,17);
     no_boxes= ((float)width- width_margin*2)/box.box_size;
     no_vert_lines= (height-height_margin*2)/20;    // making it box.box_size makes it look weird because of the for j down below
     // this for loop draws the grey background lines and the little white lines that can be found on the floor
