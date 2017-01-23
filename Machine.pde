@@ -131,8 +131,6 @@ class Box
   
   Box()
   { // The 0 values will be changed with the position of the Mech once it will be done
-    //this.x_pos=background.width_margin+(box_size) + (box_size*0);
-    //this.y_pos=background.height_margin*3;
 
   }
   
@@ -185,7 +183,7 @@ class Box
     else
     {
       // move vertically     This will be changed
-      if(this.y_pos<900)this.y_pos +=1;
+      if(this.y_pos< height-background.height_margin*2 - box_size + 4)this.y_pos +=1;
     }
   }
 }// end Machine class
