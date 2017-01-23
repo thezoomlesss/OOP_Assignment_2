@@ -12,7 +12,7 @@ class Mech
   
   void spawn_box()
   {
-    if(this.holding_box == 0)
+   if(this.holding_box == 0)
     {
       box_obj=new Box();
       boxs.add(box_obj);
@@ -47,7 +47,7 @@ class Mech
         
         if( this.m_x_pos < background.width_margin+ 10 +(this.new_rand_i*box.box_size) )
         {
-          this.m_x_pos +=1;
+          this.m_x_pos +=game_speed;
           if(this.m_x_pos == background.width_margin+ 10 +(this.new_rand_i*box.box_size)) 
           {
             this.exists_move_cond=0;
@@ -57,10 +57,9 @@ class Mech
         }
         else
         {
-          this.m_x_pos -=1;
+          this.m_x_pos -=game_speed;
           if(this.m_x_pos == background.width_margin+ 10 +(this.new_rand_i*box.box_size)) 
           {
-            this.exists_move_cond=0;
             this.move_cond=0;
             this.holding_box=0;
           }
@@ -69,14 +68,14 @@ class Mech
     else
     {
       this.holding_box=1;
-      this.new_rand_i=(int)random(1,background.no_boxes);
+      this.new_rand_i=(int)random(1,background.no_boxes-1);
       this.move_cond=1;
     }
   } // end move_m
   
   void draw_m()
   {
-    
+    spawn_box();
     // Body of the mech
     stroke(200,0,0);
     strokeWeight(1);
@@ -178,11 +177,11 @@ class Box
       {
         if( mech.m_x_pos < background.width_margin+ 10 +(mech.new_rand_i*box.box_size) )
         {
-          this.x_pos +=1;
+          this.x_pos +=game_speed;
         }
         else
         {
-          this.x_pos -=1;
+          this.x_pos -=game_speed;
           if( mech.m_x_pos == background.width_margin+ 10 +(mech.new_rand_i*box.box_size) ) this.x_pos++;
   
         }
@@ -195,7 +194,7 @@ class Box
     else
     {
       // move vertically     This will be changed
-      if(this.y_pos< height-background.height_margin*2 - box_size + 4)this.y_pos +=1;
+      if(this.y_pos< height-background.height_margin*2 - box_size + 4)this.y_pos +=game_speed;
     }
   }
 }// end Machine class

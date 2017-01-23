@@ -2,7 +2,7 @@ class Map
 {
   int width_margin=30, height_margin=20;
   int track_height=height_margin-5;
-  float no_boxes, no_vert_lines; 
+  int no_boxes, no_vert_lines; 
   Map()
   {
     
@@ -13,7 +13,7 @@ class Map
     // grid lines
     
     background(0,0,17);
-    no_boxes= ((float)width- width_margin*2)/box.box_size;
+    no_boxes= (width- width_margin*2)/box.box_size;
     no_vert_lines= (height-height_margin*2)/20;    // making it box.box_size makes it look weird because of the for j down below
     // this for loop draws the grey background lines and the little white lines that can be found on the floor
     for(int i=2; i<no_boxes-1; i++)
@@ -51,15 +51,16 @@ class Map
     // Left side verticle purple line
     line(width_margin+box.box_size-3, height-height_margin*2-2, width_margin+box.box_size-3, height-height_margin*2 +6);
     // Right side verticle purple line
-    line(width_margin+((no_boxes-1)*box.box_size)+3, height-height_margin*2-2, width_margin+((no_boxes-1)*box.box_size)+3, height-height_margin*2 +6);
+    line(width_margin+((no_boxes-1)*box.box_size), height-height_margin*2-2, width_margin+((no_boxes-1)*box.box_size), height-height_margin*2 +6);
     // Floor line
     strokeWeight(5);
-    line(width_margin+box.box_size-2, height-height_margin*2+9, width_margin+((no_boxes-1)*box.box_size)+2, height-height_margin*2+9);
-    // bottom left angled lines
+    line(width_margin+box.box_size, height-height_margin*2+9,  width_margin + ( (no_boxes-1)* box.box_size ), height-height_margin*2+9);
+    // bottom left angled lines  //width_margin+((no_boxes-1)*box.box_size)+2 + width_margin+(no_boxes*box.box_size)-10
     strokeWeight(3);
     for(int k=1; k<no_boxes; k++)
     {
       line(width_margin+(k*box.box_size), height-height_margin*2+9, width_margin+(k*box.box_size)-10, height-height_margin*2 +25);
     } // end little for
+    
   } // end void grid
 }

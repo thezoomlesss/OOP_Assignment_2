@@ -31,6 +31,7 @@ void setup()
 
 // Global declaration area
 int[][] array_rows;
+int game_speed=2;
 
 // Creating the objects that will be added into the ArrayLists
 Map background=new Map();
