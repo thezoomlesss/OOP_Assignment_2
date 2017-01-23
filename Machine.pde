@@ -3,7 +3,7 @@ class Mech
   int array_index, move_cond, exists_move_cond, rand_i, new_rand_i;
   float m_x_pos, m_y_pos;
   float mech_size=40, wheel_size=20;
-  
+  Box boxs=new Box();
   Mech()
   {
     
@@ -38,15 +38,15 @@ class Mech
         this.exists_move_cond=1;
       }
       
-      if( this.m_x_pos < background.width_margin+ 10 +(new_rand_i*box.box_size) )
+      if( this.m_x_pos < background.width_margin+ 10 +(this.new_rand_i*box.box_size) )
       {
         this.m_x_pos +=1;
-        if(this.m_x_pos == background.width_margin+ 10 +(new_rand_i*box.box_size)) this.exists_move_cond=0;
+        if(this.m_x_pos == background.width_margin+ 10 +(this.new_rand_i*box.box_size)) this.exists_move_cond=0;
       }
       else
       {
         this.m_x_pos -=1;
-        if(this.m_x_pos == background.width_margin+ 10 +(new_rand_i*box.box_size)) this.exists_move_cond=0;
+        if(this.m_x_pos == background.width_margin+ 10 +(this.new_rand_i*box.box_size)) this.exists_move_cond=0;
       } // end else
       
     } // end outer if
@@ -139,6 +139,28 @@ class Box
   } 
   void move_b()
   {
-    
+    if (this.held==1)
+    {
+      // move horizontally
+      if(mech.exists_move_cond!=0)
+      {
+        if( mech.m_x_pos < background.width_margin+ 10 +(mech.new_rand_i*box.box_size) )
+        {
+          this.x_pos +=1;
+        }
+        else
+        {
+          this.x_pos -=1;
+        }
+      }
+      else
+      {
+        this.held=0
+      }
+    }
+    else
+    {
+      // move vertically
+    }
   }
 }// end Machine class
