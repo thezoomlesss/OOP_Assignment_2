@@ -1,9 +1,10 @@
 class Mech
 {
-  int array_index, move_cond, exists_move_cond, rand_i, new_rand_i;
+  int array_index, move_cond, exists_move_cond, rand_i, new_rand_i, m_no_box=0, holding_box=0;
   float m_x_pos, m_y_pos;
   float mech_size=40, wheel_size=20;
-  Box boxs=new Box();
+  ArrayList<Box> boxs=new ArrayList<Box>();
+  Box box_obj=new Box();
   Mech()
   {
     
@@ -11,8 +12,18 @@ class Mech
   
   void spawn_box()
   {
-    box.spawn_b();
+    if(this.holding_box == 0)
+    {
+      box_obj=new Box();
+      boxs.add(box_obj);
+      boxs.get(m_no_box).held=1;
+      boxs.get(m_no_box).x_pos=(int) this.m_x_pos-10;
+      boxs.get(m_no_box).y_pos=(int) this.m_y_pos+45;
+      this.m_no_box++;
+      this.holding_box=1;
+    }
   }
+  
   void spawn_m()
   {
     /*
@@ -32,13 +43,16 @@ class Mech
   {
     if(this.move_cond==1)
     {
-       if( this.m_x_pos < background.width_margin+ 10 +(this.new_rand_i*box.box_size) )
+        
+        
+        if( this.m_x_pos < background.width_margin+ 10 +(this.new_rand_i*box.box_size) )
         {
           this.m_x_pos +=1;
           if(this.m_x_pos == background.width_margin+ 10 +(this.new_rand_i*box.box_size)) 
           {
             this.exists_move_cond=0;
             this.move_cond=0;
+            this.holding_box=0;
           }
         }
         else
@@ -48,11 +62,13 @@ class Mech
           {
             this.exists_move_cond=0;
             this.move_cond=0;
+            this.holding_box=0;
           }
       } // end else
     } // end outer if
     else
     {
+      this.holding_box=1;
       this.new_rand_i=(int)random(1,background.no_boxes);
       this.move_cond=1;
     }
@@ -82,7 +98,7 @@ class Mech
     vertex(this.m_x_pos + (mech_size*0.5f), this.m_y_pos+20);  // lower point that connects arms
     vertex(this.m_x_pos - (box.box_size *0.5), this.m_y_pos+30); // left arm top
     
-    if(box.held==1)
+    if(this.holding_box==1)
     {
       vertex(this.m_x_pos - (box.box_size *0.5), this.m_y_pos+50); // left arm lower
       vertex(this.m_x_pos + 4- (box.box_size *0.25), this.m_y_pos+60); // left arm connection to box
@@ -136,11 +152,7 @@ class Box
   
   void spawn_b()
   {
-    this.held=1;
-    boxes.add(box);
-    this.x_pos=(int) mech.m_x_pos-10;
-    this.y_pos=(int) mech.m_y_pos+45;
-    array_rows[1][1]=1;
+    
   }
   
   void disp()

@@ -45,15 +45,23 @@ void draw()
 {
   
   background.grid();
-  box.disp();
   mech.draw_m();
+  for(int index2=0; index2 < mech.boxs.size(); index2++)
+  {
+    mech.boxs.get(index2).disp();
+  }
   update();
 }
 
 void update()
 {
   mech.move_m();
-  box.move_b();
+  
+  // Moving all the boxes that are in the arraylist boxs
+  for(int index2=0; index2 < mech.boxs.size(); index2++)
+  {
+    mech.boxs.get(index2).move_b();
+  }
 }
 
 void mouseClicked()
