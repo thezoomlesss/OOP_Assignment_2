@@ -25,31 +25,37 @@ class Mech
     this.array_index=rand_i;
     this.m_x_pos=background.width_margin+ 10 +(rand_i*box.box_size);
     this.m_y_pos=background.track_height - 1;  // -1 so it goes a little over the track
-    this.move_cond=1;
+    this.move_cond=0;
     this.exists_move_cond=0;
   }
   void move_m()
   {
     if(this.move_cond==1)
     {
-      if(this.exists_move_cond==0)
-      {
-        this.new_rand_i=(int)random(1,background.no_boxes);
-        this.exists_move_cond=1;
-      }
-      
-      if( this.m_x_pos < background.width_margin+ 10 +(this.new_rand_i*box.box_size) )
-      {
-        this.m_x_pos +=1;
-        if(this.m_x_pos == background.width_margin+ 10 +(this.new_rand_i*box.box_size)) this.exists_move_cond=0;
-      }
-      else
-      {
-        this.m_x_pos -=1;
-        if(this.m_x_pos == background.width_margin+ 10 +(this.new_rand_i*box.box_size)) this.exists_move_cond=0;
+       if( this.m_x_pos < background.width_margin+ 10 +(this.new_rand_i*box.box_size) )
+        {
+          this.m_x_pos +=1;
+          if(this.m_x_pos == background.width_margin+ 10 +(this.new_rand_i*box.box_size)) 
+          {
+            this.exists_move_cond=0;
+            this.move_cond=0;
+          }
+        }
+        else
+        {
+          this.m_x_pos -=1;
+          if(this.m_x_pos == background.width_margin+ 10 +(this.new_rand_i*box.box_size)) 
+          {
+            this.exists_move_cond=0;
+            this.move_cond=0;
+          }
       } // end else
-      
     } // end outer if
+    else
+    {
+      this.new_rand_i=(int)random(1,background.no_boxes);
+      this.move_cond=1;
+    }
   } // end move_m
   
   void draw_m()
@@ -137,12 +143,13 @@ class Box
     vertex(this.x_pos, this.y_pos + box_size);
     endShape(CLOSE);
   } 
+  
   void move_b()
   {
     if (this.held==1)
     {
       // move horizontally
-      if(mech.exists_move_cond!=0)
+      if(mech.move_cond==1)
       {
         if( mech.m_x_pos < background.width_margin+ 10 +(mech.new_rand_i*box.box_size) )
         {
@@ -151,16 +158,19 @@ class Box
         else
         {
           this.x_pos -=1;
+          if( mech.m_x_pos == background.width_margin+ 10 +(mech.new_rand_i*box.box_size) ) this.x_pos++;
+  
         }
       }
       else
       {
-        this.held=0
+        this.held=0;
       }
     }
     else
     {
-      // move vertically
+      // move vertically     This will be changed
+      if(this.y_pos<900)this.y_pos +=1;
     }
   }
 }// end Machine class
