@@ -81,12 +81,27 @@ class Mech
     vertex(this.m_x_pos + (mech_size*0.5f), this.m_y_pos+8);   // Point that connects arms to box
     vertex(this.m_x_pos + (mech_size*0.5f), this.m_y_pos+20);  // lower point that connects arms
     vertex(this.m_x_pos - (box.box_size *0.5), this.m_y_pos+30); // left arm top
-    vertex(this.m_x_pos - (box.box_size *0.5), this.m_y_pos+50); // left arm lower
-    vertex(this.m_x_pos + 4- (box.box_size *0.25), this.m_y_pos+60); // left arm connection to box
-    endShape();
-    beginShape();
-    vertex(this.m_x_pos + (mech_size) - 4 + (box.box_size *0.25), this.m_y_pos+60); // right arm connection to box
-    vertex(this.m_x_pos + (mech_size) + (box.box_size *0.5), this.m_y_pos+50); // right arm lower
+    
+    if(box.held==1)
+    {
+      vertex(this.m_x_pos - (box.box_size *0.5), this.m_y_pos+50); // left arm lower
+      vertex(this.m_x_pos + 4- (box.box_size *0.25), this.m_y_pos+60); // left arm connection to box
+      endShape();
+      beginShape();
+      vertex(this.m_x_pos + (mech_size) - 4 + (box.box_size *0.25), this.m_y_pos+60); // right arm connection to box
+      vertex(this.m_x_pos + (mech_size) + (box.box_size *0.5), this.m_y_pos+50); // right arm lower
+    }
+    else
+    {
+      vertex(this.m_x_pos -10-  (box.box_size *0.5), this.m_y_pos+50); // left arm lower
+      vertex(this.m_x_pos -6- (box.box_size *0.25), this.m_y_pos+60); // left arm connection to box
+      endShape();
+      beginShape();
+      vertex(this.m_x_pos + (mech_size) + 6 + (box.box_size *0.25), this.m_y_pos+60); // right arm connection to box
+      vertex(this.m_x_pos + (mech_size) + 10 + (box.box_size *0.5), this.m_y_pos+50); // right arm lower
+    }
+    
+    
     vertex(this.m_x_pos + (mech_size) + (box.box_size *0.5), this.m_y_pos+30); // right arm top
     vertex(this.m_x_pos + (mech_size*0.5f), this.m_y_pos+20);  // lower point that connects arms 
     endShape();
