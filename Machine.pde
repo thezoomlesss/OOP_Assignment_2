@@ -1,6 +1,7 @@
 class Mech
 {
-  int array_index, move_cond, exists_move_cond, rand_i, new_rand_i, m_no_box=0, holding_box=0;
+  int array_index, move_cond, exists_move_cond, rand_i, new_rand_i, m_no_box=0, holding_box=0, first_run=1;
+  int time;
   float m_x_pos, m_y_pos, theta=0;
   float mech_size=40, wheel_size=20;
   ArrayList<Box> boxs=new ArrayList<Box>();
@@ -52,9 +53,9 @@ class Mech
           
           if(this.m_x_pos == background.width_margin+ 10 +(this.new_rand_i*box.box_size)) 
           {
-            this.exists_move_cond=0;
             this.move_cond=0;
             this.holding_box=0;
+            time = millis();
           }
         }
         else
@@ -66,20 +67,41 @@ class Mech
           {
             this.move_cond=0;
             this.holding_box=0;
+            time = millis();
+            
           }
       } // end else
     } // end outer if
     else
     {
-      this.holding_box=1;
-      this.new_rand_i=(int)random(1,background.no_boxes-1);
-      this.move_cond=1;
+      if(this.first_run==1)
+      {
+        this.first_run=0;
+        spawn_box();
+        this.holding_box=1;
+        this.new_rand_i=(int)random(1,background.no_boxes-1);
+        this.move_cond=1;
+      } 
+      else
+      {
+        if(millis() > this.time + 2000)
+        {
+          spawn_box();
+          this.holding_box=1;
+          this.new_rand_i=(int)random(1,background.no_boxes-1);
+          this.move_cond=1;
+        }
+      }
+      
+        
+        
+      
     }
   } // end move_m
   
   void draw_m()
   {
-    spawn_box();
+    //spawn_box();
     // Body of the mech
     stroke(200,0,0);
     strokeWeight(1);
@@ -146,8 +168,8 @@ class Mech
     
     for(int wheel_index=1; wheel_index<5; wheel_index++)
     {
-      line(this.m_x_pos , this.m_y_pos + 4, this.m_x_pos + sin(theta + (wheel_index*PI/2)) *10, this.m_y_pos + 4 + cos(theta + (wheel_index*PI/2))*10);
-      line(this.m_x_pos +mech_size, this.m_y_pos + 4, this.m_x_pos + mech_size + sin(theta + (wheel_index*PI/2)) *10, this.m_y_pos + 4 + cos(theta + (wheel_index*PI/2))*10);
+      line(this.m_x_pos , this.m_y_pos + 4, this.m_x_pos + sin(this.theta + (wheel_index*PI/2)) *10, this.m_y_pos + 4 + cos(this.theta + (wheel_index*PI/2))*10);
+      line(this.m_x_pos +mech_size, this.m_y_pos + 4, this.m_x_pos + mech_size + sin(this.theta + (wheel_index*PI/2)) *10, this.m_y_pos + 4 + cos(this.theta + (wheel_index*PI/2))*10);
     }
     
   }
