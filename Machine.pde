@@ -140,19 +140,16 @@ class Mech
    
     /*
         The spikes
-        We draw each spike from the middle of the wheel to the edge which is calculated by sin(theta) and cos(theta)
+        We draw each spike from the middle of the wheel to the edge which is calculated by sin(theta + index * PI/2) and cos(theta + index * PI/2)
         Theta gets incremented or decremented by 0.07f everytime the mech moves
     */
-    line(this.m_x_pos , this.m_y_pos + 4, this.m_x_pos + sin(theta) *10, this.m_y_pos + 4 + cos(theta)*10);
-    line(this.m_x_pos , this.m_y_pos + 4, this.m_x_pos  + sin(theta+PI/2) *10, this.m_y_pos  + 4 + cos(theta+PI/2)*10);
-    line(this.m_x_pos , this.m_y_pos + 4, this.m_x_pos  + sin(theta+PI) *10, this.m_y_pos  + 4 + cos(theta+PI)*10);
-    line(this.m_x_pos , this.m_y_pos + 4, this.m_x_pos  + sin(theta+ (3*PI/2)) *10, this.m_y_pos  + 4 + cos(theta+ (3*PI/2))*10);
     
-    line(this.m_x_pos +mech_size, this.m_y_pos + 4, this.m_x_pos + mech_size + sin(theta) *10, this.m_y_pos + 4 + cos(theta)*10);
-    line(this.m_x_pos +mech_size, this.m_y_pos + 4, this.m_x_pos + mech_size + sin(theta+PI/2) *10, this.m_y_pos  + 4 + cos(theta+PI/2)*10);
-    line(this.m_x_pos +mech_size, this.m_y_pos + 4, this.m_x_pos + mech_size + sin(theta+PI) *10, this.m_y_pos  + 4 + cos(theta+PI)*10);
-    line(this.m_x_pos +mech_size, this.m_y_pos + 4, this.m_x_pos + mech_size + sin(theta+ (3*PI/2)) *10, this.m_y_pos  + 4 + cos(theta+ (3*PI/2))*10);
-   
+    for(int wheel_index=1; wheel_index<5; wheel_index++)
+    {
+      line(this.m_x_pos , this.m_y_pos + 4, this.m_x_pos + sin(theta + (wheel_index*PI/2)) *10, this.m_y_pos + 4 + cos(theta + (wheel_index*PI/2))*10);
+      line(this.m_x_pos +mech_size, this.m_y_pos + 4, this.m_x_pos + mech_size + sin(theta + (wheel_index*PI/2)) *10, this.m_y_pos + 4 + cos(theta + (wheel_index*PI/2))*10);
+    }
+    
   }
 }
 
