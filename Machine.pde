@@ -1,7 +1,7 @@
 class Mech
 {
   int array_index, move_cond, exists_move_cond, rand_i, new_rand_i, m_no_box=0, holding_box=0;
-  float m_x_pos, m_y_pos;
+  float m_x_pos, m_y_pos, theta=0;
   float mech_size=40, wheel_size=20;
   ArrayList<Box> boxs=new ArrayList<Box>();
   Box box_obj=new Box();
@@ -44,10 +44,12 @@ class Mech
     if(this.move_cond==1)
     {
         
-        
+       
         if( this.m_x_pos < background.width_margin+ 10 +(this.new_rand_i*box.box_size) )
         {
           this.m_x_pos +=game_speed;
+          this.theta -=0.07f;
+          
           if(this.m_x_pos == background.width_margin+ 10 +(this.new_rand_i*box.box_size)) 
           {
             this.exists_move_cond=0;
@@ -58,6 +60,8 @@ class Mech
         else
         {
           this.m_x_pos -=game_speed;
+          this.theta +=0.07f;
+          
           if(this.m_x_pos == background.width_margin+ 10 +(this.new_rand_i*box.box_size)) 
           {
             this.move_cond=0;
@@ -130,11 +134,25 @@ class Mech
     fill(0,80,20);
     stroke(0,255,0);
     
+    // The wheels
     ellipse(this.m_x_pos, this.m_y_pos+4, wheel_size,wheel_size);
     ellipse(this.m_x_pos + mech_size, this.m_y_pos+4, wheel_size, wheel_size);
-    line(this.m_x_pos, this.m_y_pos+4, this.m_x_pos+mech_size, this.m_y_pos+4); // Line that connects the wheels
-    line(this.m_x_pos, this.m_y_pos-6, this.m_x_pos, this.m_y_pos+14);
-    line(this.m_x_pos+mech_size, this.m_y_pos-6, this.m_x_pos+mech_size, this.m_y_pos+14);
+   
+    /*
+        The spikes
+        We draw each spike from the middle of the wheel to the edge which is calculated by sin(theta) and cos(theta)
+        Theta gets incremented or decremented by 0.07f everytime the mech moves
+    */
+    line(this.m_x_pos , this.m_y_pos + 4, this.m_x_pos + sin(theta) *10, this.m_y_pos + 4 + cos(theta)*10);
+    line(this.m_x_pos , this.m_y_pos + 4, this.m_x_pos  + sin(theta+PI/2) *10, this.m_y_pos  + 4 + cos(theta+PI/2)*10);
+    line(this.m_x_pos , this.m_y_pos + 4, this.m_x_pos  + sin(theta+PI) *10, this.m_y_pos  + 4 + cos(theta+PI)*10);
+    line(this.m_x_pos , this.m_y_pos + 4, this.m_x_pos  + sin(theta+ (3*PI/2)) *10, this.m_y_pos  + 4 + cos(theta+ (3*PI/2))*10);
+    
+    line(this.m_x_pos +mech_size, this.m_y_pos + 4, this.m_x_pos + mech_size + sin(theta) *10, this.m_y_pos + 4 + cos(theta)*10);
+    line(this.m_x_pos +mech_size, this.m_y_pos + 4, this.m_x_pos + mech_size + sin(theta+PI/2) *10, this.m_y_pos  + 4 + cos(theta+PI/2)*10);
+    line(this.m_x_pos +mech_size, this.m_y_pos + 4, this.m_x_pos + mech_size + sin(theta+PI) *10, this.m_y_pos  + 4 + cos(theta+PI)*10);
+    line(this.m_x_pos +mech_size, this.m_y_pos + 4, this.m_x_pos + mech_size + sin(theta+ (3*PI/2)) *10, this.m_y_pos  + 4 + cos(theta+ (3*PI/2))*10);
+   
   }
 }
 
