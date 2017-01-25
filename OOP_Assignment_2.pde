@@ -27,9 +27,10 @@ void setup()
   /*
       Initializing the array with 0 because we don't have any boxes yet
   */
-  for(int index1=0; index1<background.no_boxes; index1++)
+ 
+  for(int index2=0; index2<background.vert_no_boxes; index2++)
   {
-    for(int index2=0; index2<background.vert_no_boxes; index2++)
+     for(int index1=0; index1<background.no_boxes; index1++)
     {
       array_rows[index1][index2]=0;
     }
@@ -53,7 +54,6 @@ ArrayList <Mech> mechs= new ArrayList <Mech>();
 
 void draw()
 {
-  
   background.grid();
   mech.draw_m();
   for(int index2=0; index2 < mech.boxs.size(); index2++)

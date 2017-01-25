@@ -56,7 +56,7 @@ class Mech
                 Sending the position in the array of where the boxes are being spawned
             */
             boxs.get(m_no_box-1).x=(int) this.m_x_pos/box.box_size - 1;
-            boxs.get(m_no_box-1).y= background.vert_no_boxes-1; 
+            boxs.get(m_no_box-1).y= 0; 
             this.holding_box=0;
             time = millis();
           }
@@ -73,7 +73,7 @@ class Mech
                 Sending the position in the array of where the boxes are being spawned
             */
             boxs.get(m_no_box-1).x=(int) this.m_x_pos/box.box_size - 1;
-            boxs.get(m_no_box-1).y= background.vert_no_boxes-1; 
+            boxs.get(m_no_box-1).y= 0; 
             this.holding_box=0;
             time = millis();
           }
@@ -231,8 +231,27 @@ class Box
     }
     else
     {
-      // move vertically     This will be changed
-      if(this.y_pos< height-background.height_margin*2 - box_size + 4) this.y_pos +=game_speed;
+      /* 
+          Here the boxes will move vertically
+          I am first putting the value 1 in the array of boxes to mark the current position of the box
+          checking if it's not on the last line already and if the next line is free so it can keep falling
+          check if it's above the floor and lowering the box
+          when it reaches the position of the next box (that we calculated before moving) then it will reset the last position
+          increment the y so it goes to the right position into the array and puts the value 1 to mark it as occupied
+      */
+      array_rows[this.x][this.y]=1;
+      if((this.y!=background.vert_no_boxes-1) && array_rows[this.x][this.y+1]!=1)
+      {
+        if(this.y_pos < height-background.height_margin*2 - box_size + 4) 
+        {
+          this.y_pos +=game_speed;
+          if( this.y_pos > height-background.height_margin*2 - box_size * (background.vert_no_boxes-this.y-1) + 4) 
+          {
+            array_rows[this.x][this.y]=0;
+            this.y++;
+          }
+        }
+      }
     }
   }
 }// end Machine class
