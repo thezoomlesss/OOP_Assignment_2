@@ -34,8 +34,8 @@ class Mech
         it will display at the location of width_margin + the index multiplied by the size of a single box + *** 10 pixels so the box will be alligned ***
     */
     this.rand_i=(int)random(1,background.no_boxes);
-    this.array_index=rand_i;
-    this.m_x_pos=background.width_margin+ 10 +(rand_i*box.box_size);
+    this.array_index=this.rand_i;
+    this.m_x_pos=background.width_margin+ 10 +(this.rand_i*box.box_size);
     this.m_y_pos=background.track_height - 1;  // -1 so it goes a little over the track
     this.move_cond=0;
     this.exists_move_cond=0;
@@ -52,7 +52,11 @@ class Mech
           if(this.m_x_pos == background.width_margin+ 10 +(this.new_rand_i*box.box_size)) 
           {
             this.move_cond=0;
+            /*
+                Sending the position in the array of where the boxes are being spawned
+            */
             boxs.get(m_no_box-1).x=(int) this.m_x_pos/box.box_size - 1;
+            boxs.get(m_no_box-1).y= background.vert_no_boxes-1; 
             this.holding_box=0;
             time = millis();
           }
@@ -65,11 +69,13 @@ class Mech
           if(this.m_x_pos == background.width_margin+ 10 +(this.new_rand_i*box.box_size)) 
           {
             this.move_cond=0;
-            //box_obj.x=(int) this.m_x_pos/box.box_size - 1;
+            /*
+                Sending the position in the array of where the boxes are being spawned
+            */
             boxs.get(m_no_box-1).x=(int) this.m_x_pos/box.box_size - 1;
+            boxs.get(m_no_box-1).y= background.vert_no_boxes-1; 
             this.holding_box=0;
             time = millis();
-            
           }
       } // end else
     } // end outer if

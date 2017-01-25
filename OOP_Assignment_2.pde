@@ -24,6 +24,16 @@ void setup()
   // Doing this here because the setup runs before the Map class and we need those values initialised before we create the array
   background.grid_initial();
   array_rows=new int[background.no_boxes][background.vert_no_boxes];
+  /*
+      Initializing the array with 0 because we don't have any boxes yet
+  */
+  for(int index1=0; index1<background.no_boxes; index1++)
+  {
+    for(int index2=0; index2<background.vert_no_boxes; index2++)
+    {
+      array_rows[index1][index2]=0;
+    }
+  }
   mech.spawn_m();
   mech.spawn_box();
 }
