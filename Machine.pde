@@ -44,8 +44,6 @@ class Mech
   {
     if(this.move_cond==1)
     {
-        
-       
         if( this.m_x_pos < background.width_margin+ 10 +(this.new_rand_i*box.box_size) )
         {
           this.m_x_pos +=game_speed;
@@ -54,6 +52,7 @@ class Mech
           if(this.m_x_pos == background.width_margin+ 10 +(this.new_rand_i*box.box_size)) 
           {
             this.move_cond=0;
+            boxs.get(m_no_box-1).x=(int) this.m_x_pos/box.box_size - 1;
             this.holding_box=0;
             time = millis();
           }
@@ -66,6 +65,8 @@ class Mech
           if(this.m_x_pos == background.width_margin+ 10 +(this.new_rand_i*box.box_size)) 
           {
             this.move_cond=0;
+            //box_obj.x=(int) this.m_x_pos/box.box_size - 1;
+            boxs.get(m_no_box-1).x=(int) this.m_x_pos/box.box_size - 1;
             this.holding_box=0;
             time = millis();
             
@@ -178,16 +179,10 @@ class Mech
 class Box
 {
   // x position in the array and held=1 means that it's held by the machine
-  int x, held; 
-  int x_pos, y_pos, box_size=60;
-  
+  float x_pos, y_pos; 
+  int x, y, held, box_size=60;
   Box()
-  { // The 0 values will be changed with the position of the Mech once it will be done
-
-  }
-  
-  void spawn_b()
-  {
+  { 
     
   }
   
@@ -231,7 +226,7 @@ class Box
     else
     {
       // move vertically     This will be changed
-      if(this.y_pos< height-background.height_margin*2 - box_size + 4)this.y_pos +=game_speed;
+      if(this.y_pos< height-background.height_margin*2 - box_size + 4) this.y_pos +=game_speed;
     }
   }
 }// end Machine class

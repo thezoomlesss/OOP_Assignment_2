@@ -2,19 +2,26 @@ class Map
 {
   int width_margin=30, height_margin=20;
   int track_height=height_margin-5;
-  int no_boxes, no_vert_lines; 
+  int no_boxes, vert_no_boxes, no_vert_lines; 
   Map()
   {
     
   
   }
+  
+  void grid_initial()
+  {
+    background(0,0,17);
+    no_boxes=(width- width_margin*2)/box.box_size;
+    no_vert_lines= (height-height_margin*2)/20;    // It's devided by 20 cause that's the distance we want between our vert lines
+    vert_no_boxes= (height-height_margin*2)/box.box_size;  // variable used to define the size of the array
+  }
+  
   void grid()
   { 
     // grid lines
     
     background(0,0,17);
-    no_boxes= (width- width_margin*2)/box.box_size;
-    no_vert_lines= (height-height_margin*2)/20;    // making it box.box_size makes it look weird because of the for j down below
     // this for loop draws the grey background lines and the little white lines that can be found on the floor
     for(int i=2; i<no_boxes-1; i++)
     {

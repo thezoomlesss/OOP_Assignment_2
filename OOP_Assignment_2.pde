@@ -22,11 +22,10 @@ void setup()
   fullScreen();
   background(0,0,17);
   // Doing this here because the setup runs before the Map class and we need those values initialised before we create the array
-  background.grid();
-  array_rows=new int[background.no_boxes][background.no_vert_lines]; 
+  background.grid_initial();
+  array_rows=new int[background.no_boxes][background.vert_no_boxes];
   mech.spawn_m();
   mech.spawn_box();
-  
 }
 
 // Global declaration area
