@@ -41,7 +41,7 @@ void setup()
 
 // Global declaration area
 int[][] array_rows;
-int game_speed=2;
+int game_speed=4;
 
 // Creating the objects that will be added into the ArrayLists
 Map background=new Map();
@@ -79,11 +79,52 @@ void draw()
   }
   
     println();println();println();
-   */ 
+   */
 }
 
 void update()
 {
+  /*
+      Here we are checking if the last line of the array is full 
+      If it's full then we have to clear it
+      To do that we initialize a condition to be true
+      Check every array box from the last line and if it's empty then negate the condition
+      If the condition is still true after going through the whole line
+      We remove from the ArrayList the boxes that are present on the last line of the array
+      After that we also clear the last line of the array
+  */
+  
+  int clear_line_cond=1;
+  
+  // Checking if the last line of the array is full
+  for(int index3=0; index3<background.no_boxes; index3++)
+  {
+    if(array_rows[index3][background.vert_no_boxes-1]==0)
+    {
+      clear_line_cond=0;
+    }
+  }
+  
+  if(clear_line_cond==1)
+  {
+    // removing from ArrayList
+    for(int index3= mech.boxs.size()-1; index3>-1; index3--)
+    {
+      if(mech.boxs.get(index3).y== background.vert_no_boxes-1)
+      {
+        mech.boxs.remove(index3);
+        mech.m_no_box--;
+      }
+    }
+    
+    //Removing from array
+    for(int index3=background.no_boxes-1; index3>-1; index3--)
+    {
+      println("TRUE");
+      array_rows[index3][background.vert_no_boxes-1]=0;
+    }  
+  }// end if
+  
   mech.move_m();
   
   // Moving all the boxes that are in the arraylist boxs
