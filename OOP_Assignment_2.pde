@@ -35,18 +35,21 @@ void setup()
       array_rows[index1][index2]=0;
     }
   }
+  character.spawn_c(random(background.width_margin, width- background.width_margin), random(background.height_margin, height-background.height_margin));
   mech.spawn_m();
   mech.spawn_box();
 }
 
 // Global declaration area
 int[][] array_rows;
-int game_speed=4;
+int game_speed=6;
+//int deleted;
 
 // Creating the objects that will be added into the ArrayLists
 Map background=new Map();
 Box box= new Box();
 Mech mech= new Mech();
+Char character= new Char();
 
 // ArrayLists
 ArrayList <Box> boxes= new ArrayList <Box>();
@@ -56,8 +59,21 @@ void draw()
 {
   background.grid();
   mech.draw_m();
+  character.draw_c();
   for(int index2=0; index2 < mech.boxs.size(); index2++)
   {
+    /*
+    if((deleted==1) && (mech.boxs.get(index2).y== background.vert_no_boxes-1))
+    {
+      stroke(0,255,0);
+      println("VERDE BA");
+    }
+    else
+    {
+      stroke(255,0,0);
+    }
+    */
+    
     mech.boxs.get(index2).disp();
   }
   update();
@@ -84,6 +100,7 @@ void draw()
 
 void update()
 {
+  
   /*
       Here we are checking if the last line of the array is full 
       If it's full then we have to clear it
@@ -94,7 +111,8 @@ void update()
       After that we also clear the last line of the array
   */
   
-  int clear_line_cond=1;
+  int clear_line_cond=1; 
+  //deleted=0;
   
   // Checking if the last line of the array is full
   for(int index3=0; index3<background.no_boxes; index3++)
@@ -120,8 +138,8 @@ void update()
     //Removing from array
     for(int index3=background.no_boxes-1; index3>-1; index3--)
     {
-      println("TRUE");
       array_rows[index3][background.vert_no_boxes-1]=0;
+      //deleted=1;
     }  
   }// end if
   

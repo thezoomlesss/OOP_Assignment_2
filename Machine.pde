@@ -201,7 +201,7 @@ class Box
     beginShape();
     vertex(this.x_pos, this.y_pos);
     vertex(this.x_pos + box_size, this.y_pos);
-    vertex(this.x_pos+box_size, this.y_pos + box_size);
+    vertex(this.x_pos + box_size, this.y_pos + box_size);
     vertex(this.x_pos, this.y_pos + box_size);
     endShape(CLOSE);
   } 
@@ -221,13 +221,14 @@ class Box
         {
           this.x_pos -=game_speed;
           //if( mech.m_x_pos == background.width_margin+ 10 +(mech.new_rand_i*box.box_size) ) this.x_pos++;
+          // Why do I have this?
   
-        }
+        } // end else
       }
       else
       {
         this.held=0;
-      }
+      }// end else
     }
     else
     {
@@ -249,9 +250,9 @@ class Box
           {
             array_rows[this.x][this.y]=0;
             this.y++;
-          }
-        }
-      }
-    }
-  }
+          }// end inner if
+        } // end middle if
+      } // end outer if
+    } // end else
+  } // end move_b
 }// end Machine class
