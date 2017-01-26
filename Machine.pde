@@ -86,7 +86,7 @@ class Mech
         this.first_run=0;
         spawn_box();
         this.holding_box=1;
-        this.new_rand_i=(int)random(1,background.no_boxes-1);
+        this.new_rand_i=(int)random(1,background.no_boxes+1);
         this.move_cond=1;
       } 
       else
@@ -95,7 +95,7 @@ class Mech
         {
           spawn_box();
           this.holding_box=1;
-          this.new_rand_i=(int)random(1,background.no_boxes-1);
+          this.new_rand_i=(int)random(1,background.no_boxes+1);
           this.move_cond=1;
         }
       }
@@ -220,7 +220,7 @@ class Box
         else
         {
           this.x_pos -=game_speed;
-          if( mech.m_x_pos == background.width_margin+ 10 +(mech.new_rand_i*box.box_size) ) this.x_pos++;
+          //if( mech.m_x_pos == background.width_margin+ 10 +(mech.new_rand_i*box.box_size) ) this.x_pos++;
   
         }
       }

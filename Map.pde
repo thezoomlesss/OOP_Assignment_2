@@ -12,7 +12,7 @@ class Map
   void grid_initial()
   {
     background(0,0,17);
-    no_boxes=(width- width_margin*2)/box.box_size;
+    no_boxes=(width- width_margin*2 - box.box_size * 2)/box.box_size;
     no_vert_lines= (height-height_margin*2)/20;    // It's devided by 20 cause that's the distance we want between our vert lines
     vert_no_boxes= (height-height_margin*2)/box.box_size;  // variable used to define the size of the array
   }
@@ -23,7 +23,7 @@ class Map
     
     background(0,0,17);
     // this for loop draws the grey background lines and the little white lines that can be found on the floor
-    for(int i=2; i<no_boxes-1; i++)
+    for(int i=2; i<no_boxes+1; i++)
     {
       // little white lines 
       strokeWeight(1);
@@ -33,7 +33,7 @@ class Map
       stroke(20);
       for(int j=4; j<no_vert_lines; j++)
       {
-        line(width_margin+(i*box.box_size), j*20, width_margin+(i*box.box_size), (j*20)+5);
+        line(width_margin+(i*(box.box_size) ), j*20, width_margin+(i*box.box_size ), (j*20)+5);
       } // end inner for loop
     } // end outer for loop
     
@@ -58,13 +58,13 @@ class Map
     // Left side verticle purple line
     line(width_margin+box.box_size-3, height-height_margin*2-2, width_margin+box.box_size-3, height-height_margin*2 +6);
     // Right side verticle purple line
-    line(width_margin+((no_boxes-1)*box.box_size), height-height_margin*2-2, width_margin+((no_boxes-1)*box.box_size), height-height_margin*2 +6);
+    line(width_margin+((no_boxes+1)*box.box_size), height-height_margin*2-2, width_margin+((no_boxes+1)*box.box_size), height-height_margin*2 +6);
     // Floor line
     strokeWeight(5);
-    line(width_margin+box.box_size, height-height_margin*2+9,  width_margin + ( (no_boxes-1)* box.box_size ), height-height_margin*2+9);
-    // bottom left angled lines  //width_margin+((no_boxes-1)*box.box_size)+2 + width_margin+(no_boxes*box.box_size)-10
+    line(width_margin+box.box_size, height-height_margin*2+9,  width_margin + ( (no_boxes+1)* box.box_size ), height-height_margin*2+9);
+    // bottom left angled lines  
     strokeWeight(3);
-    for(int k=1; k<no_boxes; k++)
+    for(int k=1; k<no_boxes+1; k++)
     {
       line(width_margin+(k*box.box_size), height-height_margin*2+9, width_margin+(k*box.box_size)-10, height-height_margin*2 +25);
     } // end little for

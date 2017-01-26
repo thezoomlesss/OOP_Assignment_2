@@ -61,6 +61,25 @@ void draw()
     mech.boxs.get(index2).disp();
   }
   update();
+  
+  
+  /*
+         Don't mind this
+         It's just a test
+         
+         
+  println(background.vert_no_boxes, background.no_boxes);
+  for(int index2=0; index2<background.vert_no_boxes; index2++)
+  {
+    for(int index1=0; index1<background.no_boxes; index1++)
+    {  
+      print(array_rows[index1][index2]+" ");
+    }
+    println();
+  }
+  
+    println();println();println();
+   */ 
 }
 
 void update()
