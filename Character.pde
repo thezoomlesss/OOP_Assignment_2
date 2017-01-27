@@ -1,13 +1,14 @@
 class Char 
 {
-  float c_x_pos, c_y_pos;
-  int c_x, c_y, in_air=1;
+  float c_x_pos, c_y_pos, left, right;
+  int c_x, c_y, in_air, c_size=60;
   
   
-  void spawn_c(float x, float y)
+  void spawn_c(int x, int y)
   {
-    this.c_x_pos=x;
-    this.c_y_pos=y;
+    this.c_x_pos=background.width_margin + (x * c_size);
+    this.c_y_pos=background.width_margin +  (y * c_size);
+    this.in_air=1;
   }
   
   void draw_c()
@@ -17,9 +18,9 @@ class Char
     noFill();
     beginShape();
     vertex(this.c_x_pos, this.c_y_pos);
-    vertex(this.c_x_pos + box.box_size, this.c_y_pos);
-    vertex(this.c_x_pos + box.box_size, this.c_y_pos + box.box_size);
-    vertex(this.c_x_pos, this.c_y_pos + box.box_size);
+    vertex(this.c_x_pos + this.c_size, this.c_y_pos);
+    vertex(this.c_x_pos + this.c_size, this.c_y_pos + this.c_size);
+    vertex(this.c_x_pos, this.c_y_pos + this.c_size);
     endShape(CLOSE);
   }
   
@@ -27,8 +28,5 @@ class Char
   {
     
   }
-  void keyPressed()
-  {
-    
-  }
-}
+  
+} // end class Char

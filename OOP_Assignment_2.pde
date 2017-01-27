@@ -20,6 +20,7 @@
 void setup()
 {
   fullScreen();
+  smooth();
   background(0,0,17);
   // Doing this here because the setup runs before the Map class and we need those values initialised before we create the array
   background.grid_initial();
@@ -35,14 +36,14 @@ void setup()
       array_rows[index1][index2]=0;
     }
   }
-  character.spawn_c(random(background.width_margin, width- background.width_margin), random(background.height_margin, height-background.height_margin));
+  character.spawn_c((int)random(background.no_boxes *0.25, background.no_boxes *0.75), (int)random(background.vert_no_boxes *0.85, background.vert_no_boxes *0.90));
   mech.spawn_m();
   mech.spawn_box();
 }
 
 // Global declaration area
 int[][] array_rows;
-int game_speed=6;
+int game_speed=3;
 //int deleted;
 
 // Creating the objects that will be added into the ArrayLists
@@ -66,7 +67,7 @@ void draw()
     if((deleted==1) && (mech.boxs.get(index2).y== background.vert_no_boxes-1))
     {
       stroke(0,255,0);
-      println("VERDE BA");
+      println("Green");
     }
     else
     {
@@ -77,6 +78,22 @@ void draw()
     mech.boxs.get(index2).disp();
   }
   update();
+  
+  // This updates the position of the character
+  if(character.right - character.left > 0)
+  {
+    if(character.c_x_pos< width - (background.width_margin + 2*character.c_size))
+    {
+      character.c_x_pos += (character.right - character.left) * game_speed;
+    }
+  }
+  else
+  {
+    if(character.c_x_pos> background.width_margin + character.c_size)
+    {
+      character.c_x_pos += (character.right - character.left) * game_speed;
+    }
+  }
   
   
   /*
@@ -156,4 +173,37 @@ void mouseClicked()
 {
   // This is just a function that helps me understand where everything should be placed
   //println("x:"+mouseX+" y:"+ mouseY);
+}
+
+void keyPressed()
+{
+  if(character.c_x_pos > background.width_margin + character.c_size)
+  {
+    if (keyCode == LEFT || key=='a')
+    {
+        character.left = 1;
+    }
+  }
+  if(character.c_x_pos < width - (background.width_margin + character.c_size))
+  {
+    if (keyCode == RIGHT || key=='d')
+    {
+      character.right = 1;
+    }
+  }
+} // end keyPressed
+
+void keyReleased()
+{
+  
+  if (keyCode == LEFT || key=='a')
+  {
+    character.left = 0;
+  }
+  
+  if (keyCode == RIGHT || key=='d')
+  {
+    character.right = 0;
+  }
+  
 }
