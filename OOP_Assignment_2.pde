@@ -25,17 +25,6 @@ void setup()
   // Doing this here because the setup runs before the Map class and we need those values initialised before we create the array
   background.grid_initial();
   array_rows=new int[background.no_boxes][background.vert_no_boxes];
-  /*
-      Initializing the array with 0 because we don't have any boxes yet
-  */
- 
-  for(int index2=0; index2<background.vert_no_boxes; index2++)
-  {
-     for(int index1=0; index1<background.no_boxes; index1++)
-    {
-      array_rows[index1][index2]=0;
-    }
-  }
   character.spawn_c((int)random(background.no_boxes *0.25, background.no_boxes *0.75), (int)random(background.vert_no_boxes *0.85, background.vert_no_boxes *0.90));
   mech.spawn_m();
   mech.spawn_box();
@@ -58,6 +47,7 @@ ArrayList <Mech> mechs= new ArrayList <Mech>();
 
 void draw()
 {
+  //println(frameRate);
   background.grid();
   mech.draw_m();
   character.draw_c();
@@ -87,7 +77,7 @@ void draw()
          Don't mind this
          It's just a test
          
-         
+        
   println(background.vert_no_boxes, background.no_boxes);
   for(int index2=0; index2<background.vert_no_boxes; index2++)
   {
@@ -101,6 +91,7 @@ void draw()
     println();println();println();
    */
 }
+ 
 
 void update()
 {
@@ -162,16 +153,22 @@ void update()
   {
     if(character.c_x_pos< width - (background.width_margin + 2*character.c_size))
     {
-      character.c_x_pos += (character.right - character.left) * game_speed;
+      character.c_x_pos += (character.right - character.left) * 2*game_speed;
     }
   }
   else
   {
     if(character.c_x_pos> background.width_margin + character.c_size)
     {
-      character.c_x_pos += (character.right - character.left) * game_speed;
+      character.c_x_pos += (character.right - character.left) * 2*game_speed;
     }
   }
+  
+  if(character.in_air==1 && character.fall_cond==1 && character.c_y_pos < height-background.height_margin*2 - character.c_size + 4)
+  {
+    character.c_y_pos += game_speed;
+  }
+  
 }
 
 void mouseClicked()
