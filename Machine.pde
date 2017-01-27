@@ -3,7 +3,7 @@ class Mech
   int array_index, move_cond, exists_move_cond, rand_i, new_rand_i, m_no_box=0, holding_box=0, first_run=1;
   int time;
   float m_x_pos, m_y_pos, theta=0;
-  float mech_size=40, wheel_size=20;
+  float mech_size=60, wheel_size=20;
   ArrayList<Box> boxs=new ArrayList<Box>();
   Box box_obj=new Box();
   Mech()
@@ -18,8 +18,8 @@ class Mech
       box_obj=new Box();
       boxs.add(box_obj);
       boxs.get(m_no_box).held=1;
-      boxs.get(m_no_box).x_pos=(int) this.m_x_pos-10;
-      boxs.get(m_no_box).y_pos=(int) this.m_y_pos+45;
+      boxs.get(m_no_box).x_pos= this.m_x_pos-10;
+      boxs.get(m_no_box).y_pos= this.m_y_pos+45;
       this.m_no_box++;
       this.holding_box=1;
     }
@@ -35,7 +35,7 @@ class Mech
     */
     this.rand_i=(int)random(1,background.no_boxes);
     this.array_index=this.rand_i;
-    this.m_x_pos=background.width_margin+ 10 +(this.rand_i*box.box_size);
+    this.m_x_pos=background.width_margin + (this.rand_i*box.box_size);
     this.m_y_pos=background.track_height - 1;  // -1 so it goes a little over the track
     this.move_cond=0;
     this.exists_move_cond=0;
@@ -49,8 +49,10 @@ class Mech
           this.m_x_pos +=game_speed;
           this.theta -=0.07f;
           
-          if(this.m_x_pos == background.width_margin+ 10 +(this.new_rand_i*box.box_size)) 
+          if(this.m_x_pos > background.width_margin+ 10 +(this.new_rand_i*box.box_size)) 
           {
+            
+            this.m_x_pos =background.width_margin + game_speed +(this.new_rand_i*box.box_size);
             this.move_cond=0;
             /*
                 Sending the position in the array of where the boxes are being spawned
@@ -66,8 +68,10 @@ class Mech
           this.m_x_pos -=game_speed;
           this.theta +=0.07f;
           
-          if(this.m_x_pos == background.width_margin+ 10 +(this.new_rand_i*box.box_size)) 
+          if(this.m_x_pos < background.width_margin+ 10 +(this.new_rand_i*box.box_size)) 
           {
+            
+            this.m_x_pos =background.width_margin+ game_speed +(this.new_rand_i*box.box_size);
             this.move_cond=0;
             /*
                 Sending the position in the array of where the boxes are being spawned
@@ -132,26 +136,38 @@ class Mech
     
     if(this.holding_box==1)
     {
-      vertex(this.m_x_pos - (box.box_size *0.5), this.m_y_pos+50); // left arm lower
-      vertex(this.m_x_pos + 4- (box.box_size *0.25), this.m_y_pos+60); // left arm connection to box
-      endShape();
-      beginShape();
-      vertex(this.m_x_pos + (mech_size) - 4 + (box.box_size *0.25), this.m_y_pos+60); // right arm connection to box
+      vertex(this.m_x_pos - (box.box_size *0.5) , this.m_y_pos+50); // left arm lower
+      if(mech.new_rand_i>mech.rand_i) 
+      {  
+        vertex(this.m_x_pos-10 + game_speed, this.m_y_pos+60);  // left connection
+        endShape();
+        beginShape();
+        vertex(this.m_x_pos-10 + box.box_size + game_speed , this.m_y_pos+60); // right connection
+      
+      }
+      else
+      {
+        vertex(this.m_x_pos-10 - game_speed, this.m_y_pos+60); // left connection
+        endShape();
+        beginShape();
+        vertex(this.m_x_pos-10 +  box.box_size - game_speed , this.m_y_pos+60); // right connection
+      }
       vertex(this.m_x_pos + (mech_size) + (box.box_size *0.5), this.m_y_pos+50); // right arm lower
     }
-    else
+    else  // Not holding box
     {
-      vertex(this.m_x_pos -10-  (box.box_size *0.5), this.m_y_pos+50); // left arm lower
-      vertex(this.m_x_pos -6- (box.box_size *0.25), this.m_y_pos+60); // left arm connection to box
+      vertex(this.m_x_pos - (box.box_size *0.5) -5, this.m_y_pos+50); // left arm lower
+      vertex(this.m_x_pos - 25 + game_speed, this.m_y_pos+60); // left arm connection to box 
       endShape();
+      
       beginShape();
-      vertex(this.m_x_pos + (mech_size) + 6 + (box.box_size *0.25), this.m_y_pos+60); // right arm connection to box
+      vertex(this.m_x_pos + (box.box_size)  +10 , this.m_y_pos+60); // right arm connection to box
       vertex(this.m_x_pos + (mech_size) + 10 + (box.box_size *0.5), this.m_y_pos+50); // right arm lower
     }
     
     
     vertex(this.m_x_pos + (mech_size) + (box.box_size *0.5), this.m_y_pos+30); // right arm top
-    vertex(this.m_x_pos + (mech_size*0.5f), this.m_y_pos+20);  // lower point that connects arms 
+    vertex(this.m_x_pos + (mech_size*0.5f), this.m_y_pos+20);  // right arm connectio to origin
     endShape();
    
     
@@ -186,7 +202,7 @@ class Box
 {
   // x position in the array and held=1 means that it's held by the machine
   float x_pos, y_pos; 
-  int x, y, held, box_size=60;
+  int x, y, held, box_size=80;
   Box()
   { 
     
@@ -227,6 +243,7 @@ class Box
       }
       else
       {
+        this.x_pos+=game_speed;
         this.held=0;
       }// end else
     }

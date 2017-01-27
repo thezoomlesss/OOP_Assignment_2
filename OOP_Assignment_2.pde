@@ -20,7 +20,7 @@
 void setup()
 {
   fullScreen();
-  smooth();
+  frameRate(120);
   background(0,0,17);
   // Doing this here because the setup runs before the Map class and we need those values initialised before we create the array
   background.grid_initial();
@@ -43,7 +43,7 @@ void setup()
 
 // Global declaration area
 int[][] array_rows;
-int game_speed=3;
+int game_speed=2;
 //int deleted;
 
 // Creating the objects that will be added into the ArrayLists
@@ -80,20 +80,7 @@ void draw()
   update();
   
   // This updates the position of the character
-  if(character.right - character.left > 0)
-  {
-    if(character.c_x_pos< width - (background.width_margin + 2*character.c_size))
-    {
-      character.c_x_pos += (character.right - character.left) * game_speed;
-    }
-  }
-  else
-  {
-    if(character.c_x_pos> background.width_margin + character.c_size)
-    {
-      character.c_x_pos += (character.right - character.left) * game_speed;
-    }
-  }
+ 
   
   
   /*
@@ -167,6 +154,24 @@ void update()
   {
     mech.boxs.get(index2).move_b();
   }
+  
+  /*
+      Update for character's position
+  */
+   if(character.right - character.left > 0)
+  {
+    if(character.c_x_pos< width - (background.width_margin + 2*character.c_size))
+    {
+      character.c_x_pos += (character.right - character.left) * game_speed;
+    }
+  }
+  else
+  {
+    if(character.c_x_pos> background.width_margin + character.c_size)
+    {
+      character.c_x_pos += (character.right - character.left) * game_speed;
+    }
+  }
 }
 
 void mouseClicked()
@@ -177,20 +182,17 @@ void mouseClicked()
 
 void keyPressed()
 {
-  if(character.c_x_pos > background.width_margin + character.c_size)
+  
+  if (keyCode == LEFT || key=='a')
   {
-    if (keyCode == LEFT || key=='a')
-    {
-        character.left = 1;
-    }
+      character.left = 1;
   }
-  if(character.c_x_pos < width - (background.width_margin + character.c_size))
+
+  if (keyCode == RIGHT || key=='d')
   {
-    if (keyCode == RIGHT || key=='d')
-    {
-      character.right = 1;
-    }
+    character.right = 1;
   }
+  
 } // end keyPressed
 
 void keyReleased()

@@ -1,7 +1,7 @@
 class Char 
 {
   float c_x_pos, c_y_pos, left, right;
-  int c_x, c_y, in_air, c_size=60;
+  int c_x, c_y, in_air, c_size=80;
   
   
   void spawn_c(int x, int y)
