@@ -159,10 +159,11 @@ void update()
     // Not at the limit
     if(character.c_x_pos< background.width_margin + ( (background.no_boxes)* box.box_size ) )
     {
-      // There's no box blocking our path to the right
-      if( array_rows[character.c_y+1][character.c_x] != 1)
+      // Not the last line
+      if(character.c_y != background.no_boxes)
       { 
-        character.c_x_pos += (character.right - character.left) * 2*game_speed;
+        // There's no box blocking our path to the right
+        if( array_rows[character.c_y][character.c_x] != 1) character.c_x_pos += (character.right - character.left) * 2*game_speed;
       } // end inner if
     } // end mid if
   } // end outer if
@@ -175,9 +176,7 @@ void update()
       if(character.c_x_pos> background.width_margin + character.c_size)
       {
         // There's no box blocking our path to the left
-        
-       // println("Array left: " +array_rows[character.c_x][character.c_y-1]);  
-        if( array_rows[character.c_y+1][character.c_x-1] != 1)
+        if( array_rows[character.c_y][character.c_x-1] != 1)
         { 
           character.c_x_pos += (character.right - character.left) * 2*game_speed;
         } // end inner if
@@ -187,22 +186,30 @@ void update()
   
   if(character.in_air==1 && character.fall_cond==1 && character.c_y_pos < height-background.height_margin*2 - character.c_size + 4)
   {
-    character.c_y_pos += game_speed;
+    // Not the last line
+    if(character.c_y != background.vert_no_boxes - 1)
+    { 
+      // if there is no box underneath
+      if(array_rows[character.c_y+1][character.c_x-1] !=1)
+      {
+        character.c_y_pos += game_speed;
+      }
+    }
   }
   
   /*   This checks if the array index corresponds with the real position.
        If it doesn't then it updates it
   */
-  if(character.c_x != (int) (character.c_x_pos - background.width_margin)/character.c_size) character.c_x =(int) (character.c_x_pos - background.width_margin)/character.c_size; 
-  if(character.c_y != (int) (character.c_y_pos - background.width_margin)/character.c_size) character.c_y =(int) (character.c_y_pos - background.width_margin)/character.c_size;
+  if(character.c_x != (int) (character.c_x_pos - background.width_margin +10)/character.c_size)character.c_x =(int) (character.c_x_pos - background.width_margin +10)/character.c_size; 
+  if(character.c_y != (int) (character.c_y_pos - background.width_margin +28)/character.c_size) character.c_y =(int) (character.c_y_pos - background.width_margin+28)/character.c_size;
 }
 
 void mouseClicked()
 {
   // This is just a function that helps me understand where everything should be placed
   //println("x:"+mouseX+" y:"+ mouseY);
-  //character.c_x_pos= mouseX;
-  //character.c_y_pos=mouseY;
+  character.c_x_pos= mouseX;
+  character.c_y_pos=mouseY;
 }
 
 void keyPressed()
