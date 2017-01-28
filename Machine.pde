@@ -257,15 +257,15 @@ class Box
           when it reaches the position of the next box (that we calculated before moving) then it will reset the last position
           increment the y so it goes to the right position into the array and puts the value 1 to mark it as occupied
       */
-      array_rows[this.x][this.y]=1;
-      if((this.y!=background.vert_no_boxes-1) && array_rows[this.x][this.y+1]!=1)
+      array_rows[this.y][this.x]=1;
+      if((this.y!=background.vert_no_boxes-1) && array_rows[this.y+1][this.x]!=1)
       {
         if(this.y_pos < height-background.height_margin*2 - box_size + 4) 
         {
           this.y_pos +=game_speed;
           if( this.y_pos > height-background.height_margin*2 - box_size * (background.vert_no_boxes-this.y-1) + 4) 
           {
-            array_rows[this.x][this.y]=0;
+            array_rows[this.y][this.x]=0;
             this.y++;
           }// end inner if
         } // end middle if

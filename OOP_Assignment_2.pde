@@ -24,7 +24,7 @@ void setup()
   background(0,0,17);
   // Doing this here because the setup runs before the Map class and we need those values initialised before we create the array
   background.grid_initial();
-  array_rows=new int[background.no_boxes][background.vert_no_boxes];
+  array_rows=new int[background.vert_no_boxes][background.no_boxes];
   character.spawn_c((int)random(background.no_boxes *0.25, background.no_boxes *0.75), (int)random(background.vert_no_boxes *0.85, background.vert_no_boxes *0.90));
   mech.spawn_m();
   mech.spawn_box();
@@ -77,19 +77,21 @@ void draw()
          Don't mind this
          It's just a test
          
-        
+       
   println(background.vert_no_boxes, background.no_boxes);
+  
+   
   for(int index2=0; index2<background.vert_no_boxes; index2++)
   {
     for(int index1=0; index1<background.no_boxes; index1++)
-    {  
-      print(array_rows[index1][index2]+" ");
+    { 
+      print(array_rows[index2][index1]+" ");
     }
     println();
   }
   
     println();println();println();
-   */
+   */ 
 }
  
 
@@ -112,7 +114,7 @@ void update()
   // Checking if the last line of the array is full
   for(int index3=0; index3<background.no_boxes; index3++)
   {
-    if(array_rows[index3][background.vert_no_boxes-1]==0)
+    if(array_rows[background.vert_no_boxes-1][index3]==0)
     {
       clear_line_cond=0;
     }
@@ -130,10 +132,10 @@ void update()
       }
     }
     
-    //Removing from array
+    //Removing from array  No real reason why I'm going backwards
     for(int index3=background.no_boxes-1; index3>-1; index3--)
     {
-      array_rows[index3][background.vert_no_boxes-1]=0;
+      array_rows[background.vert_no_boxes-1][index3]=0;
       //deleted=1;
     }  
   }// end if
@@ -148,33 +150,59 @@ void update()
   
   /*
       Update for character's position
+      We check the places next to the character to see if they're free
+      for left we have an -1 because the index we use is already greater than the actual position by one
   */
-   if(character.right - character.left > 0)
+                   
+  if(character.right - character.left > 0)  // going right
   {
-    if(character.c_x_pos< width - (background.width_margin + 2*character.c_size))
+    // Not at the limit
+    if(character.c_x_pos< background.width_margin + ( (background.no_boxes)* box.box_size ) )
     {
-      character.c_x_pos += (character.right - character.left) * 2*game_speed;
-    }
-  }
-  else
+      // There's no box blocking our path to the right
+      if( array_rows[character.c_y+1][character.c_x] != 1)
+      { 
+        character.c_x_pos += (character.right - character.left) * 2*game_speed;
+      } // end inner if
+    } // end mid if
+  } // end outer if
+  else  
   {
-    if(character.c_x_pos> background.width_margin + character.c_size)
+    // going left
+    if(character.right - character.left < 0)
     {
-      character.c_x_pos += (character.right - character.left) * 2*game_speed;
-    }
-  }
+      // Not at the limit
+      if(character.c_x_pos> background.width_margin + character.c_size)
+      {
+        // There's no box blocking our path to the left
+        
+       // println("Array left: " +array_rows[character.c_x][character.c_y-1]);  
+        if( array_rows[character.c_y+1][character.c_x-1] != 1)
+        { 
+          character.c_x_pos += (character.right - character.left) * 2*game_speed;
+        } // end inner if
+      } // end mid if
+    } // end outer if
+  } // end else
   
   if(character.in_air==1 && character.fall_cond==1 && character.c_y_pos < height-background.height_margin*2 - character.c_size + 4)
   {
     character.c_y_pos += game_speed;
   }
   
+  /*   This checks if the array index corresponds with the real position.
+       If it doesn't then it updates it
+  */
+  if(character.c_x != (int) (character.c_x_pos - background.width_margin)/character.c_size) character.c_x =(int) (character.c_x_pos - background.width_margin)/character.c_size; 
+  if(character.c_y != (int) (character.c_y_pos - background.width_margin)/character.c_size) character.c_y =(int) (character.c_y_pos - background.width_margin)/character.c_size;
 }
 
 void mouseClicked()
 {
   // This is just a function that helps me understand where everything should be placed
   //println("x:"+mouseX+" y:"+ mouseY);
+  //character.c_x_pos= mouseX;
+  //character.c_y_pos=mouseY;
 }
 
 void keyPressed()
