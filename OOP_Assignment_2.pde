@@ -160,7 +160,7 @@ void update()
     if(character.c_x_pos< background.width_margin + ( (background.no_boxes)* box.box_size ) )
     {
       // Not the last line
-      if(character.c_y != background.no_boxes)
+      if(character.c_y != background.no_boxes && character.c_x != background.no_boxes)
       { 
         // There's no box blocking our path to the right
         if( array_rows[character.c_y][character.c_x] != 1) character.c_x_pos += (character.right - character.left) * 2*game_speed;
@@ -175,11 +175,15 @@ void update()
       // Not at the limit
       if(character.c_x_pos> background.width_margin + character.c_size)
       {
-        // There's no box blocking our path to the left
-        if( array_rows[character.c_y][character.c_x-1] != 1)
-        { 
-          character.c_x_pos += (character.right - character.left) * 2*game_speed;
-        } // end inner if
+        // not on the first cole
+        if(character.c_x!=0)
+        {
+          // There's no box blocking our path to the left
+          if( array_rows[character.c_y][character.c_x-1] != 1)
+          { 
+            character.c_x_pos += (character.right - character.left) * 2*game_speed;
+          } // end inner if
+        }
       } // end mid if
     } // end outer if
   } // end else
@@ -187,7 +191,7 @@ void update()
   if(character.in_air==1 && character.fall_cond==1 && character.c_y_pos < height-background.height_margin*2 - character.c_size + 4)
   {
     // Not the last line
-    if(character.c_y != background.vert_no_boxes - 1)
+    if(character.c_y != background.vert_no_boxes - 1 && character.c_x != 0)
     { 
       // if there is no box underneath
       if(array_rows[character.c_y+1][character.c_x-1] !=1)
@@ -200,7 +204,15 @@ void update()
   /*   This checks if the array index corresponds with the real position.
        If it doesn't then it updates it
   */
-  if(character.c_x != (int) (character.c_x_pos - background.width_margin +10)/character.c_size)character.c_x =(int) (character.c_x_pos - background.width_margin +10)/character.c_size; 
+  if(character.c_x != (int) (character.c_x_pos - background.width_margin +10)/character.c_size)
+  {
+    character.c_x =(int) (character.c_x_pos - background.width_margin +10)/character.c_size; 
+  }
+  else
+  {
+    if(character.c_x != (int) (character.c_x_pos - background.width_margin -10)/character.c_size) character.c_x =(int) (character.c_x_pos - background.width_margin -10)/character.c_size; 
+  }
+  
   if(character.c_y != (int) (character.c_y_pos - background.width_margin +28)/character.c_size) character.c_y =(int) (character.c_y_pos - background.width_margin+28)/character.c_size;
 }
 
