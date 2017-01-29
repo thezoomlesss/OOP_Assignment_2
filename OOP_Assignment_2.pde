@@ -153,26 +153,26 @@ void update()
       We check the places next to the character to see if they're free
       for left we have an -1 because the index we use is already greater than the actual position by one
   */
-                   
+                  
   if(character.right - character.left > 0)  // going right
   {
     // Not at the limit
     if(character.c_x_pos< background.width_margin + ( (background.no_boxes)* box.box_size ) )
     {
-      // Not the last line
-      if(character.c_y != background.no_boxes && character.c_x != background.no_boxes)
+      // Not the last column            character.c_y != background.vert_no_boxes &&
+      if( character.c_x != background.no_boxes - 1)
       { 
-        // There's no box blocking our path to the right
+        // There's a blocking our path to the right
         if( array_rows[character.c_y][character.c_x] == 1)
         {
-          // There's no box after the box that we want to move (right)
+          // We are not on the right limit and  There's no box after the box that we want to move (right)
           if( character.c_x < background.no_boxes - 1 && array_rows[character.c_y][character.c_x+1] == 0)
           {
             // Checking for the box in the boxs arraylist
             for(int index4=0; index4< mech.m_no_box; index4++)
             {
               // if the box from the boxs has the position we're looking for
-              if(mech.boxs.get(index4).x == character.c_x)
+              if(mech.boxs.get(index4).x == character.c_x && mech.boxs.get(index4).y == character.c_y)
               {
                 array_rows[mech.boxs.get(index4).y][mech.boxs.get(index4).x]=0;
                 mech.boxs.get(index4).x= character.c_x+1;
@@ -198,20 +198,40 @@ void update()
       // Not at the limit
       if(character.c_x_pos> background.width_margin + character.c_size)
       {
-        // not on the first cole
-        if(character.c_x!=0)
+        // not on the first col
+        if(character.c_x>1)
         {
-          // There's no box blocking our path to the left
-          if( array_rows[character.c_y][character.c_x-1] != 1)
-          { 
+          // There's a box blocking our path to the left
+          if( array_rows[character.c_y][character.c_x-1] == 1)
+          {  
+            // There's a clear spot after the box to the left
+            if(array_rows[character.c_y][character.c_x-2] == 0)
+            {
+              // Finding the box to move in the ArrayList and Array
+              for(int index4=0; index4< mech.m_no_box; index4++)
+              {
+                // if the box from the boxs has the position we're looking for
+                if(mech.boxs.get(index4).x == character.c_x-1 && mech.boxs.get(index4).y == character.c_y)
+                {
+                  array_rows[mech.boxs.get(index4).y][mech.boxs.get(index4).x]=0;
+                  mech.boxs.get(index4).x= character.c_x-2;
+                  mech.boxs.get(index4).x_pos= background.width_margin + ((mech.boxs.get(index4).x+1) * box.box_size);
+                  array_rows[mech.boxs.get(index4).y][mech.boxs.get(index4).x]=1;
+                  break;
+                } // end inner if
+              } // end for
+            }// End if clear spot after box (left)
+          } 
+          else // else there is no box blocking our path
+          {
             character.c_x_pos += (character.right - character.left) * 2*game_speed;
-          } // end inner if
-        }
+          }
+        } // end if not on first col
       } // end mid if
     } // end outer if
   } // end else
   
-  if(character.in_air==1 && character.fall_cond==1 && character.c_y_pos < height-background.height_margin*2 - character.c_size + 4)
+  if(character.c_y_pos < height-background.height_margin*2 - character.c_size + 4)
   {
     // Not the last line and not the first column
     if(character.c_y != background.vert_no_boxes - 1 && character.c_x != 0)
@@ -219,9 +239,18 @@ void update()
       // if there is no box underneath
       if(array_rows[character.c_y+1][character.c_x-1] !=1)
       {
+        character.fall_cond=1;
         character.c_y_pos += game_speed;
       }
+      else // marking the fact that the character will no longer keep falling
+      {
+        character.fall_cond=0;
+      }
     }
+  }
+  else // marking the fact that the character will no longer keep falling
+  {
+    character.fall_cond=0;
   }
   
   /*   This checks if the array index corresponds with the real position.
@@ -231,6 +260,7 @@ void update()
   // If on the floor/bottom
   if( character.c_y == background.vert_no_boxes-1)
   {
+    character.fall_cond=0;
     // if the position should be updated (to the right)
     if(character.c_x != (int) (character.c_x_pos - background.width_margin +10)/character.c_size)
     {
