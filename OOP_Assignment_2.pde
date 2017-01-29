@@ -163,7 +163,30 @@ void update()
       if(character.c_y != background.no_boxes && character.c_x != background.no_boxes)
       { 
         // There's no box blocking our path to the right
-        if( array_rows[character.c_y][character.c_x] != 1) character.c_x_pos += (character.right - character.left) * 2*game_speed;
+        if( array_rows[character.c_y][character.c_x] == 1)
+        {
+          // There's no box after the box that we want to move (right)
+          if( character.c_x < background.no_boxes - 1 && array_rows[character.c_y][character.c_x+1] == 0)
+          {
+            // Checking for the box in the boxs arraylist
+            for(int index4=0; index4< mech.m_no_box; index4++)
+            {
+              // if the box from the boxs has the position we're looking for
+              if(mech.boxs.get(index4).x == character.c_x)
+              {
+                array_rows[mech.boxs.get(index4).y][mech.boxs.get(index4).x]=0;
+                mech.boxs.get(index4).x= character.c_x+1;
+                mech.boxs.get(index4).x_pos= background.width_margin + ((mech.boxs.get(index4).x+1) * box.box_size);
+                array_rows[mech.boxs.get(index4).y][mech.boxs.get(index4).x]=1;
+                break;
+              } // end inner if
+            } // end for
+          } // end mid if
+        } // else there is no box blocking the path
+        else
+        {
+          character.c_x_pos += (character.right - character.left) * 2*game_speed;
+        }
       } // end inner if
     } // end mid if
   } // end outer if
@@ -190,7 +213,7 @@ void update()
   
   if(character.in_air==1 && character.fall_cond==1 && character.c_y_pos < height-background.height_margin*2 - character.c_size + 4)
   {
-    // Not the last line
+    // Not the last line and not the first column
     if(character.c_y != background.vert_no_boxes - 1 && character.c_x != 0)
     { 
       // if there is no box underneath
@@ -204,16 +227,32 @@ void update()
   /*   This checks if the array index corresponds with the real position.
        If it doesn't then it updates it
   */
-  if(character.c_x != (int) (character.c_x_pos - background.width_margin +10)/character.c_size)
+  
+  // If on the floor/bottom
+  if( character.c_y == background.vert_no_boxes-1)
   {
-    character.c_x =(int) (character.c_x_pos - background.width_margin +10)/character.c_size; 
+    // if the position should be updated (to the right)
+    if(character.c_x != (int) (character.c_x_pos - background.width_margin +10)/character.c_size)
+    {
+      character.c_x =(int) (character.c_x_pos - background.width_margin +10)/character.c_size; 
+    }
+    else
+    {
+      // if the position should be updated (to the left)
+      if(character.c_x != (int) (character.c_x_pos - background.width_margin -10)/character.c_size)   character.c_x =(int) (character.c_x_pos - background.width_margin -10)/character.c_size; 
+    }
   }
   else
   {
-    if(character.c_x != (int) (character.c_x_pos - background.width_margin -10)/character.c_size) character.c_x =(int) (character.c_x_pos - background.width_margin -10)/character.c_size; 
+    // Not on the floor and check if it needs to be changed
+    if((character.c_x != (int) (character.c_x_pos - background.width_margin + character.c_size )/character.c_size) )
+    {
+      character.c_x =(int) (character.c_x_pos - background.width_margin )/character.c_size; 
+    }
   }
   
-  if(character.c_y != (int) (character.c_y_pos - background.width_margin +28)/character.c_size) character.c_y =(int) (character.c_y_pos - background.width_margin+28)/character.c_size;
+  // vertical
+  if(character.c_y != (int) (character.c_y_pos - background.width_margin +28 )/character.c_size) character.c_y =(int) (character.c_y_pos - background.width_margin+28)/character.c_size;
 }
 
 void mouseClicked()
