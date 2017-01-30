@@ -109,7 +109,6 @@ void update()
   */
   
   int clear_line_cond=1; 
-  //deleted=0;
   
   // Checking if the last line of the array is full
   for(int index3=0; index3<background.no_boxes; index3++)
@@ -130,7 +129,7 @@ void update()
         mech.boxs.remove(index3);
         mech.m_no_box--;
       }
-    }
+    } // end for
     
     //Removing from array  No real reason why I'm going backwards
     for(int index3=background.no_boxes-1; index3>-1; index3--)
@@ -142,7 +141,7 @@ void update()
   
   
   
-  
+  // Calling the function that moves the mech around
   mech.move_m();
   
   // Jumping until we get to the height of the original pos - the amount we want to jump by
@@ -159,116 +158,10 @@ void update()
       We check the places next to the character to see if they're free
       for left we have an -1 because the index we use is already greater than the actual position by one
   */
-                  
-  if(character.right - character.left > 0)  // going right
-  {
-    // Not at the limit
-    if(character.c_x_pos< background.width_margin + ( (background.no_boxes)* box.box_size ) )
-    {
-      // Not the last column            character.c_y != background.vert_no_boxes &&
-      if( character.c_x  != background.no_boxes - 1 ) // -1  
-      { 
-        // There's a blocking our path to the right
-        if( array_rows[character.c_y][character.c_x] == 1)
-        {
-          // We are not on the right limit and  There's no box after the box that we want to move (right)
-          if( character.c_x < background.no_boxes -1   && array_rows[character.c_y][character.c_x+1] == 0) 
-          {
-            // Checking for the box in the boxs arraylist
-            for(int index4=0; index4< mech.m_no_box; index4++)
-            {
-              // if the box from the boxs has the position we're looking for
-              if(mech.boxs.get(index4).x == character.c_x && mech.boxs.get(index4).y == character.c_y)
-              {
-                array_rows[mech.boxs.get(index4).y][mech.boxs.get(index4).x]=0;
-                mech.boxs.get(index4).x= character.c_x+1;
-                mech.boxs.get(index4).x_pos= background.width_margin + ((mech.boxs.get(index4).x+1) * box.box_size);
-                array_rows[mech.boxs.get(index4).y][mech.boxs.get(index4).x]=1;
-                break;
-              } // end inner if
-            } // end for
-          } // end mid if
-        } // else there is no box blocking the path
-        else 
-        {
-          character.c_x_pos += (character.right - character.left) * 2*game_speed;
-        }
-      } // else we are at the last col
-      else  // We simply stop checking for other boxes cause we are at the last col and we simply walk 
-      {
-        character.c_x_pos += (character.right - character.left) * 2*game_speed;
-      }// end inner if
-    } // end mid if
-  } // end outer if
-  else  
-  {
-    // going left
-    if(character.right - character.left < 0)
-    {
-      // Not at the limit
-      if(character.c_x_pos> background.width_margin + character.c_size)
-      {
-        // not on the first col
-        if(character.c_x>0)
-        {
-          // There's a box blocking our path to the left
-          if( array_rows[character.c_y][character.c_x-1] == 1)
-          { 
-            if( character.c_x>1)
-            {
-              // There's a clear spot after the box to the left
-              if(array_rows[character.c_y][character.c_x-2] == 0)            // If we have a box on the first col (x==0) then this crashes the program 
-              { // Still crashing even with x==2 for some reason...........................
-                // Finding the box to move in the ArrayList and Array
-                for(int index4=0; index4< mech.m_no_box; index4++)
-                {
-                  // if the box from the boxs has the position we're looking for
-                  if(mech.boxs.get(index4).x == character.c_x-1 && mech.boxs.get(index4).y == character.c_y)
-                  {
-                    array_rows[mech.boxs.get(index4).y][mech.boxs.get(index4).x]=0;
-                    mech.boxs.get(index4).x= character.c_x-2;
-                    mech.boxs.get(index4).x_pos= background.width_margin + ((mech.boxs.get(index4).x+1) * box.box_size);
-                    array_rows[mech.boxs.get(index4).y][mech.boxs.get(index4).x]=1;
-                    break;
-                  } // end inner if
-                } // end for
-              }// End if clear spot after box (left)
-            }
-          } 
-          else // else there is no box blocking our path
-          {
-            character.c_x_pos += (character.right - character.left) * 2*game_speed;
-          }
-        } // end if not on first col
-        else // if on the first col Maybe needed here
-        {
-          
-        }
-      } // end mid if
-    } // end outer if
-  } // end else
+   character.c_move();                
   
-  if(character.c_y_pos < height-background.height_margin*2 - character.c_size + 4)
-  {
-    // Not the last line and not the first column
-    if( character.up !=1 && character.c_y != background.vert_no_boxes - 1 && character.c_x != 0)
-    { 
-      // if there is no box underneath
-      if(array_rows[character.c_y+1][character.c_x-1] !=1)
-      {
-        character.fall_cond=1;
-        character.c_y_pos += game_speed;
-      }
-      else // marking the fact that the character will no longer keep falling
-      {
-        character.fall_cond=0;
-      }
-    } // end not last line nor first column
-  }
-  else // marking the fact that the character will no longer keep falling
-  {
-    character.fall_cond=0;
-  }
+  
+  
   
   /*   This checks if the array index corresponds with the real position.
        If it doesn't then it updates it
@@ -294,9 +187,6 @@ void update()
   
   
   */
-  
-  
-  
   
   
   
@@ -359,8 +249,7 @@ void update()
   */
   text(character.c_y, 300,300);
   
-  // vertical  checking if we are jumping and if the index doesn't match the position on the vertical axis
-  if(character.c_y != (int) (character.c_y_pos - background.width_margin +28  )/character.c_size && character.up !=1) character.c_y =(int) (character.c_y_pos - background.width_margin+28)/character.c_size;
+ 
 }
 
 void mouseClicked()
