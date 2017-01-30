@@ -25,7 +25,7 @@ void setup()
   // Doing this here because the setup runs before the Map class and we need those values initialised before we create the array
   background.grid_initial();
   array_rows=new int[background.vert_no_boxes][background.no_boxes];
-  character.spawn_c((int)random(background.no_boxes *0.25, background.no_boxes *0.75), (int)random(background.vert_no_boxes *0.85, background.vert_no_boxes *0.90));
+  character.spawn_c((int)random(background.no_boxes *0.25, background.no_boxes *0.75) , (int)random(background.vert_no_boxes *0.85, background.vert_no_boxes *0.90));
   mech.spawn_m();
   mech.spawn_box();
 }
@@ -140,7 +140,13 @@ void update()
     }  
   }// end if
   
+  
+  
+  
   mech.move_m();
+  
+  // Jumping until we get to the height of the original pos - the amount we want to jump by
+  character.jump();
   
   // Moving all the boxes that are in the arraylist boxs
   for(int index2=0; index2 < mech.boxs.size(); index2++)
@@ -160,13 +166,13 @@ void update()
     if(character.c_x_pos< background.width_margin + ( (background.no_boxes)* box.box_size ) )
     {
       // Not the last column            character.c_y != background.vert_no_boxes &&
-      if( character.c_x != background.no_boxes - 1)
+      if( character.c_x  != background.no_boxes - 1 ) // -1  
       { 
         // There's a blocking our path to the right
         if( array_rows[character.c_y][character.c_x] == 1)
         {
           // We are not on the right limit and  There's no box after the box that we want to move (right)
-          if( character.c_x < background.no_boxes - 1 && array_rows[character.c_y][character.c_x+1] == 0)
+          if( character.c_x < background.no_boxes -1   && array_rows[character.c_y][character.c_x+1] == 0) 
           {
             // Checking for the box in the boxs arraylist
             for(int index4=0; index4< mech.m_no_box; index4++)
@@ -183,11 +189,15 @@ void update()
             } // end for
           } // end mid if
         } // else there is no box blocking the path
-        else
+        else 
         {
           character.c_x_pos += (character.right - character.left) * 2*game_speed;
         }
-      } // end inner if
+      } // else we are at the last col
+      else  // We simply stop checking for other boxes cause we are at the last col and we simply walk 
+      {
+        character.c_x_pos += (character.right - character.left) * 2*game_speed;
+      }// end inner if
     } // end mid if
   } // end outer if
   else  
@@ -199,34 +209,41 @@ void update()
       if(character.c_x_pos> background.width_margin + character.c_size)
       {
         // not on the first col
-        if(character.c_x>1)
+        if(character.c_x>0)
         {
           // There's a box blocking our path to the left
           if( array_rows[character.c_y][character.c_x-1] == 1)
-          {  
-            // There's a clear spot after the box to the left
-            if(array_rows[character.c_y][character.c_x-2] == 0)
+          { 
+            if( character.c_x>1)
             {
-              // Finding the box to move in the ArrayList and Array
-              for(int index4=0; index4< mech.m_no_box; index4++)
-              {
-                // if the box from the boxs has the position we're looking for
-                if(mech.boxs.get(index4).x == character.c_x-1 && mech.boxs.get(index4).y == character.c_y)
+              // There's a clear spot after the box to the left
+              if(array_rows[character.c_y][character.c_x-2] == 0)            // If we have a box on the first col (x==0) then this crashes the program 
+              { // Still crashing even with x==2 for some reason...........................
+                // Finding the box to move in the ArrayList and Array
+                for(int index4=0; index4< mech.m_no_box; index4++)
                 {
-                  array_rows[mech.boxs.get(index4).y][mech.boxs.get(index4).x]=0;
-                  mech.boxs.get(index4).x= character.c_x-2;
-                  mech.boxs.get(index4).x_pos= background.width_margin + ((mech.boxs.get(index4).x+1) * box.box_size);
-                  array_rows[mech.boxs.get(index4).y][mech.boxs.get(index4).x]=1;
-                  break;
-                } // end inner if
-              } // end for
-            }// End if clear spot after box (left)
+                  // if the box from the boxs has the position we're looking for
+                  if(mech.boxs.get(index4).x == character.c_x-1 && mech.boxs.get(index4).y == character.c_y)
+                  {
+                    array_rows[mech.boxs.get(index4).y][mech.boxs.get(index4).x]=0;
+                    mech.boxs.get(index4).x= character.c_x-2;
+                    mech.boxs.get(index4).x_pos= background.width_margin + ((mech.boxs.get(index4).x+1) * box.box_size);
+                    array_rows[mech.boxs.get(index4).y][mech.boxs.get(index4).x]=1;
+                    break;
+                  } // end inner if
+                } // end for
+              }// End if clear spot after box (left)
+            }
           } 
           else // else there is no box blocking our path
           {
             character.c_x_pos += (character.right - character.left) * 2*game_speed;
           }
         } // end if not on first col
+        else // if on the first col Maybe needed here
+        {
+          
+        }
       } // end mid if
     } // end outer if
   } // end else
@@ -234,7 +251,7 @@ void update()
   if(character.c_y_pos < height-background.height_margin*2 - character.c_size + 4)
   {
     // Not the last line and not the first column
-    if(character.c_y != background.vert_no_boxes - 1 && character.c_x != 0)
+    if( character.up !=1 && character.c_y != background.vert_no_boxes - 1 && character.c_x != 0)
     { 
       // if there is no box underneath
       if(array_rows[character.c_y+1][character.c_x-1] !=1)
@@ -246,7 +263,7 @@ void update()
       {
         character.fall_cond=0;
       }
-    }
+    } // end not last line nor first column
   }
   else // marking the fact that the character will no longer keep falling
   {
@@ -257,6 +274,59 @@ void update()
        If it doesn't then it updates it
   */
   
+  textSize(20);
+  text("Character pos x "+character.c_x, 300,400);
+  /*
+  
+  if(character.c_x_pos +  character.c_size * 0.5 > background.width_margin + ((character.c_x + 1)  * character.c_size) )
+  {
+    if(array_rows[character.c_y][character.c_x+1]!=1) character.c_x++;
+  }
+  else
+  {
+    if(character.c_x_pos +  character.c_size * 0.5 < background.width_margin + ((character.c_x )  * character.c_size) )
+    {
+      if(array_rows[character.c_y][character.c_x-1]!=1) character.c_x--;
+    }
+  }
+  
+  line(character.c_x_pos + character.c_size *0.5, character.c_y_pos, character.c_x_pos + character.c_size *0.5, character.c_y_pos + character.c_size);
+  
+  
+  */
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  /*
+             This somewhat works fine
+  
+
+  if(character.c_x_pos > background.width_margin + (character.c_x * character.c_size) + character.c_size * 0.5)
+  {
+    character.c_x++;
+  }
+  else
+  {
+    if(character.c_x_pos < background.width_margin + (character.c_x * character.c_size) - character.c_size * 0.5)
+    {
+      character.c_x--;
+    }
+  }
+  
+  line(background.width_margin + (character.c_x * character.c_size) + character.c_size * 0.5, character.c_y_pos, background.width_margin + (character.c_x * character.c_size) + character.c_size * 0.5, character.c_y_pos+ character.c_size);
+  
+  
+
+  */
+             
+  /*
+  
   // If on the floor/bottom
   if( character.c_y == background.vert_no_boxes-1)
   {
@@ -265,11 +335,16 @@ void update()
     if(character.c_x != (int) (character.c_x_pos - background.width_margin +10)/character.c_size)
     {
       character.c_x =(int) (character.c_x_pos - background.width_margin +10)/character.c_size; 
+      text("Right to: "+character.c_x, 300,450); 
     }
     else
     {
       // if the position should be updated (to the left)
-      if(character.c_x != (int) (character.c_x_pos - background.width_margin -10)/character.c_size)   character.c_x =(int) (character.c_x_pos - background.width_margin -10)/character.c_size; 
+      if(character.c_x != (int) (character.c_x_pos - background.width_margin -10)/character.c_size)
+      {
+        character.c_x =(int) (character.c_x_pos - background.width_margin -10)/character.c_size;
+        text("Left to: "+character.c_x, 300,450);
+      }
     }
   }
   else
@@ -281,8 +356,11 @@ void update()
     }
   }
   
-  // vertical
-  if(character.c_y != (int) (character.c_y_pos - background.width_margin +28 )/character.c_size) character.c_y =(int) (character.c_y_pos - background.width_margin+28)/character.c_size;
+  */
+  text(character.c_y, 300,300);
+  
+  // vertical  checking if we are jumping and if the index doesn't match the position on the vertical axis
+  if(character.c_y != (int) (character.c_y_pos - background.width_margin +28  )/character.c_size && character.up !=1) character.c_y =(int) (character.c_y_pos - background.width_margin+28)/character.c_size;
 }
 
 void mouseClicked()
@@ -306,6 +384,15 @@ void keyPressed()
     character.right = 1;
   }
   
+  if(keyCode == UP || key=='w' && character.jump_cond==true && character.up_released == true)
+  {
+    character.old_pos= character.c_y_pos;
+    character.fall_cond=0;
+    character.up=1;
+    character.up_released=false;
+    character.jump_cond=false;
+  }
+  
 } // end keyPressed
 
 void keyReleased()
@@ -321,4 +408,8 @@ void keyReleased()
     character.right = 0;
   }
   
+  if (keyCode == UP || key=='w')
+  {
+    character.up_released=true;
+  }  
 }
