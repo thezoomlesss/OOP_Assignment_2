@@ -30,11 +30,16 @@ void setup()
   character.spawn_c((int)random(background.no_boxes *0.25, background.no_boxes *0.75) , (int)random(background.vert_no_boxes *0.85, background.vert_no_boxes *0.90));
   mech.spawn_m();
   mech.spawn_box();
-}
+  
+  sourceLight = createFont("Font.otf", 34);
+  textFont(sourceLight);
+  
+}// end setup
 
 // Global declaration area
 int[][] array_rows;
 int game_speed=2, state=0;    // State starts from 0 because that's the first page
+PFont sourceLight;
 //int deleted;
 
 // Creating the objects that will be added into the ArrayLists
@@ -61,6 +66,7 @@ void game_state(int state)
     case 1: // Main menu screen
     {
       menu.display_border();
+      menu.title();
       menu.buttons();
       break;
     }

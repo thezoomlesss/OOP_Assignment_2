@@ -38,7 +38,9 @@ class Menu
   
   void title()
   {
-    
+    textSize(100);
+    fill(200,0,0);
+    text("Stack Challenge", width * 0.425f - button_width, height * 0.2);
   }
   
   void buttons()
@@ -83,10 +85,10 @@ class Menu
     }
     
     
-    textSize(25);
-    strokeText("New Game", width * 0.5f - button_width + 40, height * pos + 0.2 * button_height);
-    strokeText("Leaderboards", width * 0.5f - button_width + 20, height * pos + 4.2 * button_height);
-    strokeText("Settings", width * 0.5f - button_width + 50, height * pos + 8.2 * button_height);
+    textSize(30);
+    strokeText("New Game", width * 0.5f - button_width + 50, height * pos + 0.2 * button_height);
+    strokeText("Leaderboards", width * 0.5f - button_width + 35, height * pos + 4.2 * button_height);
+    strokeText("Settings", width * 0.5f - button_width + 60, height * pos + 8.2 * button_height);
     
   }
 } // end class Menu
