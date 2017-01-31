@@ -25,6 +25,8 @@ void setup()
   // Doing this here because the setup runs before the Map class and we need those values initialised before we create the array
   background.grid_initial();
   array_rows=new int[background.vert_no_boxes][background.no_boxes];
+  
+  // These 3 have to be moved 
   character.spawn_c((int)random(background.no_boxes *0.25, background.no_boxes *0.75) , (int)random(background.vert_no_boxes *0.85, background.vert_no_boxes *0.90));
   mech.spawn_m();
   mech.spawn_box();
@@ -32,7 +34,7 @@ void setup()
 
 // Global declaration area
 int[][] array_rows;
-int game_speed=2, state=3;
+int game_speed=2, state=0;    // State starts from 0 because that's the first page
 //int deleted;
 
 // Creating the objects that will be added into the ArrayLists
@@ -40,6 +42,8 @@ Map background=new Map();
 Box box= new Box();
 Mech mech= new Mech();
 Char character= new Char();
+Profile profile= new Profile();           
+Menu menu= new Menu();
 
 // ArrayLists
 ArrayList <Box> boxes= new ArrayList <Box>();
@@ -51,21 +55,23 @@ void game_state(int state)
   {
     case 0: // Name screen
     {
-      
+      profile.check_file();
       break;
     }
     case 1: // Main menu screen
     {
-      
+      menu.display();
       break;
     }
     case 2: // Leaderboards screen
     {
-      
+      profile.check_file();
       break;
     }
     case 3: // Game screen
     {
+      
+      
       // Remember to add all the things from the setup
       
       background.grid();   // Drawing the background
@@ -111,7 +117,7 @@ void game_state(int state)
 
 void draw()
 {
-  println(frameRate);
+  //println(frameRate);
   game_state(state); 
   /*
          Don't mind this
@@ -157,7 +163,7 @@ void update()
     {
       clear_line_cond=0;
     }
-  }
+  } // end for loop that checks if the last line is full
   
   if(clear_line_cond==1)
   {
@@ -169,7 +175,7 @@ void update()
         mech.boxs.remove(index3);
         mech.m_no_box--;
       }
-    } // end for
+    } // end for that removes the boxes from the ArrayList
     
     //Removing from array  No real reason why I'm going backwards
     for(int index3=background.no_boxes-1; index3>-1; index3--)
