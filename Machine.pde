@@ -110,6 +110,41 @@ class Mech
     }
   } // end move_m
   
+  
+  void move_b()
+  {
+    // Moving all the boxes that are in the arraylist boxs
+    for(int index2=0; index2 < this.boxs.size(); index2++)
+    {
+      this.boxs.get(index2).move_b();
+    }
+  } // end move_b()
+  
+  /* 
+      For loop that goes through the ArrayList and displays all the boxes
+  */
+  
+  void disp_boxes()
+  {
+    for(int index2=0; index2 < this.boxs.size(); index2++)
+    {
+      /*
+      if((deleted==1) && (mech.boxs.get(index2).y== background.vert_no_boxes-1))
+      {
+      stroke(0,255,0);
+      println("Green");
+      }
+      else
+      {
+      stroke(255,0,0);
+      }
+      */
+      
+      this.boxs.get(index2).disp();
+    }
+  }
+  
+  
   void draw_m()
   {
     //spawn_box();
@@ -119,8 +154,8 @@ class Mech
     fill(200,0,0);
     beginShape();
     vertex(this.m_x_pos,m_y_pos);
-    vertex(this.m_x_pos+mech_size, m_y_pos);
-    vertex(this.m_x_pos+mech_size, m_y_pos+8);
+    vertex(this.m_x_pos+this.mech_size, m_y_pos);
+    vertex(this.m_x_pos+this.mech_size, m_y_pos+8);
     vertex(this.m_x_pos, m_y_pos+8);
     endShape(CLOSE);
      /* 
@@ -130,8 +165,8 @@ class Mech
     noFill();
     stroke(255,0,0);
     beginShape();
-    vertex(this.m_x_pos + (mech_size*0.5f), this.m_y_pos+8);   // Point that connects arms to box
-    vertex(this.m_x_pos + (mech_size*0.5f), this.m_y_pos+20);  // lower point that connects arms
+    vertex(this.m_x_pos + (this.mech_size*0.5f), this.m_y_pos+8);   // Point that connects arms to box
+    vertex(this.m_x_pos + (this.mech_size*0.5f), this.m_y_pos+20);  // lower point that connects arms
     vertex(this.m_x_pos - (box.box_size *0.5), this.m_y_pos+30); // left arm top
     
     if(this.holding_box==1)
@@ -152,7 +187,7 @@ class Mech
         beginShape();
         vertex(this.m_x_pos-10 +  box.box_size - game_speed , this.m_y_pos+60); // right connection
       }
-      vertex(this.m_x_pos + (mech_size) + (box.box_size *0.5), this.m_y_pos+50); // right arm lower
+      vertex(this.m_x_pos + (this.mech_size) + (box.box_size *0.5), this.m_y_pos+50); // right arm lower
     }
     else  // Not holding box
     {
@@ -162,12 +197,12 @@ class Mech
       
       beginShape();
       vertex(this.m_x_pos + (box.box_size)  +10 , this.m_y_pos+60); // right arm connection to box
-      vertex(this.m_x_pos + (mech_size) + 10 + (box.box_size *0.5), this.m_y_pos+50); // right arm lower
+      vertex(this.m_x_pos + (this.mech_size) + 10 + (box.box_size *0.5), this.m_y_pos+50); // right arm lower
     }
     
     
-    vertex(this.m_x_pos + (mech_size) + (box.box_size *0.5), this.m_y_pos+30); // right arm top
-    vertex(this.m_x_pos + (mech_size*0.5f), this.m_y_pos+20);  // right arm connectio to origin
+    vertex(this.m_x_pos + (this.mech_size) + (box.box_size *0.5), this.m_y_pos+30); // right arm top
+    vertex(this.m_x_pos + (this.mech_size*0.5f), this.m_y_pos+20);  // right arm connectio to origin
     endShape();
    
     
@@ -181,7 +216,7 @@ class Mech
     
     // The wheels
     ellipse(this.m_x_pos, this.m_y_pos+4, wheel_size,wheel_size);
-    ellipse(this.m_x_pos + mech_size, this.m_y_pos+4, wheel_size, wheel_size);
+    ellipse(this.m_x_pos + this.mech_size, this.m_y_pos+4, wheel_size, wheel_size);
    
     /*
         The spikes
@@ -192,7 +227,7 @@ class Mech
     for(int wheel_index=1; wheel_index<5; wheel_index++)
     {
       line(this.m_x_pos , this.m_y_pos + 4, this.m_x_pos + sin(this.theta + (wheel_index*PI/2)) *10, this.m_y_pos + 4 + cos(this.theta + (wheel_index*PI/2))*10);
-      line(this.m_x_pos +mech_size, this.m_y_pos + 4, this.m_x_pos + mech_size + sin(this.theta + (wheel_index*PI/2)) *10, this.m_y_pos + 4 + cos(this.theta + (wheel_index*PI/2))*10);
+      line(this.m_x_pos +this.mech_size, this.m_y_pos + 4, this.m_x_pos + this.mech_size + sin(this.theta + (wheel_index*PI/2)) *10, this.m_y_pos + 4 + cos(this.theta + (wheel_index*PI/2))*10);
     }
     
   }

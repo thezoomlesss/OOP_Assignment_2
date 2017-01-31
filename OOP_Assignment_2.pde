@@ -32,7 +32,7 @@ void setup()
 
 // Global declaration area
 int[][] array_rows;
-int game_speed=2;
+int game_speed=2, state=3;
 //int deleted;
 
 // Creating the objects that will be added into the ArrayLists
@@ -45,34 +45,74 @@ Char character= new Char();
 ArrayList <Box> boxes= new ArrayList <Box>();
 ArrayList <Mech> mechs= new ArrayList <Mech>();
 
-void draw()
+void game_state(int state)
 {
-  //println(frameRate);
-  background.grid();
-  mech.draw_m();
-  character.draw_c();
-  for(int index2=0; index2 < mech.boxs.size(); index2++)
+  switch(state)
   {
-    /*
-    if((deleted==1) && (mech.boxs.get(index2).y== background.vert_no_boxes-1))
+    case 0: // Name screen
     {
-      stroke(0,255,0);
-      println("Green");
+      
+      break;
     }
-    else
+    case 1: // Main menu screen
     {
-      stroke(255,0,0);
+      
+      break;
     }
-    */
-    
-    mech.boxs.get(index2).disp();
-  }
-  update();
-  
-  // This updates the position of the character
+    case 2: // Leaderboards screen
+    {
+      
+      break;
+    }
+    case 3: // Game screen
+    {
+      // Remember to add all the things from the setup
+      
+      background.grid();   // Drawing the background
+      mech.draw_m();       // Drawing the mech
+      character.draw_c();  // Drawing the character
+      mech.disp_boxes();   // Drawing the boxes
+      update();            // Updating all the values
+      mech.move_m();       // Calling the function that moves the mech around
+      character.jump();    // Jumping until we get to the height of the original pos - the amount we want to jump by
+      
+      /*
+          Update for character's position
+          We check the places next to the character to see if they're free
+          for left we have an -1 because the index we use is already greater than the actual position by one
+      */
+      character.c_move();  // This updates the position of the character
+      mech.move_b();       // This updates the position of the boxes
+                  
  
   
-  
+      break;
+    }
+    case 4: // Dead game screen
+    {
+      
+      break;
+    }
+    case 5: // Possibly settings if I have time for it
+    {
+      
+      break;
+    }
+    
+    default:
+    {
+      textSize(40);
+      text("Sorry Bud...", width * 0.40, height * 0.30);
+    }
+    
+  }
+}
+
+
+void draw()
+{
+  println(frameRate);
+  game_state(state); 
   /*
          Don't mind this
          It's just a test
@@ -92,7 +132,7 @@ void draw()
   
     println();println();println();
    */ 
-}
+} // end draw
  
 
 void update()
@@ -139,30 +179,6 @@ void update()
     }  
   }// end if
   
-  
-  
-  // Calling the function that moves the mech around
-  mech.move_m();
-  
-  // Jumping until we get to the height of the original pos - the amount we want to jump by
-  character.jump();
-  
-  // Moving all the boxes that are in the arraylist boxs
-  for(int index2=0; index2 < mech.boxs.size(); index2++)
-  {
-    mech.boxs.get(index2).move_b();
-  }
-  
-  /*
-      Update for character's position
-      We check the places next to the character to see if they're free
-      for left we have an -1 because the index we use is already greater than the actual position by one
-  */
-   character.c_move();                
-  
-  
-  
-  
   /*   This checks if the array index corresponds with the real position.
        If it doesn't then it updates it
   */
@@ -187,10 +203,6 @@ void update()
   
   
   */
-  
-  
-  
-  
   
   
   /*
@@ -249,8 +261,7 @@ void update()
   */
   text(character.c_y, 300,300);
   
- 
-}
+} // end update
 
 void mouseClicked()
 {
@@ -273,7 +284,7 @@ void keyPressed()
     character.right = 1;
   }
   
-  if(keyCode == UP || key=='w' && character.jump_cond==true && character.up_released == true)
+  if(keyCode == UP || key=='w' && character.jump_cond==true && character.up_released == true )  // find a way to add && character.fall_cond != 1 cause it doesn't work
   {
     character.old_pos= character.c_y_pos;
     character.fall_cond=0;
