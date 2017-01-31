@@ -60,7 +60,8 @@ void game_state(int state)
     }
     case 1: // Main menu screen
     {
-      menu.display();
+      menu.display_border();
+      menu.buttons();
       break;
     }
     case 2: // Leaderboards screen
@@ -70,8 +71,6 @@ void game_state(int state)
     }
     case 3: // Game screen
     {
-      
-      
       // Remember to add all the things from the setup
       
       background.grid();   // Drawing the background
@@ -318,4 +317,18 @@ void keyReleased()
   {
     character.up_released=true;
   }  
-}
+} // end keyReleased
+
+/*
+    Function used to write with white color font with a black outline
+*/
+void strokeText(String message, float x, float y) 
+{ 
+  fill(0); 
+  text(message, x-1, y); 
+  text(message, x, y-1); 
+  text(message, x+1, y); 
+  text(message, x, y+1); 
+  fill(255); 
+  text(message, x, y); 
+} // end strokeText

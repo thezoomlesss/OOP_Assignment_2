@@ -3,11 +3,7 @@ class Map
   int width_margin=30, height_margin=20;
   int track_height=height_margin-5;
   int no_boxes, vert_no_boxes, no_vert_lines; 
-  Map()
-  {
-    
   
-  }
   
   void grid_initial()
   {
