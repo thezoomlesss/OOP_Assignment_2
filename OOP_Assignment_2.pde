@@ -272,9 +272,29 @@ void mouseClicked()
 {
   // This is just a function that helps me understand where everything should be placed
   //println("x:"+mouseX+" y:"+ mouseY);
-  character.c_x_pos= mouseX;
-  character.c_y_pos=mouseY;
-}
+  if(state==3)
+  {
+    character.c_x_pos= mouseX;
+    character.c_y_pos=mouseY;
+  }
+  else if(state==1)
+       {
+          if(mouseX> width * 0.5f - menu.button_width && mouseX <width * 0.5f + menu.button_width) 
+          {
+            // if first button
+            if(mouseY> height * menu.pos  - menu.button_height && mouseY< height * menu.pos + menu.button_height)
+            {
+              state=3;
+            }
+            // else if 2nd button
+            else if( mouseY> height * menu.pos + 4  * menu.button_height - menu.button_height && mouseY< height * menu.pos + 4  * menu.button_height + menu.button_height)
+                 {
+                   state=2;
+                 }
+          } // end if not between the width of the buttons 
+       } // end if not on the menu page 
+    
+} // end mouseClicked
 
 void keyPressed()
 {

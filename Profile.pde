@@ -1,6 +1,8 @@
 class Profile
 {
-  
+                 /*
+                       Missing a page for the leaderboards
+                 */
   Profile()
   {
   }
@@ -26,6 +28,8 @@ class Profile
       profile_txt = createWriter(dataPath("Leaderboards.txt"));
       profile_txt.close();
       state=1;
-    }
-  }
+    } // end else
+    
+  } // end check_file()
+  
 } // end class Profile
