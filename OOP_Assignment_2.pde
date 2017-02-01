@@ -31,15 +31,15 @@ void setup()
   mech.spawn_m();
   mech.spawn_box();
   
-  sourceLight = createFont("Font.otf", 34);
-  textFont(sourceLight);
+  Title_font = createFont("Font1.otf", 34);
+  Text_font = createFont("Font2.otf", 34); 
   
 }// end setup
 
 // Global declaration area
 int[][] array_rows;
 int game_speed=2, state=0;    // State starts from 0 because that's the first page
-PFont sourceLight;
+PFont Title_font, Text_font;
 //int deleted;
 
 // Creating the objects that will be added into the ArrayLists
@@ -72,7 +72,7 @@ void game_state(int state)
     }
     case 2: // Leaderboards screen
     {
-      profile.check_file();
+      profile.top_10();
       break;
     }
     case 3: // Game screen
@@ -293,7 +293,7 @@ void mouseClicked()
               state=3;
             }
             // else if 2nd button
-            else if( mouseY> height * menu.pos + 4  * menu.button_height - menu.button_height && mouseY< height * menu.pos + 4  * menu.button_height + menu.button_height)
+            else if( mouseY> height * menu.pos + 3  * menu.button_height - menu.button_height && mouseY< height * menu.pos + 3  * menu.button_height + menu.button_height)
                  {
                    state=2;
                  }
