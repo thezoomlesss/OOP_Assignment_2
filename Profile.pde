@@ -1,8 +1,10 @@
 class Profile
 {
-                 /*
-                       Missing a page for the leaderboards
-                 */
+  String allowed_chars="qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM ";
+  String name="";
+  int name_index=0;
+  
+  
   void top_10()
   {
     menu.display_border();
@@ -14,7 +16,7 @@ class Profile
     textSize(30);
     textAlign(CENTER);
     textFont(Title_font);
-    strokeText("Top 10", width * 0.5, height *0.08);
+    strokeText("T o p  1 0", width * 0.5, height *0.08);
     
     
     textSize(20);
@@ -79,6 +81,65 @@ class Profile
   
   void get_name()
   {
+    menu.display_border(); 
+    
+    // Use string.indexOf('a') for the permitted characters
+    
+    // The title
+    textAlign(CENTER);
+    textFont(Title_font);
+    textSize(100);
+    strokeText("Choose your name", width * 0.5, height *0.2);
+    
+    // The name box
+    fill(10,8,25);
+    beginShape();
+    vertex(width * 0.4, height * 0.45);
+    vertex(width * 0.6, height * 0.45);
+    vertex(width * 0.6, height * 0.55);
+    vertex(width * 0.4, height * 0.55);
+    endShape(CLOSE);
+    
+    
+    // Taking the character input
+    if(keyPressed && (name_index<12 || key==ENTER))
+    {
+      
+      delay(200);
+      if(key!=BACKSPACE && key!=ENTER)// && allowed_chars.indexOf(key) > 0)
+      {
+        name+=Character.toUpperCase(key);
+        name_index++;
+      }
+      if(key==ENTER && name_index>0) 
+      {
+            
+        state=1;         
+        
+      }
+      
+      if(key==BACKSPACE && name_index>0)  
+      {
+        delay(200);
+        name_index--;
+        name=name.substring(0,name.length()-1);
+      }
+    }
+    else
+    {
+      if(key==BACKSPACE && name_index==12)  
+      {
+        delay(200);
+        name_index--;
+        name=name.substring(0,name.length()-1);
+      }
+    }
+    
+    // Displaying the characters
+    textFont(Text_font);
+    textSize(40);
+    textAlign(CENTER);
+    strokeText(name, width *0.5,height * 0.51);
     
   }
   
@@ -90,20 +151,16 @@ class Profile
   void check_file()
   {
     File f = new File(dataPath("Leaderboards.txt")); 
-    if(f.exists())
-    {
-      // The file exists
-      state=1;
-    }
-    else
+    if(!f.exists())
     {
       // The file doesn't exist and we have to create it
       
       PrintWriter profile_txt;   
       profile_txt = createWriter(dataPath("Leaderboards.txt"));
       profile_txt.close();
-      state=1;
     } // end else
+    
+    profile.get_name();
     
   } // end check_file()
   
