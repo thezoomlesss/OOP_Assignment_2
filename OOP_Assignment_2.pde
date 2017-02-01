@@ -298,7 +298,14 @@ void mouseClicked()
                    state=2;
                  }
           } // end if not between the width of the buttons 
-       } // end if not on the menu page 
+       } // end if not on the menu page
+       else if(state==2) // if on the leaderboards page
+       {
+         if(mouseX> width * 0.45 && mouseX < width * 0.55 && mouseY > height * 0.81 && mouseY< height * 0.91) 
+         {
+            state=1;
+         }
+       }
     
 } // end mouseClicked
 

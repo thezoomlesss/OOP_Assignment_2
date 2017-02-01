@@ -67,13 +67,13 @@ class Menu
       {
         if(  mouseY> height * pos + index  * button_height - button_height && mouseY< height * pos + index  * button_height + button_height)
         {
-           fill(0,55,205); // blue 85
+           fill(0,55,205); // Hovered color
            stroke(15,25,50);
            strokeWeight(6);
         }
         else
         {
-          fill(10,8,25);
+          fill(10,8,25); // Not hovered
           strokeWeight(4);
           stroke(25,45,120); 
         } 
