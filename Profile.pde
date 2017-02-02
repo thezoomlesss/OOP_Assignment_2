@@ -1,14 +1,17 @@
 class Profile
 {
+  Table table2; int rowCount2;
   String allowed_chars="qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM ";
   String name="";
   int name_index=0;
   Record[] order=new Record[10];  // We are using 11 because we are doing a top 10 and the 11th position will be used as a temp position
   Record order_temp= new Record("Temp", 1);
   
+  
   void top_10()
   {
     menu.display_border();
+    sort();
     Table table = loadTable("Leaderboards.txt", "tsv");
     Record one;
     int rowCount = table.getRowCount();   
@@ -37,8 +40,8 @@ class Profile
       fill(10,8,25);
       beginShape();
       vertex( width * 0.3, height *  0.11);
-      vertex( width * 0.3, height * rowCount * 0.077);
-      vertex( width * 0.7, height * rowCount * 0.077);
+      vertex( width * 0.3, height * (rowCount+3) * 0.062);
+      vertex( width * 0.7, height * (rowCount+3) * 0.062);
       vertex( width * 0.7, height  * 0.11);
       endShape(CLOSE);
       
@@ -95,10 +98,10 @@ class Profile
     // The name box
     fill(10,8,25);
     beginShape();
-    vertex(width * 0.4, height * 0.45);
-    vertex(width * 0.6, height * 0.45);
-    vertex(width * 0.6, height * 0.55);
-    vertex(width * 0.4, height * 0.55);
+    vertex(width * 0.5 - 195, height * 0.45);
+    vertex(width * 0.5 + 195, height * 0.45);   // Using - 195 so it looks the same on any screen
+    vertex(width * 0.5 + 195, height * 0.55);
+    vertex(width * 0.5 - 195, height * 0.55);
     endShape(CLOSE);
     
     
@@ -149,37 +152,8 @@ class Profile
   
   void save_score(String name, int score)
   {
-    Table table2 = loadTable("Leaderboards.txt", "tsv");
-    int rowCount2 = table2.getRowCount();
     
-    // Getting the data into our array
-    for(int index=0; index<rowCount2; index++)
-    {
-      order[index]=new Record(table2.getString(index,0), table2.getInt(index,1));
-    }
-    
-    /* 
-        Using bubble sort to sort the little array before writing it into the file
-    */
-    for (int i = 0; i < rowCount2-1; i++) 
-    {
-      for (int j = 1; j < (rowCount2 - i); j++) 
-      {
-        if (order[j - 1].score < order[j].score) 
-        {
-          //println(order[index-1].name, order[index-1].score + " Swapped with " + order[index].name, order[index].score);
-          order_temp.name = order[j-1].name;
-          order_temp.score = order[j-1].score;
-          
-          order[j-1].name = order[j].name;
-          order[j-1].score = order[j].score;
-          
-          order[j].name = order_temp.name;
-          order[j].score = order_temp.score;
-        } 
-      } // end inner for
-    } // end outer for
-    
+    sort();
     /* 
         Here we determine which position the new score should go on
         We update the array
@@ -226,7 +200,49 @@ class Profile
   }// end save_score
   
   
-  
+  void sort()
+  { 
+    table2 = loadTable("Leaderboards.txt", "tsv");
+    rowCount2 = table2.getRowCount();
+    // Getting the data into our array
+    for(int index=0; index<rowCount2; index++)
+    {
+      order[index]=new Record(table2.getString(index,0), table2.getInt(index,1));
+    }
+    
+    /* 
+        Using bubble sort to sort the little array before writing it into the file
+    */
+    for (int i = 0; i < rowCount2-1; i++) 
+    {
+      for (int j = 1; j < (rowCount2 - i); j++) 
+      {
+        if (order[j - 1].score < order[j].score) 
+        {
+          //println(order[index-1].name, order[index-1].score + " Swapped with " + order[index].name, order[index].score);
+          order_temp.name = order[j-1].name;
+          order_temp.score = order[j-1].score;
+          
+          order[j-1].name = order[j].name;
+          order[j-1].score = order[j].score;
+          
+          order[j].name = order_temp.name;
+          order[j].score = order_temp.score;
+        } 
+      } // end inner for
+    } // end outer for
+    
+    // writing the sorted array into the file
+    PrintWriter leader_txt;   
+    leader_txt = createWriter(dataPath("Leaderboards.txt"));
+    
+    for(int index=0; index<rowCount2; index++)
+    {
+      leader_txt.println(order[index].name+ "\t"+ order[index].score);
+    }
+    leader_txt.close();
+    
+  }
   
   
   void check_file()
