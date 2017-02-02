@@ -3,7 +3,8 @@ class Profile
   String allowed_chars="qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM ";
   String name="";
   int name_index=0;
-  
+  Record[] order=new Record[10];  // We are using 11 because we are doing a top 10 and the 11th position will be used as a temp position
+  Record order_temp= new Record("Temp", 1);
   
   void top_10()
   {
@@ -143,10 +144,90 @@ class Profile
     
   }
   
+  
+  
+  
   void save_score(String name, int score)
   {
+    Table table2 = loadTable("Leaderboards.txt", "tsv");
+    int rowCount2 = table2.getRowCount();
     
-  }
+    // Getting the data into our array
+    for(int index=0; index<rowCount2; index++)
+    {
+      order[index]=new Record(table2.getString(index,0), table2.getInt(index,1));
+    }
+    
+    /* 
+        Using bubble sort to sort the little array before writing it into the file
+    */
+    for (int i = 0; i < rowCount2-1; i++) 
+    {
+      for (int j = 1; j < (rowCount2 - i); j++) 
+      {
+        if (order[j - 1].score < order[j].score) 
+        {
+          //println(order[index-1].name, order[index-1].score + " Swapped with " + order[index].name, order[index].score);
+          order_temp.name = order[j-1].name;
+          order_temp.score = order[j-1].score;
+          
+          order[j-1].name = order[j].name;
+          order[j-1].score = order[j].score;
+          
+          order[j].name = order_temp.name;
+          order[j].score = order_temp.score;
+        } 
+      } // end inner for
+    } // end outer for
+    
+    /* 
+        Here we determine which position the new score should go on
+        We update the array
+        We update the text file with the new array
+    */
+    int index_score = rowCount2-1;
+    
+    // In case the text file is empty thins prevents a crash   
+    if( rowCount2 != 0 )
+    while(score > order[index_score].score)
+    {
+      index_score--;
+      if(index_score==0) break;
+    }
+    
+    // Checking that the position we want to put in exists in the array
+    if(index_score >= 0 && index_score != rowCount2-1)
+    {
+      // inserting the new score into the array
+      for(int index=index_score; index < rowCount2; index++)
+      {
+        
+        order_temp.name = order[index].name ;
+        order_temp.score = order[index].score;
+        
+        order[index].name = name;
+        order[index].score = score;
+        
+        name=order_temp.name;
+        score=order_temp.score;
+      } // end for used to add the new score in
+    } 
+    
+    PrintWriter leader_txt;   
+    leader_txt = createWriter(dataPath("Leaderboards.txt"));
+    
+    for(int index=0; index<rowCount2; index++)
+    {
+      leader_txt.println(order[index].name+ "\t"+ order[index].score);
+    }
+    leader_txt.close();
+    state=1;
+    
+  }// end save_score
+  
+  
+  
+  
   
   void check_file()
   {
@@ -163,7 +244,7 @@ class Profile
     profile.get_name();
     
   } // end check_file()
-  
+   
 } // end class Profile
 
 class Record

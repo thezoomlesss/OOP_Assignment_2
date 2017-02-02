@@ -38,7 +38,7 @@ void setup()
 
 // Global declaration area
 int[][] array_rows;
-int game_speed=2, state=0;    // State starts from 0 because that's the first page
+int game_speed=2, state=0, score;    // State starts from 0 because that's the first page
 PFont Title_font, Text_font;
 //int deleted;
 
@@ -101,7 +101,7 @@ void game_state(int state)
     }
     case 4: // Dead game screen
     {
-      
+      profile.save_score(profile.name, score);
       break;
     }
     case 5: // Possibly settings if I have time for it
@@ -287,12 +287,13 @@ void mouseClicked()
        {
           if(mouseX> width * 0.5f - menu.button_width && mouseX <width * 0.5f + menu.button_width) 
           {
-            // if first button
+            // if first button  (new game)
             if(mouseY> height * menu.pos  - menu.button_height && mouseY< height * menu.pos + menu.button_height)
             {
+              score=0;
               state=3;
             }
-            // else if 2nd button
+            // else if 2nd button (leaderboards
             else if( mouseY> height * menu.pos + 3  * menu.button_height - menu.button_height && mouseY< height * menu.pos + 3  * menu.button_height + menu.button_height)
                  {
                    state=2;
