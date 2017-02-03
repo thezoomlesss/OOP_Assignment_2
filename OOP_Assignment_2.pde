@@ -15,6 +15,13 @@
   - Add detection algo to see how many blocks are there on the lowest ground
   - Leaderboards
   
+  Left to do:
+  - Fix how the position index works
+  - Fix box pushing
+  - Add more mechs
+  - Add the score
+  - Fix the jump physics
+  
 */
 
 import ddf.minim.*;
@@ -66,6 +73,7 @@ Mech mech= new Mech();
 Char character= new Char();
 Profile profile= new Profile();           
 Menu menu= new Menu();
+Settings settings= new Settings();
 
 // ArrayLists
 ArrayList <Box> boxes= new ArrayList <Box>();
@@ -121,9 +129,9 @@ void game_state(int state)
       profile.save_score(profile.name, score);
       break;
     }
-    case 5: // Possibly settings if I have time for it
+    case 5: // settings 
     {
-      
+      settings.s_menu();
       break;
     }
     
@@ -166,14 +174,34 @@ void draw()
 
 void setup_song()   // Function to get to the next song
 {
-  if(!song.isPlaying())
+  if(settings.toggle_music)
   {
-    song.rewind();
-    song.close();
-    song_index++;
-    song = minim.loadFile("songs/song"+song_index+".wav");
-    song.play();
-    if(song_index > fileList.length - 1) song_index=1;
+    if(!song.isPlaying())
+    {
+      if( settings.playing)
+      {
+        song.rewind();
+        song.close();
+        song_index++;
+        song = minim.loadFile("songs/song"+song_index+".wav");
+        song.play();
+        if(song_index > fileList.length - 1) song_index=1;
+      }
+      else
+      {
+        //song.rewind();
+        song.play();
+        settings.playing=true;
+      }
+    }
+    else
+    {
+      song.play();
+    }
+  } // stop music
+  else
+  {
+    song.pause();
   }
 } // end setup_song
 
@@ -250,7 +278,7 @@ void update()
   /*
              This somewhat works fine
   
-
+ */
   if(character.c_x_pos > background.width_margin + (character.c_x * character.c_size) + character.c_size * 0.5)
   {
     character.c_x++;
@@ -267,7 +295,7 @@ void update()
   
   
 
-  */
+ 
              
   /*
   
@@ -326,9 +354,13 @@ void mouseClicked()
             }
             // else if 2nd button (leaderboards
             else if( mouseY> height * menu.pos + 3  * menu.button_height - menu.button_height && mouseY< height * menu.pos + 3  * menu.button_height + menu.button_height)
-                 {
-                   state=2;
-                 }
+            {
+              state=2;
+            }
+            else if(mouseY> height * menu.pos + 6  * menu.button_height - menu.button_height && mouseY< height * menu.pos + 6  * menu.button_height + menu.button_height)
+            {
+              state=5;
+            }
           } // end if not between the width of the buttons 
        } // end if not on the menu page
        else if(state==2) // if on the leaderboards page
@@ -337,7 +369,16 @@ void mouseClicked()
          {
             state=1;
          }
-       }
+       } // if on the seetings page
+       else if(state==5)
+       {
+         // if pressing on the toggle music button
+         if( mouseX > width * 0.58 - settings.check_size/2 && mouseX < width * 0.58 + settings.check_size/2 && mouseY > height *0.39 - settings.check_size/2 && mouseY < height * 0.39 + settings.check_size/2)
+         {
+           settings.toggle_music = !settings.toggle_music;
+           settings.playing=false;
+         } 
+       } // end else if on settings
     
 } // end mouseClicked
 
