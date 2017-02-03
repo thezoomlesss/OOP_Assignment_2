@@ -352,7 +352,7 @@ void mouseClicked()
               score=0;
               state=3;
             }
-            // else if 2nd button (leaderboards
+            // else if 2nd button (leaderboards) 
             else if( mouseY> height * menu.pos + 3  * menu.button_height - menu.button_height && mouseY< height * menu.pos + 3  * menu.button_height + menu.button_height)
             {
               state=2;
@@ -363,7 +363,7 @@ void mouseClicked()
             }
           } // end if not between the width of the buttons 
        } // end if not on the menu page
-       else if(state==2) // if on the leaderboards page
+       else if(state==2) // if on the leaderboards page and pressing the back button
        {
          if(mouseX> width * 0.45 && mouseX < width * 0.55 && mouseY > height * 0.85 && mouseY< height * 0.95) 
          {
@@ -378,6 +378,12 @@ void mouseClicked()
            settings.toggle_music = !settings.toggle_music;
            settings.playing=false;
          } 
+         
+         //if pressing the back button
+         if(mouseX> width * 0.45 && mouseX < width * 0.55 && mouseY > height * 0.85 && mouseY< height * 0.95) 
+         {
+            state=1;
+         }
        } // end else if on settings
     
 } // end mouseClicked
