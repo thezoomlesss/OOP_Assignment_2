@@ -17,6 +17,8 @@
   
 */
 
+import ddf.minim.*;
+
 void setup()
 {
   fullScreen();
@@ -34,9 +36,24 @@ void setup()
   Title_font = createFont("Font1.otf", 34);
   Text_font = createFont("Font2.otf", 34); 
   
+  
+  minim = new Minim(this);
+  // this loads mysong.wav from the data folder
+  song = minim.loadFile("songs/song"+song_index+".wav");
+  song.play();
+  // We use this so we can get the number of songs that we have in the songs folder
+  String path = "C:\\Users\\Mushy\\Documents\\GitHub\\OOP_Assignment_2" + "/data/songs";
+  File dataFolder = new File(path);
+  fileList= dataFolder.list();
+  
+  
 }// end setup
 
 // Global declaration area
+Minim minim;
+AudioPlayer song;
+String[] fileList;
+int song_index=1;
 int[][] array_rows;
 int game_speed=2, state=0, score;    // State starts from 0 because that's the first page
 PFont Title_font, Text_font;
@@ -116,13 +133,14 @@ void game_state(int state)
       text("Sorry Bud...", width * 0.40, height * 0.30);
     }
     
-  }
+  } // end Switch
 }
 
 
 void draw()
 {
   //println(frameRate);
+  setup_song();
   game_state(state); 
   /*
          Don't mind this
@@ -144,7 +162,20 @@ void draw()
     println();println();println();
    */ 
 } // end draw
- 
+
+
+void setup_song()   // Function to get to the next song
+{
+  if(!song.isPlaying())
+  {
+    song.rewind();
+    song.close();
+    song_index++;
+    song = minim.loadFile("songs/song"+song_index+".wav");
+    song.play();
+    if(song_index > fileList.length - 1) song_index=1;
+  }
+} // end setup_song
 
 void update()
 {
@@ -302,7 +333,7 @@ void mouseClicked()
        } // end if not on the menu page
        else if(state==2) // if on the leaderboards page
        {
-         if(mouseX> width * 0.45 && mouseX < width * 0.55 && mouseY > height * 0.81 && mouseY< height * 0.91) 
+         if(mouseX> width * 0.45 && mouseX < width * 0.55 && mouseY > height * 0.85 && mouseY< height * 0.95) 
          {
             state=1;
          }

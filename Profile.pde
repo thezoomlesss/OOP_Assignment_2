@@ -59,7 +59,7 @@ class Profile
     
     // The back button
     
-    if(mouseX> width * 0.45 && mouseX < width * 0.55 && mouseY > height * 0.81 && mouseY< height * 0.91)
+    if(mouseX> width * 0.45 && mouseX < width * 0.55 && mouseY > height * 0.85 && mouseY< height * 0.95)
     {
       fill(0,55,205); // Hovered color
       stroke(15,25,50);
@@ -72,14 +72,14 @@ class Profile
       stroke(25,45,120); 
     }
     beginShape();
-    vertex(width * 0.45, height * 0.81);
-    vertex(width * 0.45, height * 0.91);
-    vertex(width * 0.55, height * 0.91);
-    vertex(width * 0.55, height * 0.81);
+    vertex(width * 0.45, height * 0.85);
+    vertex(width * 0.45, height * 0.95);
+    vertex(width * 0.55, height * 0.95);
+    vertex(width * 0.55, height * 0.85);
     endShape(CLOSE);
     
     textAlign(CENTER);
-    strokeText("Back", width * 0.5, height * 0.87);
+    strokeText("Back", width * 0.5, height * 0.91);
     
   }
   
@@ -207,6 +207,7 @@ class Profile
     // Getting the data into our array
     for(int index=0; index<rowCount2; index++)
     {
+      if(index==10) break;
       order[index]=new Record(table2.getString(index,0), table2.getInt(index,1));
     }
     
@@ -217,6 +218,7 @@ class Profile
     {
       for (int j = 1; j < (rowCount2 - i); j++) 
       {
+        if(j==10) break;
         if (order[j - 1].score < order[j].score) 
         {
           //println(order[index-1].name, order[index-1].score + " Swapped with " + order[index].name, order[index].score);
@@ -238,6 +240,7 @@ class Profile
     
     for(int index=0; index<rowCount2; index++)
     {
+      if(index==10) break;
       leader_txt.println(order[index].name+ "\t"+ order[index].score);
     }
     leader_txt.close();
