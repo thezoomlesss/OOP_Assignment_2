@@ -48,7 +48,7 @@ class Char
       if(this.c_x_pos< background.width_margin + ( (background.no_boxes)* box.box_size ) )
       {
         // Not the last column            this.c_y != background.vert_no_boxes &&
-        if( this.c_x  != background.no_boxes - 1 ) // -1  
+        if( this.c_x  != background.no_boxes  ) // -1  
         { 
           // There's a blocking our path to the right
           if( array_rows[this.c_y][this.c_x] == 1)

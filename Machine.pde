@@ -16,10 +16,10 @@ class Mech
    if(this.holding_box == 0)
     {
       box_obj=new Box();
-      boxs.add(box_obj);
-      boxs.get(m_no_box).held=1;
-      boxs.get(m_no_box).x_pos= this.m_x_pos-10;
-      boxs.get(m_no_box).y_pos= this.m_y_pos+45;
+      this.boxs.add(box_obj);
+      this.boxs.get(m_no_box).held=1;
+      this.boxs.get(m_no_box).x_pos= this.m_x_pos-10;
+      this.boxs.get(m_no_box).y_pos= this.m_y_pos+45;
       this.m_no_box++;
       this.holding_box=1;
     }
@@ -33,26 +33,31 @@ class Mech
         it will mark that index as occupied 
         it will display at the location of width_margin + the index multiplied by the size of a single box + *** 10 pixels so the box will be alligned ***
     */
+   // mech_count++;
     this.rand_i=(int)random(1,background.no_boxes);
     this.array_index=this.rand_i;
     this.m_x_pos=background.width_margin + (this.rand_i*box.box_size);
     this.m_y_pos=background.track_height - 1;  // -1 so it goes a little over the track
     this.move_cond=0;
     this.exists_move_cond=0;
+    println("Mech no:" + mech_count + "Pos: "+ this.m_x_pos + " With random i == " + this.rand_i);
+    
+    mechs.add(mech);
+    
   }
   void move_m()
   {
-    if(this.move_cond==1)
+    if(this.move_cond==1) // If the mech should move
     {
-        if( this.m_x_pos < background.width_margin+ 10 +(this.new_rand_i*box.box_size) )
+        if( this.m_x_pos < background.width_margin+ 10 +( this.new_rand_i*box.box_size) )
         {
           this.m_x_pos +=game_speed;
           this.theta -=0.07f;
           
-          if(this.m_x_pos > background.width_margin+ 10 +(this.new_rand_i*box.box_size)) 
+          if(this.m_x_pos > background.width_margin+ 10 +( this.new_rand_i*box.box_size)) 
           {
             
-            this.m_x_pos =background.width_margin + game_speed +(this.new_rand_i*box.box_size);
+            this.m_x_pos =background.width_margin + game_speed +( this.new_rand_i*box.box_size);
             this.move_cond=0;
             /*
                 Sending the position in the array of where the boxes are being spawned
@@ -70,7 +75,6 @@ class Mech
           
           if(this.m_x_pos < background.width_margin+ 10 +(this.new_rand_i*box.box_size)) 
           {
-            
             this.m_x_pos =background.width_margin+ game_speed +(this.new_rand_i*box.box_size);
             this.move_cond=0;
             /*
@@ -83,9 +87,10 @@ class Mech
           }
       } // end else
     } // end outer if
-    else
+    else // else not having a command to move
     {
-      if(this.first_run==1)
+      // if it is the first run then we instantly  spawn a box
+      if(this.first_run==1)  
       {
         this.first_run=0;
         spawn_box();
@@ -93,7 +98,7 @@ class Mech
         this.new_rand_i=(int)random(1,background.no_boxes+1);
         this.move_cond=1;
       } 
-      else
+      else // if it is not the first run then we have to wait before spawning a box
       {
         if(millis() > this.time + 2000)
         {
@@ -102,12 +107,10 @@ class Mech
           this.new_rand_i=(int)random(1,background.no_boxes+1);
           this.move_cond=1;
         }
-      }
-      
-        
-        
+      } // end else not the first run
       
     }
+    
   } // end move_m
   
   

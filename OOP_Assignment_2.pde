@@ -37,9 +37,16 @@ void setup()
   
   // These 3 have to be moved 
   character.spawn_c((int)random(background.no_boxes *0.25, background.no_boxes *0.75) , (int)random(background.vert_no_boxes *0.85, background.vert_no_boxes *0.90));
-  mech.spawn_m();
-  mech.spawn_box();
   
+  mech=new Mech();
+  mech.spawn_m();
+  mech=new Mech();
+  mech.spawn_m();
+  
+  for( int mech_index=0; mech_index < mechs.size(); mech_index++)
+  { 
+    mechs.get(mech_index).spawn_box();
+  }
   Title_font = createFont("Font1.otf", 34);
   Text_font = createFont("Font2.otf", 34); 
   
@@ -60,7 +67,7 @@ void setup()
 Minim minim;
 AudioPlayer song;
 String[] fileList;
-int song_index=1;
+int song_index=1, mech_count=0, mech_index;
 int[][] array_rows;
 int game_speed=2, state=0, score;    // State starts from 0 because that's the first page
 PFont Title_font, Text_font;
@@ -105,11 +112,14 @@ void game_state(int state)
       // Remember to add all the things from the setup
       
       background.grid();   // Drawing the background
-      mech.draw_m();       // Drawing the mech
+      for(mech_index=0; mech_index < mechs.size(); mech_index++)
+      { 
+        mechs.get(mech_index).draw_m();       // Drawing the mech
+        mechs.get(mech_index).disp_boxes();   // Drawing the boxes
+        mechs.get(mech_index).move_m();       // Calling the function that moves the mech around   
+      }
       character.draw_c();  // Drawing the character
-      mech.disp_boxes();   // Drawing the boxes
       update();            // Updating all the values
-      mech.move_m();       // Calling the function that moves the mech around
       character.jump();    // Jumping until we get to the height of the original pos - the amount we want to jump by
       
       /*
@@ -118,8 +128,10 @@ void game_state(int state)
           for left we have an -1 because the index we use is already greater than the actual position by one
       */
       character.c_move();  // This updates the position of the character
-      mech.move_b();       // This updates the position of the boxes
-                  
+      for(mech_index=0; mech_index < mechs.size(); mech_index++)
+      {
+        mechs.get(mech_index).move_b();       // This updates the position of the boxes
+      }          
  
   
       break;
@@ -204,6 +216,7 @@ void setup_song()   // Function to get to the next song
     song.pause();
   }
 } // end setup_song
+
 
 void update()
 {
@@ -291,6 +304,8 @@ void update()
     }
   }
   
+  // The line drawn on the character
+  stroke(255,0,0);
   line(background.width_margin + (character.c_x * character.c_size) + character.c_size * 0.5, character.c_y_pos, background.width_margin + (character.c_x * character.c_size) + character.c_size * 0.5, character.c_y_pos+ character.c_size);
   
   

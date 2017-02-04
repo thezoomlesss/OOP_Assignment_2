@@ -27,9 +27,9 @@ class Box
     if (this.held==1)
     {
       // move horizontally
-      if(mech.move_cond==1)
+      if(mechs.get(mech_index).move_cond==1)
       {
-        if( mech.m_x_pos < background.width_margin+ 10 +(mech.new_rand_i*box.box_size) )
+        if( mechs.get(mech_index).m_x_pos < background.width_margin+ 10 +(mechs.get(mech_index).new_rand_i*box.box_size) )
         {
           this.x_pos +=game_speed;
         }
