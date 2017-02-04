@@ -245,14 +245,19 @@ void update()
   if(clear_line_cond==1)
   {
     // removing from ArrayList
-    for(int index3= mech.boxs.size()-1; index3>-1; index3--)
-    {
-      if(mech.boxs.get(index3).y== background.vert_no_boxes-1)
+     
+     for(mech_index = 0; mech_index < mechs.size(); mech_index++)
+     {
+      for(int index3= mechs.get(mech_index).boxs.size()-1; index3>-1; index3--)
       {
-        mech.boxs.remove(index3);
-        mech.m_no_box--;
-      }
-    } // end for that removes the boxes from the ArrayList
+        if(mechs.get(mech_index).boxs.get(index3).y== background.vert_no_boxes-1)
+        {
+          mechs.get(mech_index).boxs.remove(index3);
+          mechs.get(mech_index).m_no_box--;
+        }
+      } // end for that removes the boxes from the ArrayList
+     }
+    
     
     //Removing from array  No real reason why I'm going backwards
     for(int index3=background.no_boxes-1; index3>-1; index3--)
