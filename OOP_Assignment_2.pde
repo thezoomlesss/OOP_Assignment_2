@@ -43,6 +43,12 @@ void setup()
   mech=new Mech();
   mech.spawn_m();
   
+  mech=new Mech();
+  mech.spawn_m();
+  
+  mech=new Mech();
+  mech.spawn_m();
+  
   for( int mech_index=0; mech_index < mechs.size(); mech_index++)
   { 
     mechs.get(mech_index).spawn_box();
@@ -362,7 +368,7 @@ void mouseClicked()
 {
   // This is just a function that helps me understand where everything should be placed
   //println("x:"+mouseX+" y:"+ mouseY);
-  if(state==3)
+  if(state==3 && settings.cheats == true)
   {
     character.c_x_pos= mouseX;
     character.c_y_pos=mouseY;
@@ -402,6 +408,10 @@ void mouseClicked()
          {
            settings.toggle_music = !settings.toggle_music;
            settings.playing=false;
+         } 
+         if( mouseX > width * 0.58 - settings.check_size/2 && mouseX < width * 0.58 + settings.check_size/2 && mouseY > height *0.49 - settings.check_size/2 && mouseY < height * 0.49 + settings.check_size/2)
+         {
+           settings.cheats=!settings.cheats;
          } 
          
          //if pressing the back button

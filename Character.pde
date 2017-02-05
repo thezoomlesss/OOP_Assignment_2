@@ -100,7 +100,7 @@ class Char
               if( this.c_x>1)
               {
                 // There's a clear spot after the box to the left
-                if(array_rows[this.c_y][this.c_x-2] == 0)            // If we have a box on the first col (x==0) then this crashes the program 
+                if(array_rows[this.c_y][this.c_x-2] == 0)            
                 { // Still crashing even with x==2 for some reason...........................
                   // Finding the box to move in the ArrayList and Array
                   for(int index4=0; index4< mech.m_no_box; index4++)
@@ -135,7 +135,6 @@ class Char
         Checking for how long should the this keep falling
         If on the floor/bottom then make the fall conditio = 0 so we know when we can jump again
     */
-    
     if(this.c_y == background.vert_no_boxes-1)
     {
       this.fall_cond=0;
@@ -150,7 +149,6 @@ class Char
     }  
     
     // If it should fall and we are not jumping atm then make it fall
-    
     if(this.fall_cond==1 && this.up != 1)
     {
       this.c_y_pos += game_speed;
