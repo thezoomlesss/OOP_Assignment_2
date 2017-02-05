@@ -135,7 +135,8 @@ class Char
         Checking for how long should the this keep falling
         If on the floor/bottom then make the fall conditio = 0 so we know when we can jump again
     */
-    if(this.c_y == background.vert_no_boxes-1)
+    //if(this.c_y == background.vert_no_boxes-1)
+    if(this.c_y_pos + character.c_size>= height-background.height_margin*2+6)
     {
       this.fall_cond=0;
     }  // If in the air and we have a box underneath us
@@ -149,22 +150,21 @@ class Char
     }  
     
     // If it should fall and we are not jumping atm then make it fall
-    if(this.fall_cond==1 && this.up != 1)
+    if(this.fall_cond==1 && this.up != 1)// && (this.c_y_pos + character.c_size< height-background.height_margin*2+6))
     {
       this.c_y_pos += game_speed;
     }
     
     
+   // && this.c_y_pos + character.c_size< height-background.height_margin*2+6
     
     
-    
-    
-    
-    
-    
-    
-    // vertical  checking if we are jumping and if the index doesn't match the position on the vertical axis
-    if(this.c_y != (int) (this.c_y_pos - background.width_margin +28  )/this.c_size && this.up !=1)  this.c_y =(int) (this.c_y_pos - background.width_margin+28)/this.c_size;
+    if( this.c_y_pos + this.c_size > background.width_margin +  (this.c_y+1 * c_size) )
+    {
+      this.c_y =(int) (this.c_y_pos - background.width_margin )/this.c_size;
+    }
+     //vertical  checking if we are jumping and if the index doesn't match the position on the vertical axis
+   // if(this.c_y != (int) (this.c_y_pos - background.width_margin +28  )/this.c_size && this.up !=1)  this.c_y =(int) (this.c_y_pos - background.width_margin+28)/this.c_size;
     
     
     

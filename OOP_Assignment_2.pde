@@ -18,6 +18,7 @@
   Left to do:
   - Fix how the position index works
   - Fix box pushing
+  - Add losing the game
   - Add more mechs
   - Add the score
   - Fix the jump physics
@@ -65,7 +66,7 @@ void setup()
   String path = "C:\\Users\\Mushy\\Documents\\GitHub\\OOP_Assignment_2" + "/data/songs";
   File dataFolder = new File(path);
   fileList= dataFolder.list();
-  
+  song.setGain(-15);
   
 }// end setup
 
@@ -435,9 +436,9 @@ void keyPressed()
   {
     character.right = 1;
   }
-  
   if( key=='w' && character.jump_cond==true && character.up_released == true && character.fall_cond == 0  ) 
   {
+    
     character.old_pos= character.c_y_pos;
     character.fall_cond=1;
     character.up=1;
