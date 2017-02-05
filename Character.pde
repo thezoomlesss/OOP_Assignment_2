@@ -37,6 +37,7 @@ class Char
         this.jump_cond=true;
         this.up=0;
       }
+      
     } // end if not jumping
   } // end jump function
   
@@ -131,32 +132,55 @@ class Char
     } // end else
     
     /*
-        Checking for how long should the character keep falling
+        Checking for how long should the this keep falling
+        If on the floor/bottom then make the fall conditio = 0 so we know when we can jump again
     */
-    if(character.c_y_pos < height-background.height_margin*2 - character.c_size + 4)
+    
+    if(this.c_y == background.vert_no_boxes-1)
     {
-      // Not the last line and not the first column
-      if( character.up !=1 && character.c_y != background.vert_no_boxes - 1 && character.c_x != 0)
-      { 
-        // if there is no box underneath
-        if(array_rows[character.c_y+1][character.c_x-1] !=1)
-        {
-          character.fall_cond=1;
-          character.c_y_pos += game_speed;
-        }
-        else // marking the fact that the character will no longer keep falling
-        {
-          character.fall_cond=0;
-        }
-      } // end not last line nor first column
+      this.fall_cond=0;
+    }  // If in the air and we have a box underneath us
+    else if(array_rows[this.c_y+1][this.c_x-1]==1)
+    {
+      this.fall_cond=0;
     }
-    else // marking the fact that the character will no longer keep falling
+    else
     {
-      character.fall_cond=0;
+      this.fall_cond=1;
+    }  
+    
+    // If it should fall and we are not jumping atm then make it fall
+    
+    if(this.fall_cond==1 && this.up != 1)
+    {
+      this.c_y_pos += game_speed;
     }
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
     // vertical  checking if we are jumping and if the index doesn't match the position on the vertical axis
-    if(this.c_y != (int) (this.c_y_pos - background.width_margin +28  )/this.c_size && this.up !=1) this.c_y =(int) (this.c_y_pos - background.width_margin+28)/this.c_size;
+    if(this.c_y != (int) (this.c_y_pos - background.width_margin +28  )/this.c_size && this.up !=1)  this.c_y =(int) (this.c_y_pos - background.width_margin+28)/this.c_size;
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
   } // end function c_move

@@ -134,7 +134,8 @@ void game_state(int state)
         mechs.get(mech_index).move_b();       // This updates the position of the boxes
       }          
  
-  
+      // 10 points for every second staying alive
+      if(frameCount%60==1) score+=10;
       break;
     }
     case 4: // Dead game screen
@@ -320,12 +321,13 @@ void update()
 
  
              
-  /*
   
-  // If on the floor/bottom
+  
+  
+  text(character.fall_cond, 300,650);
+  /*
   if( character.c_y == background.vert_no_boxes-1)
   {
-    character.fall_cond=0;
     // if the position should be updated (to the right)
     if(character.c_x != (int) (character.c_x_pos - background.width_margin +10)/character.c_size)
     {
@@ -414,20 +416,20 @@ void mouseClicked()
 void keyPressed()
 {
   
-  if (keyCode == LEFT || key=='a')
+  if ( key=='a')
   {
       character.left = 1;
   }
 
-  if (keyCode == RIGHT || key=='d')
+  if ( key=='d')
   {
     character.right = 1;
   }
   
-  if(keyCode == UP || key=='w' && character.jump_cond==true && character.up_released == true )  // find a way to add && character.fall_cond != 1 cause it doesn't work
+  if( key=='w' && character.jump_cond==true && character.up_released == true && character.fall_cond == 0  ) 
   {
     character.old_pos= character.c_y_pos;
-    character.fall_cond=0;
+    character.fall_cond=1;
     character.up=1;
     character.up_released=false;
     character.jump_cond=false;
@@ -438,17 +440,17 @@ void keyPressed()
 void keyReleased()
 {
   
-  if (keyCode == LEFT || key=='a')
+  if ( key=='a')
   {
     character.left = 0;
   }
   
-  if (keyCode == RIGHT || key=='d')
+  if ( key=='d')
   {
     character.right = 0;
   }
   
-  if (keyCode == UP || key=='w')
+  if ( key=='w')
   {
     character.up_released=true;
   }  

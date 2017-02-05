@@ -40,7 +40,6 @@ class Mech
     this.m_y_pos=background.track_height - 1;  // -1 so it goes a little over the track
     this.move_cond=0;
     this.exists_move_cond=0;
-    println("Mech no:" + mech_count + "Pos: "+ this.m_x_pos + " With random i == " + this.rand_i);
     
     mechs.add(mech);
     

@@ -18,7 +18,7 @@ class Map
     // Here we make the box for the score and write the current score
     textAlign(CENTER);
     textFont(Text_font);
-    textSize(20);
+    textSize(22);
     strokeText(String.valueOf(score) , character.c_x_pos + character.c_size/2, character.c_y_pos - character.c_size/4);
   }
   
