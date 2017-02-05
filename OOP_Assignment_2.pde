@@ -112,6 +112,7 @@ void game_state(int state)
       // Remember to add all the things from the setup
       
       background.grid();   // Drawing the background
+      background.score();
       for(mech_index=0; mech_index < mechs.size(); mech_index++)
       { 
         mechs.get(mech_index).draw_m();       // Drawing the mech
@@ -265,7 +266,9 @@ void update()
       array_rows[background.vert_no_boxes-1][index3]=0;
       //deleted=1;
     }  
-  }// end if
+    
+    score+=1000;
+  }// end if clear_line_cond==1 
   
   /*   This checks if the array index corresponds with the real position.
        If it doesn't then it updates it

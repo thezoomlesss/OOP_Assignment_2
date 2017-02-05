@@ -2,7 +2,7 @@ class Map
 {
   int width_margin=30, height_margin=20;
   int track_height=height_margin-5;
-  int no_boxes, vert_no_boxes, no_vert_lines; 
+  int no_boxes, vert_no_boxes, no_vert_lines, score_box=100; 
   
   
   void grid_initial()
@@ -11,6 +11,15 @@ class Map
     no_boxes=(width- width_margin*2 - box.box_size * 2)/box.box_size;
     no_vert_lines= (height-height_margin*2)/20;    // It's devided by 20 cause that's the distance we want between our vert lines
     vert_no_boxes= (height-height_margin*2)/box.box_size;  // variable used to define the size of the array
+  }
+  
+  void score()
+  {
+    // Here we make the box for the score and write the current score
+    textAlign(CENTER);
+    textFont(Text_font);
+    textSize(20);
+    strokeText(String.valueOf(score) , character.c_x_pos + character.c_size/2, character.c_y_pos - character.c_size/4);
   }
   
   void grid()
