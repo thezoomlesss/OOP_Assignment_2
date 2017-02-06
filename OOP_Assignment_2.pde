@@ -88,6 +88,7 @@ Char character= new Char();
 Profile profile= new Profile();           
 Menu menu= new Menu();
 Settings settings= new Settings();
+Death death= new Death();
 
 // ArrayLists
 ArrayList <Box> boxes= new ArrayList <Box>();
@@ -147,7 +148,7 @@ void game_state(int state)
     }
     case 4: // Dead game screen
     {
-      profile.save_score(profile.name, score);
+      death.display();
       break;
     }
     case 5: // settings 
@@ -420,7 +421,17 @@ void mouseClicked()
          {
             state=1;
          }
-       } // end else if on settings
+       } // if on the death screen
+       else if(state==4)
+       {
+         //if pressing the back button
+         if(mouseX> width * 0.45 && mouseX < width * 0.55 && mouseY > height * 0.85 && mouseY< height * 0.95) 
+         {
+            profile.save_score(profile.name, score);
+            state=1;
+         }
+       }
+       // end else if on settings
     
 } // end mouseClicked
 
@@ -450,7 +461,6 @@ void keyPressed()
 
 void keyReleased()
 {
-  
   if ( key=='a')
   {
     character.left = 0;

@@ -195,7 +195,6 @@ class Profile
       leader_txt.println(order[index].name+ "\t"+ order[index].score);
     }
     leader_txt.close();
-    state=1;
     
   }// end save_score
   
