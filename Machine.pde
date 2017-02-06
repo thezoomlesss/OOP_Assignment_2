@@ -59,10 +59,10 @@ class Mech
             this.m_x_pos =background.width_margin + game_speed +( this.new_rand_i*box.box_size);
             this.move_cond=0;
             /*
-                Sending the position in the array of where the boxes are being spawned
+                Sending the position in the array of where the this.boxs are being spawned
             */
-            boxs.get(m_no_box-1).x=(int) this.m_x_pos/box.box_size - 1;
-            boxs.get(m_no_box-1).y= 0; 
+            this.boxs.get(m_no_box-1).x=(int) this.m_x_pos/box.box_size - 1;
+            this.boxs.get(m_no_box-1).y= 0; 
             this.holding_box=0;
             time = millis();
           }
@@ -77,10 +77,10 @@ class Mech
             this.m_x_pos =background.width_margin+ game_speed +(this.new_rand_i*box.box_size);
             this.move_cond=0;
             /*
-                Sending the position in the array of where the boxes are being spawned
+                Sending the position in the array of where the this.boxs are being spawned
             */
-            boxs.get(m_no_box-1).x=(int) this.m_x_pos/box.box_size - 1;
-            boxs.get(m_no_box-1).y= 0; 
+            this.boxs.get(m_no_box-1).x=(int) this.m_x_pos/box.box_size - 1;
+            this.boxs.get(m_no_box-1).y= 0; 
             this.holding_box=0;
             time = millis();
           }
@@ -115,7 +115,7 @@ class Mech
   
   void move_b()
   {
-    // Moving all the boxes that are in the arraylist boxs
+    // Moving all the this.boxs that are in the arraylist this.boxs
     for(int index2=0; index2 < this.boxs.size(); index2++)
     {
       this.boxs.get(index2).move_b();
@@ -123,15 +123,15 @@ class Mech
   } // end move_b()
   
   /* 
-      For loop that goes through the ArrayList and displays all the boxes
+      For loop that goes through the ArrayList and displays all the this.boxs
   */
   
-  void disp_boxes()
+  void disp_boxs()
   {
     for(int index2=0; index2 < this.boxs.size(); index2++)
     {
       /*
-      if((deleted==1) && (mech.boxs.get(index2).y== background.vert_no_boxes-1))
+      if((deleted==1) && (mech.this.boxs.get(index2).y== background.vert_no_this.boxs-1))
       {
       stroke(0,255,0);
       println("Green");

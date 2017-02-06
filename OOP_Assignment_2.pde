@@ -120,7 +120,7 @@ void game_state(int state)
       for(mech_index=0; mech_index < mechs.size(); mech_index++)
       { 
         mechs.get(mech_index).draw_m();       // Drawing the mech
-        mechs.get(mech_index).disp_boxes();   // Drawing the boxes
+        mechs.get(mech_index).disp_boxs();   // Drawing the boxes
         mechs.get(mech_index).move_m();       // Calling the function that moves the mech around   
       }
       character.draw_c();  // Drawing the character
@@ -280,83 +280,14 @@ void update()
   
   textSize(20);
   text("Character pos x "+character.c_x, 300,400);
-  /*
-  
-  if(character.c_x_pos +  character.c_size * 0.5 > background.width_margin + ((character.c_x + 1)  * character.c_size) )
-  {
-    if(array_rows[character.c_y][character.c_x+1]!=1) character.c_x++;
-  }
-  else
-  {
-    if(character.c_x_pos +  character.c_size * 0.5 < background.width_margin + ((character.c_x )  * character.c_size) )
-    {
-      if(array_rows[character.c_y][character.c_x-1]!=1) character.c_x--;
-    }
-  }
-  
-  line(character.c_x_pos + character.c_size *0.5, character.c_y_pos, character.c_x_pos + character.c_size *0.5, character.c_y_pos + character.c_size);
   
   
-  */
-  
-  
-  /*
-             This somewhat works fine
-  
- */
-  if(character.c_x_pos > background.width_margin + (character.c_x * character.c_size) + character.c_size * 0.5)
-  {
-    character.c_x++;
-  }
-  else
-  {
-    if(character.c_x_pos < background.width_margin + (character.c_x * character.c_size) - character.c_size * 0.5)
-    {
-      character.c_x--;
-    }
-  }
-  
-  // The line drawn on the character
   stroke(255,0,0);
   line(background.width_margin + (character.c_x * character.c_size) + character.c_size * 0.5, character.c_y_pos, background.width_margin + (character.c_x * character.c_size) + character.c_size * 0.5, character.c_y_pos+ character.c_size);
   
   
-
- 
-             
-  
-  
-  
   text(character.fall_cond, 300,650);
-  /*
-  if( character.c_y == background.vert_no_boxes-1)
-  {
-    // if the position should be updated (to the right)
-    if(character.c_x != (int) (character.c_x_pos - background.width_margin +10)/character.c_size)
-    {
-      character.c_x =(int) (character.c_x_pos - background.width_margin +10)/character.c_size; 
-      text("Right to: "+character.c_x, 300,450); 
-    }
-    else
-    {
-      // if the position should be updated (to the left)
-      if(character.c_x != (int) (character.c_x_pos - background.width_margin -10)/character.c_size)
-      {
-        character.c_x =(int) (character.c_x_pos - background.width_margin -10)/character.c_size;
-        text("Left to: "+character.c_x, 300,450);
-      }
-    }
-  }
-  else
-  {
-    // Not on the floor and check if it needs to be changed
-    if((character.c_x != (int) (character.c_x_pos - background.width_margin + character.c_size )/character.c_size) )
-    {
-      character.c_x =(int) (character.c_x_pos - background.width_margin )/character.c_size; 
-    }
-  }
   
-  */
   text(character.c_y, 300,300);
   
   
@@ -471,44 +402,54 @@ void mouseClicked()
 
 void keyPressed()
 {
-  
-  if ( key=='a')
+  if(state==3)
   {
-      character.left = 1;
-  }
-
-  if ( key=='d')
-  {
-    character.right = 1;
-  }
-  if( key=='w' && character.jump_cond==true && character.up_released == true && character.fall_cond == 0  ) 
-  {
+    if ( key=='f' )
+    {
+      character.move_box= !character.move_box;
+    }
     
-    character.old_pos= character.c_y_pos;
-    character.fall_cond=1;
-    character.up=1;
-    character.up_released=false;
-    character.jump_cond=false;
+    if ( key=='a' )
+    {
+        character.left = 1;
+    }
+  
+    if ( key=='d')
+    {
+      character.right = 1;
+    }
+    if( key=='w' && character.jump_cond==true && character.up_released == true && character.fall_cond == 0  ) 
+    {
+      
+      character.old_pos= character.c_y_pos;
+      character.fall_cond=1;
+      character.up=1;
+      character.up_released=false;
+      character.jump_cond=false;
+    }
   }
   
 } // end keyPressed
 
 void keyReleased()
 {
-  if ( key=='a')
+  if(state==3)
   {
-    character.left = 0;
+    if ( key=='a')
+    {
+      character.left = 0;
+    }
+    
+    if ( key=='d')
+    {
+      character.right = 0;
+    }
+    
+    if ( key=='w')
+    {
+      character.up_released=true;
+    }  
   }
-  
-  if ( key=='d')
-  {
-    character.right = 0;
-  }
-  
-  if ( key=='w')
-  {
-    character.up_released=true;
-  }  
 } // end keyReleased
 
 /*
