@@ -8,8 +8,8 @@ class Char
   {
     this.c_x=x;
     this.c_y=y;
-    this.c_x_pos=background.width_margin + (this.c_x * c_size);
-    this.c_y_pos=background.width_margin +  (this.c_y * c_size);
+    this.c_x_pos=background.width_margin + (this.c_x * this.c_size);
+    this.c_y_pos=background.width_margin +  (this.c_y * this.c_size);
     this.in_air=1;
   }
   
@@ -20,12 +20,16 @@ class Char
     strokeWeight(1);
     stroke(0,255,0);
     noFill();
+    
+    
     beginShape();
-    vertex(this.c_x_pos, this.c_y_pos);
-    vertex(this.c_x_pos + this.c_size, this.c_y_pos);
-    vertex(this.c_x_pos + this.c_size, this.c_y_pos + this.c_size);
-    vertex(this.c_x_pos, this.c_y_pos + this.c_size);
+    vertex(this.c_x_pos + this.c_size *0.5, this.c_y_pos + this.c_size * 0.25);
+    vertex(this.c_x_pos + this.c_size * 0.75, this.c_y_pos + this.c_size *0.5);
+    vertex(this.c_x_pos + this.c_size *0.5, this.c_y_pos + this.c_size * 0.75);
+    vertex(this.c_x_pos + this.c_size *0.25, this.c_y_pos + this.c_size *0.5);
     endShape(CLOSE);
+    
+    
   }
   
   // Jumping until we get to the height of the original pos - the amount we want to jump by
@@ -70,7 +74,7 @@ class Char
                   // Checking for the box in the boxs arraylist
                   for(int index3=0; index3< mechs.size(); index3++)
                   {
-                    for(int index4=0; index4< mech.m_no_box; index4++)
+                    for(int index4=0; index4< mechs.get(index3).m_no_box; index4++)
                     {
                       // if the box from the boxs has the position we're looking for
                       if(mechs.get(index3).boxs.get(index4).x == this.c_x - 1 && mechs.get(index3).boxs.get(index4).y == this.c_y)
@@ -127,7 +131,7 @@ class Char
                      for(int index3=0; index3< mechs.size(); index3++)
                     {
                       // Checking for the box in the boxs arraylist
-                      for(int index4=0; index4< mech.m_no_box; index4++)
+                      for(int index4=0; index4< mechs.get(index3).m_no_box; index4++)
                       {
                         // if the box from the boxs has the position we're looking for
                         if(mechs.get(index3).boxs.get(index4).x == this.c_x - 1 && mechs.get(index3).boxs.get(index4).y == this.c_y)

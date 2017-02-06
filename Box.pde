@@ -67,7 +67,7 @@ class Box
           {
             array_rows[this.y][this.x]=0;
             this.y++;
-            if(this.y + 1 == character.c_y  && this.x == character.c_x-1) state=4;
+            if(this.x == character.c_x-1  && (this.y + 1 == character.c_y || this.y == character.c_y) && ( this.y_pos < height-background.height_margin*2 - box_size -60 )) state=4; //|| 
           }// end inner if
         } // end middle if
       } // end outer if

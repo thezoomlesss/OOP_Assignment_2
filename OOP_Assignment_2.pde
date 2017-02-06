@@ -26,6 +26,11 @@
 */
 
 import ddf.minim.*;
+import ddf.minim.analysis.*;
+import ddf.minim.effects.*;
+import ddf.minim.signals.*;
+import ddf.minim.spi.*;
+import ddf.minim.ugens.*;
 
 void setup()
 {
@@ -398,11 +403,30 @@ void mouseClicked()
          //if pressing the back button
          if(mouseX> width * 0.45 && mouseX < width * 0.55 && mouseY > height * 0.85 && mouseY< height * 0.95) 
          {
+           // Saving the score
             profile.save_score(profile.name, score);
+            
+            // Clearing the mechs
             for(int index= mechs.size()-1; index>=0; index--)
             {
+              // Clearing the boxs arraylists
+              for(int index2= mechs.get(index).boxs.size() - 1; index2 >= 0 ; index2--)
+              {
+                mechs.get(index).boxs.remove(index2);
+              }
+              mechs.get(index).m_no_box=0;
               mechs.remove(index);
             }
+            
+            // Clearing the array rows when we reset the game
+            for(int index3=0; index3 < background.no_boxes; index3++)
+            {
+              for(int index4=0; index4 < background.vert_no_boxes; index4++)
+              {
+                array_rows[index4][index3]=0;
+              }
+            }  
+                    
             first_run=0;
             state=1;
          }
