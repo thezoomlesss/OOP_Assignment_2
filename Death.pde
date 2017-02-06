@@ -2,6 +2,7 @@ class Death
 {
   void display()
   {
+    background(0,0,17);
     menu.display_border();
     
     // The title

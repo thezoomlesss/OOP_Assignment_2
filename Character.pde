@@ -158,65 +158,11 @@ class Char
         
         
       } // end moving left
-    } // end elseleft
+    } // end else left
        
-        /*
-        // Not at the limit
-        if(this.c_x_pos> background.width_margin + this.c_size)
-        {
-          
-          // not on the first col
-          if(this.c_x>0)
-          {
-            
-            /*
-                Here we update the x index if it crossed to another cell
-           
-            if( character.c_x_pos + character.c_size *0.38 > background.width_margin + (box.box_size * character.c_x-2) )
-            {
-              character.c_x_pos += (character.right - character.left) * 2*game_speed;
-            }
-            else
-            {
-              character.c_x--;
-            }
-            
-            // There's a box blocking our path to the left
-            if(array_rows[this.c_y][this.c_x-2] == 1)
-            { 
-              
-              if(move_box==true)
-              {
-                if(this.c_x>1)
-                {
-                  // There's a clear spot after the box to the left
-                  if(array_rows[this.c_y][this.c_x-2] == 0)            
-                  { // Still crashing even with x==2 for some reason...........................
-                    // Finding the box to move in the ArrayList and Array
-                    for(int index4=0; index4< mech.m_no_box; index4++)
-                    {
-                      // if the box from the boxs has the position we're looking for
-                      if(mech.boxs.get(index4).x == this.c_x-1 && mech.boxs.get(index4).y == this.c_y)
-                      {
-                        array_rows[mech.boxs.get(index4).y][mech.boxs.get(index4).x]=0;
-                        mech.boxs.get(index4).x= this.c_x-2;
-                        mech.boxs.get(index4).x_pos= background.width_margin + ((mech.boxs.get(index4).x+1) * box.box_size);
-                        array_rows[mech.boxs.get(index4).y][mech.boxs.get(index4).x]=1;
-                        break;
-                      } // end inner if
-                    } // end for
-                  }// End if clear spot after box (left)
-                }
-              } // end if move_box==true
-            } 
-            else // else there is no box blocking our path
-            {
-              this.c_x_pos += (this.right - this.left) * 2*game_speed;
-            }
-          } // end if not on first col
-        } // end mid if
-      } // end outer if
-      */
+    
+    
+    
     
     /*
         Checking for how long should the this keep falling
@@ -252,22 +198,7 @@ class Char
     }
      //vertical  checking if we are jumping and if the index doesn't match the position on the vertical axis
    // if(this.c_y != (int) (this.c_y_pos - background.width_margin +28  )/this.c_size && this.up !=1)  this.c_y =(int) (this.c_y_pos - background.width_margin+28)/this.c_size;
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+  
   } // end function c_move
   
 } // end class Char

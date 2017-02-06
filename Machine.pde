@@ -2,13 +2,14 @@ class Mech
 {
   int array_index, move_cond, exists_move_cond, rand_i, new_rand_i, m_no_box=0, holding_box=0, first_run=1;
   int time;
+  color mech_colour;
   float m_x_pos, m_y_pos, theta=0;
   float mech_size=60, wheel_size=20;
   ArrayList<Box> boxs=new ArrayList<Box>();
   Box box_obj=new Box();
   Mech()
   {
-    
+    this.mech_colour= color(random(0,255),random(0,255),random(0,255));
   }
   
   void spawn_box()
@@ -151,9 +152,9 @@ class Mech
   {
     //spawn_box();
     // Body of the mech
-    stroke(200,0,0);
+    stroke(this.mech_colour);
     strokeWeight(1);
-    fill(200,0,0);
+    fill(this.mech_colour);
     beginShape();
     vertex(this.m_x_pos,m_y_pos);
     vertex(this.m_x_pos+this.mech_size, m_y_pos);
@@ -165,7 +166,7 @@ class Mech
       We start from m_x_pos + half of the mech size so we get to the exact middle of the mech
     */
     noFill();
-    stroke(255,0,0);
+    stroke(this.mech_colour);
     beginShape();
     vertex(this.m_x_pos + (this.mech_size*0.5f), this.m_y_pos+8);   // Point that connects arms to box
     vertex(this.m_x_pos + (this.mech_size*0.5f), this.m_y_pos+20);  // lower point that connects arms

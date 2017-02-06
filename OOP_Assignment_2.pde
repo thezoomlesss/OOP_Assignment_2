@@ -36,20 +36,7 @@ void setup()
   background.grid_initial();
   array_rows=new int[background.vert_no_boxes][background.no_boxes];
   
-  // These 3 have to be moved 
-  character.spawn_c((int)random(background.no_boxes *0.25, background.no_boxes *0.75) , (int)random(background.vert_no_boxes *0.85, background.vert_no_boxes *0.90));
   
-  mech=new Mech();
-  mech.spawn_m();
-  
-  mech=new Mech();
-  mech.spawn_m();
-  
-  
-  for( int mech_index=0; mech_index < mechs.size(); mech_index++)
-  { 
-    mechs.get(mech_index).spawn_box();
-  }
   Title_font = createFont("Font1.otf", 34);
   Text_font = createFont("Font2.otf", 34); 
   
@@ -70,7 +57,7 @@ void setup()
 Minim minim;
 AudioPlayer song;
 String[] fileList;
-int song_index=1, mech_count=0, mech_index;
+int song_index=1, mech_count=0, mech_index, first_run=0;
 int[][] array_rows;
 int game_speed=2, state=0, score, cleared=0, mech_spawned=0;    // State starts from 0 because that's the first page
 PFont Title_font, Text_font;
@@ -114,6 +101,25 @@ void game_state(int state)
     case 3: // Game screen
     {
       // Remember to add all the things from the setup
+      
+      // These 3 have to be moved 
+      if(first_run==0)
+      {
+        character.spawn_c((int)random(background.no_boxes *0.25, background.no_boxes *0.75) , (int)random(background.vert_no_boxes *0.85, background.vert_no_boxes *0.90));
+        
+        mech=new Mech();
+        mech.spawn_m();
+        mech=new Mech();
+        mech.spawn_m();
+        
+        for( int mech_index=0; mech_index < mechs.size(); mech_index++)
+        { 
+          mechs.get(mech_index).spawn_box();
+        }
+        first_run=1;
+      }
+      
+      
       
       background.grid();   // Drawing the background
       background.score();
@@ -393,6 +399,11 @@ void mouseClicked()
          if(mouseX> width * 0.45 && mouseX < width * 0.55 && mouseY > height * 0.85 && mouseY< height * 0.95) 
          {
             profile.save_score(profile.name, score);
+            for(int index= mechs.size()-1; index>=0; index--)
+            {
+              mechs.remove(index);
+            }
+            first_run=0;
             state=1;
          }
        }
