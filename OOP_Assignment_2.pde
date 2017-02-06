@@ -41,14 +41,10 @@ void setup()
   
   mech=new Mech();
   mech.spawn_m();
-  mech=new Mech();
-  mech.spawn_m();
   
   mech=new Mech();
   mech.spawn_m();
   
-  mech=new Mech();
-  mech.spawn_m();
   
   for( int mech_index=0; mech_index < mechs.size(); mech_index++)
   { 
@@ -76,7 +72,7 @@ AudioPlayer song;
 String[] fileList;
 int song_index=1, mech_count=0, mech_index;
 int[][] array_rows;
-int game_speed=2, state=0, score;    // State starts from 0 because that's the first page
+int game_speed=2, state=0, score, cleared=0, mech_spawned=0;    // State starts from 0 because that's the first page
 PFont Title_font, Text_font;
 //int deleted;
 
@@ -273,9 +269,8 @@ void update()
     for(int index3=background.no_boxes-1; index3>-1; index3--)
     {
       array_rows[background.vert_no_boxes-1][index3]=0;
-      //deleted=1;
     }  
-    
+    cleared++;
     score+=1000;
   }// end if clear_line_cond==1 
   
@@ -363,6 +358,45 @@ void update()
   
   */
   text(character.c_y, 300,300);
+  
+  
+  /*
+      Addinng more mechs when we clear lines
+      initially add every 2 clears
+      then we do it after 3 clears
+      at the end we do it after 6 clears
+      
+      We do this so the screen doesn't get overcrowded and the game doesn't become impossible
+  */
+  
+  if( cleared <5)
+  {
+    if( cleared % 2 == 0 && mech_spawned!=cleared)
+    {
+      mech=new Mech();
+      mech.spawn_m();
+      mech_spawned = cleared;
+    }
+  }
+  else if( cleared < 13)
+  {
+    if( cleared % 3 == 0 && mech_spawned!=cleared)
+    {
+      mech=new Mech();
+      mech.spawn_m();
+      mech_spawned = cleared;
+    }
+  }
+  else
+  {
+    if( cleared % 6 == 0 && mech_spawned!=cleared)
+    {
+      mech=new Mech();
+      mech.spawn_m();
+      mech_spawned = cleared;
+    }
+  }
+  
   
 } // end update
 
