@@ -1,4 +1,4 @@
-class Profile
+class Profile extends Design
 {
   Table table2; int rowCount2;
   String allowed_chars="qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM ";
@@ -10,7 +10,7 @@ class Profile
   
   void top_10()
   {
-    menu.display_border();
+    backgr();
     sort();
     Table table = loadTable("Leaderboards.txt", "tsv");
     Record one;
@@ -57,35 +57,14 @@ class Profile
       }
     }// end else
     
-    // The back button
     
-    if(mouseX> width * 0.45 && mouseX < width * 0.55 && mouseY > height * 0.85 && mouseY< height * 0.95)
-    {
-      fill(0,55,205); // Hovered color
-      stroke(15,25,50);
-      strokeWeight(6);
-    }
-    else
-    {
-      fill(10,8,25); // Not hovered
-      strokeWeight(4);
-      stroke(25,45,120); 
-    }
-    beginShape();
-    vertex(width * 0.45, height * 0.85);
-    vertex(width * 0.45, height * 0.95);
-    vertex(width * 0.55, height * 0.95);
-    vertex(width * 0.55, height * 0.85);
-    endShape(CLOSE);
-    
-    textAlign(CENTER);
-    strokeText("Back", width * 0.5, height * 0.91);
+    back_button();
     
   }
   
   void get_name()
   {
-    menu.display_border(); 
+    backgr();
     
     // Use string.indexOf('a') for the permitted characters
     

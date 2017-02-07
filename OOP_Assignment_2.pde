@@ -77,6 +77,7 @@ Profile profile= new Profile();
 Menu menu= new Menu();
 Settings settings= new Settings();
 Death death= new Death();
+Instructions instructions= new Instructions();
 
 // ArrayLists
 ArrayList <Box> boxes= new ArrayList <Box>();
@@ -162,6 +163,11 @@ void game_state(int state)
     {
       settings.s_menu();
       break;
+    }
+    case 6: // Instruction screen
+    {
+     instructions.display();
+     break; 
     }
     
     default:
@@ -359,7 +365,7 @@ void mouseClicked()
             if(mouseY> height * menu.pos  - menu.button_height && mouseY< height * menu.pos + menu.button_height)
             {
               score=0;
-              state=3;
+              state=6;
             }
             // else if 2nd button (leaderboards) 
             else if( mouseY> height * menu.pos + 3  * menu.button_height - menu.button_height && mouseY< height * menu.pos + 3  * menu.button_height + menu.button_height)
@@ -430,8 +436,15 @@ void mouseClicked()
             first_run=0;
             state=1;
          }
+       }// end else if on settings
+       else if(state==6)
+       {
+         //if pressing the back button
+         if(mouseX> width * 0.45 && mouseX < width * 0.55 && mouseY > height * 0.85 && mouseY< height * 0.95) 
+         {
+            state=1;
+         }
        }
-       // end else if on settings
     
 } // end mouseClicked
 
