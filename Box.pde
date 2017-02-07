@@ -5,18 +5,21 @@ class Box implements Objects
   int x, y, held, box_size=80;
   Box()
   {
-  }
+      }
 
   void disp()
   {
     // Remmber to work on the colors here
     strokeWeight(1);
-    stroke(255, 0, 0);
+    stroke(255,0,0);
     noFill();
     beginShape();
     vertex(x_pos, y_pos);
     vertex(x_pos + box_size, y_pos);
+    vertex(x_pos, y_pos + box_size);
+    vertex(x_pos, y_pos);
     vertex(x_pos + box_size, y_pos + box_size);
+    vertex(x_pos + box_size, y_pos);
     vertex(x_pos, y_pos + box_size);
     endShape(CLOSE);
   } 

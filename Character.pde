@@ -15,7 +15,7 @@ class Char extends Body implements Objects
     this.in_air=1;
   }
 
-  
+
   // Jumping until we get to the height of the original pos - the amount we want to jump by
   void jump()
   {
@@ -53,22 +53,26 @@ class Char extends Body implements Objects
                 // We are not on the right limit and  There's no box after the box that we want to move (right)
                 if ( c_x < background.no_boxes    && array_rows[c_y][c_x] == 0) 
                 {
-                  // Checking for the box in the boxs arraylist
-                  for (int index3=0; index3< mechs.size(); index3++)
+                  // if there is no box on top of our box
+                  if ( array_rows[c_y-1][c_x-1]==0)
                   {
-                    for (int index4=0; index4< mechs.get(index3).m_no_box; index4++)
+                    // Checking for the box in the boxs arraylist
+                    for (int index3=0; index3< mechs.size(); index3++)
                     {
-                      // if the box from the boxs has the position we're looking for
-                      if (mechs.get(index3).boxs.get(index4).x == c_x - 1 && mechs.get(index3).boxs.get(index4).y == c_y)
+                      for (int index4=0; index4< mechs.get(index3).m_no_box; index4++)
                       {
-                        array_rows[mechs.get(index3).boxs.get(index4).y][mechs.get(index3).boxs.get(index4).x]=0;
-                        mechs.get(index3).boxs.get(index4).x++;//= c_x;
-                        mechs.get(index3).boxs.get(index4).x_pos= background.width_margin + ((mechs.get(index3).boxs.get(index4).x+1) * box.box_size); // was x+1
-                        array_rows[mechs.get(index3).boxs.get(index4).y][mechs.get(index3).boxs.get(index4).x]=1;
-                        break;
-                      } // end inner if
-                    } // end for
-                  }// end for loop used for mechs arraylist
+                        // if the box from the boxs has the position we're looking for
+                        if (mechs.get(index3).boxs.get(index4).x == c_x - 1 && mechs.get(index3).boxs.get(index4).y == c_y)
+                        {
+                          array_rows[mechs.get(index3).boxs.get(index4).y][mechs.get(index3).boxs.get(index4).x]=0;
+                          mechs.get(index3).boxs.get(index4).x++;//= c_x;
+                          mechs.get(index3).boxs.get(index4).x_pos= background.width_margin + ((mechs.get(index3).boxs.get(index4).x+1) * box.box_size); // was x+1
+                          array_rows[mechs.get(index3).boxs.get(index4).y][mechs.get(index3).boxs.get(index4).x]=1;
+                          break;
+                        } // end inner if
+                      } // end for
+                    }// end for loop used for mechs arraylist
+                  } // end if there is no box on top of our box
                 } // end mid if
               }// end  if move_box==true
             } // end else there is no box to the right blocking us
@@ -108,22 +112,26 @@ class Char extends Body implements Objects
                   // We are not on the right limit and  There's no box after the box that we want to move (left)
                   if ( c_x > 1    && array_rows[c_y][c_x-2] == 0) 
                   {
-                    for (int index3=0; index3< mechs.size(); index3++)
+                    // if there is no box on top of our box
+                    if ( array_rows[c_y-1][c_x-1]==0)
                     {
-                      // Checking for the box in the boxs arraylist
-                      for (int index4=0; index4< mechs.get(index3).m_no_box; index4++)
+                      for (int index3=0; index3< mechs.size(); index3++)
                       {
-                        // if the box from the boxs has the position we're looking for
-                        if (mechs.get(index3).boxs.get(index4).x == c_x - 1 && mechs.get(index3).boxs.get(index4).y == c_y)
+                        // Checking for the box in the boxs arraylist
+                        for (int index4=0; index4< mechs.get(index3).m_no_box; index4++)
                         {
-                          array_rows[mechs.get(index3).boxs.get(index4).y][mechs.get(index3).boxs.get(index4).x]=0;
-                          mechs.get(index3).boxs.get(index4).x--;//= c_x;
-                          mechs.get(index3).boxs.get(index4).x_pos= background.width_margin + ((mechs.get(index3).boxs.get(index4).x+1) * box.box_size); // was x+1
-                          array_rows[mechs.get(index3).boxs.get(index4).y][mechs.get(index3).boxs.get(index4).x]=1;
-                          break;
-                        } // end inner if
-                      } // end for used for boxs arraylist
-                    }// end for used for mechs arraylist
+                          // if the box from the boxs has the position we're looking for
+                          if (mechs.get(index3).boxs.get(index4).x == c_x - 1 && mechs.get(index3).boxs.get(index4).y == c_y)
+                          {
+                            array_rows[mechs.get(index3).boxs.get(index4).y][mechs.get(index3).boxs.get(index4).x]=0;
+                            mechs.get(index3).boxs.get(index4).x--;//= c_x;
+                            mechs.get(index3).boxs.get(index4).x_pos= background.width_margin + ((mechs.get(index3).boxs.get(index4).x+1) * box.box_size); // was x+1
+                            array_rows[mechs.get(index3).boxs.get(index4).y][mechs.get(index3).boxs.get(index4).x]=1;
+                            break;
+                          } // end inner if
+                        } // end for used for boxs arraylist
+                      }// end for used for mechs arraylist
+                    }
                   } // end mid if
                 }// end  if move_box==true
               } // end else there is no box to the right blocking us
