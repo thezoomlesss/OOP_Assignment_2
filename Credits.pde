@@ -5,14 +5,12 @@ class Credits extends Design implements Screens
     backgr();
 
     textAlign(CENTER);
-    textFont(Title_font);
-    textSize(80);
-    strokeText("C r e d i t s", width * 0.5, height * 0.2);
+    title("C r e d i t s",0.5, 0.2, 0);
 
     textFont(Text_font);
-    textSize(40);
-    strokeText("Music: HOME", width * 0.5, height *0.5);
-    strokeText("Code: Mohamad Zabad (Mushy)", width * 0.5, height *0.6);
+    textSize(text_size);
+    strokeText("All the Code Written By :  Mohamad Zabad (Mushy)", width * 0.5, height *0.5);
+    strokeText("Music: HOME", width * 0.5, height *0.6);
 
     button("Back", 0.85, 0.95);
   }

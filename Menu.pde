@@ -16,7 +16,7 @@ class Menu extends Design implements Screens
     textAlign(CENTER);
     textSize(100);
     fill(200, 0, 0);
-    text("Stack Challenge", width * 0.5, height * 0.2);
+    text("  Stack Challenge", width * 0.5, height * 0.2);
   }
 
   void buttons()
@@ -71,7 +71,7 @@ class Menu extends Design implements Screens
     strokeText("Leaderboards", width * 0.5f, height * pos + 3.2 * button_height);
     strokeText("Settings", width * 0.5f, height * pos + 6.2 * button_height);
     textFont(Credit_font);
-    textSize(40);
+    textSize(text_size);
     strokeText("Credits", width * 0.93, height *0.95);
     textAlign(LEFT);
   }

@@ -67,6 +67,9 @@ class Box implements Objects
           {
             array_rows[y][x]=0;
             y++;
+            // if we are on the same column and 
+            // this or the next pos is the character
+            // and the box is not about to land then kill the character
             if ( x == character.c_x-1  && (y + 1 == character.c_y || y == character.c_y) && ( y_pos < height-background.height_margin*2 - box_size -60 ) ) state=4;
           }// end inner if
         } // end middle if

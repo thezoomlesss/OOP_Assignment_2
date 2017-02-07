@@ -8,15 +8,11 @@ class Settings extends Design implements Screens
     backgr();
     textAlign(CENTER);
 
-    // The title
-
-    textFont(Title_font);
-    textSize(80);
-    strokeText("Settings", width * 0.5, height * 0.1);
+    title("S e t t i n g s", 0.5 , 0.12, 0);
 
     // The text for Music
     textFont(Text_font);
-    textSize(40);
+    textSize(text_size);
     strokeText("Music: ", width * 0.4, height * 0.4);
 
     // The button for Music
@@ -35,7 +31,7 @@ class Settings extends Design implements Screens
 
     // The text for Cheats
     textFont(Text_font);
-    textSize(40);
+    textSize(text_size);
     strokeText("Cheats: ", width * 0.4, height * 0.5);
 
     // The button for Cheats

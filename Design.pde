@@ -1,5 +1,13 @@
 abstract class Design
 {
+  void title(String a, float b, float c, int d)
+  {
+    // The title
+    textFont(Title_font);
+    textSize(title_size - d );
+    strokeText(a, width * b, height * c);
+  }
+  
   void button(String a, float low, float high)
   {
     // The back button
@@ -21,7 +29,7 @@ abstract class Design
     vertex(width * 0.55, height * low);
     endShape(CLOSE);
     textFont(Text_font);
-    textSize(40);
+    textSize(text_size);
     textAlign(CENTER);
     strokeText( a, width * 0.5, height * ((high+low)/2 +0.01));
   }

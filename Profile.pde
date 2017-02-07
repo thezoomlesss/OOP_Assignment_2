@@ -18,13 +18,9 @@ class Profile extends Design implements Screens
     int rowCount = table.getRowCount();   
 
     // The title
-    textSize(30);
-    textAlign(CENTER);
-    textFont(Title_font);
-    strokeText("T o p  1 0", width * 0.5, height *0.08);
+    textAlign(CENTER); 
+    title("T o p  1 0", 0.5, 0.08, 20);
 
-
-    textSize(20);
     textFont(Text_font);
     // If there is no record available  yet
     if (rowCount==0)
@@ -69,9 +65,7 @@ class Profile extends Design implements Screens
 
     // The title
     textAlign(CENTER);
-    textFont(Title_font);
-    textSize(100);
-    strokeText("Choose your name", width * 0.5, height *0.2);
+    title("Choose your name", 0.5, 0.2, -20);
 
     // The name box
     fill(10, 8, 25);
@@ -117,7 +111,7 @@ class Profile extends Design implements Screens
 
     // Displaying the characters
     textFont(Text_font);
-    textSize(40);
+    textSize(text_size);
     textAlign(CENTER);
     strokeText(name, width *0.5, height * 0.51);
   }

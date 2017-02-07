@@ -5,9 +5,7 @@ class Death extends Design implements Screens
     backgr();
     // The title
     textAlign(CENTER);
-    textFont(Title_font);
-    textSize(120);
-    strokeText("Y O U  A R E  D E A D", width * 0.5, height * 0.5);
+    title("Y O U  A R E  D E A D", 0.5, 0.5, - 40);
 
     button("Back", 0.85, 0.95);
 

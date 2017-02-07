@@ -44,11 +44,14 @@ void setup()
   background.grid_initial();
   array_rows=new int[background.vert_no_boxes][background.no_boxes];
 
-
-  Title_font = createFont("Font1.otf", 34);
-  Text_font = createFont("Font2.otf", 34); 
+  text_size = (int) (width * 0.021);
+  title_size= (int) (width*0.042);
+  
+  Title_font = createFont("Font1.otf", title_size);
+  Text_font = createFont("Font2.otf", text_size); 
   Credit_font = createFont("Font3.otf", 34);
 
+  
 
   minim = new Minim(this);
   // this loads mysong.wav from the data folder
@@ -59,6 +62,8 @@ void setup()
   File dataFolder = new File(path);
   fileList= dataFolder.list();
   song.setGain(-15);
+  
+  
 }// end setup
 
 // Global declaration area
@@ -66,6 +71,7 @@ Minim minim;
 AudioPlayer song;
 String[] fileList;
 int song_index=1, mech_count=0, mech_index, first_run=0;
+int text_size, title_size;
 int[][] array_rows;
 int game_speed=2, state=0, score, cleared=0, mech_spawned=0;    // State starts from 0 because that's the first page
 PFont Title_font, Text_font, Credit_font;
@@ -182,7 +188,7 @@ void game_state(int state)
 
   default:
     {
-      textSize(40);
+      textSize(text_size);
       text("Sorry Bud...", width * 0.40, height * 0.30);
     }
   } // end Switch
