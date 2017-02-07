@@ -1,0 +1,4 @@
+interface Objects
+{
+  void fall();
+} 
