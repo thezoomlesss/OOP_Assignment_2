@@ -1,4 +1,4 @@
-class Instructions extends Body
+class Instructions extends Body implements Screens
 {
   color colour= color(random(0, 255), random(0, 255), random(0, 255));
   ; 

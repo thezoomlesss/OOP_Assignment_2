@@ -1,9 +1,9 @@
-class Settings extends Design
+class Settings extends Design implements Screens
 {
   boolean toggle_music=true, playing=true, cheats;
   int check_size= 30;
 
-  void s_menu()
+  void display()
   {
     backgr();
     textAlign(CENTER);

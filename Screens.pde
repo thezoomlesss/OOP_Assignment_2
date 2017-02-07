@@ -1,0 +1,4 @@
+interface Screens
+{
+  void display();
+}

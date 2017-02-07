@@ -1,11 +1,11 @@
-class Menu extends Design
+class Menu extends Design implements Screens
 {
   int x_coord =20, y_coord=20;
   int x_coord_copy= x_coord+5, y_coord_copy= y_coord +6;
   int button_width= 100, button_height= (int)(button_width* 0.5);
   float pos= 0.4f;
 
-  void display_border()
+  void display()
   {
     backgr();  // This shouldn't be here
   }
@@ -65,12 +65,14 @@ class Menu extends Design
       vertex( width * 0.5f + button_width, height * pos + index  * button_height - button_height);
       endShape(CLOSE);
     }
-
-
+   
     textSize(23);
     strokeText("New Game", width * 0.5f, height * pos + 0.2 * button_height);
     strokeText("Leaderboards", width * 0.5f, height * pos + 3.2 * button_height);
     strokeText("Settings", width * 0.5f, height * pos + 6.2 * button_height);
+    textFont(Credit_font);
+    textSize(40);
+    strokeText("Credits", width * 0.93, height *0.95);
     textAlign(LEFT);
   }
 } // end class Menu

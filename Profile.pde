@@ -1,4 +1,4 @@
-class Profile extends Design
+class Profile extends Design implements Screens
 {
   Table table2; 
   int rowCount2;
@@ -9,7 +9,7 @@ class Profile extends Design
   Record order_temp= new Record("Temp", 1);
 
 
-  void top_10()
+  void display()
   {
     backgr();
     sort();

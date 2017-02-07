@@ -25,6 +25,7 @@
  - Finish the Instructions page
  - Add the interface
  - Add credits
+ - Add a function in design for the titles
  */
 
 import ddf.minim.*;
@@ -46,6 +47,7 @@ void setup()
 
   Title_font = createFont("Font1.otf", 34);
   Text_font = createFont("Font2.otf", 34); 
+  Credit_font = createFont("Font3.otf", 34);
 
 
   minim = new Minim(this);
@@ -66,7 +68,7 @@ String[] fileList;
 int song_index=1, mech_count=0, mech_index, first_run=0;
 int[][] array_rows;
 int game_speed=2, state=0, score, cleared=0, mech_spawned=0;    // State starts from 0 because that's the first page
-PFont Title_font, Text_font;
+PFont Title_font, Text_font, Credit_font;
 //int deleted;
 
 // Creating the objects that will be added into the ArrayLists
@@ -79,6 +81,7 @@ Menu menu= new Menu();
 Settings settings= new Settings();
 Death death= new Death();
 Instructions instructions= new Instructions();
+Credits credit= new Credits();
 
 // ArrayLists
 ArrayList <Box> boxes= new ArrayList <Box>();
@@ -95,14 +98,14 @@ void game_state(int state)
     }
   case 1: // Main menu screen
     {
-      menu.display_border();
+      menu.display();
       menu.title();
       menu.buttons();
       break;
     }
   case 2: // Leaderboards screen
     {
-      profile.top_10();
+      profile.display();
       break;
     }
   case 3: // Game screen
@@ -163,12 +166,17 @@ void game_state(int state)
     }
   case 5: // settings 
     {
-      settings.s_menu();
+      settings.display();
       break;
     }
   case 6: // Instruction screen
     {
       instructions.display();
+      break;
+    }
+  case 7: // The credits screen
+    {
+      credit.display();
       break;
     }
 
@@ -344,16 +352,19 @@ void mouseClicked()
       {
         score=0;
         state=6;
-      }
-      // else if 2nd button (leaderboards) 
+      }// else if 2nd button (leaderboards) 
       else if ( mouseY> height * menu.pos + 3  * menu.button_height - menu.button_height && mouseY< height * menu.pos + 3  * menu.button_height + menu.button_height)
       {
         state=2;
       } else if (mouseY> height * menu.pos + 6  * menu.button_height - menu.button_height && mouseY< height * menu.pos + 6  * menu.button_height + menu.button_height)
       {
         state=5;
-      }
+      } // if pressing on credits
     } // end if not between the width of the buttons
+    else if ( mouseY> height *0.93 && mouseY< height *0.96  && mouseX> width * 0.91 && mouseX< width * 0.95)
+    {
+      state=7;
+    }
   } // end if not on the menu page
   else if (state==2) // if on the leaderboards page and pressing the back button
   {
@@ -425,6 +436,13 @@ void mouseClicked()
     if (mouseX> width * 0.45 && mouseX < width * 0.55 && mouseY > height * 0.73 && mouseY< height * 0.83) 
     {
       state=3;
+    }
+  } else if (state==7)
+  {
+    //if pressing the back button
+    if (mouseX> width * 0.45 && mouseX < width * 0.55 && mouseY > height * 0.85 && mouseY< height * 0.95) 
+    {
+      state=1;
     }
   }
 } // end mouseClicked

@@ -1,4 +1,4 @@
-class Death extends Design
+class Death extends Design implements Screens
 {
   void display()
   {
