@@ -46,12 +46,12 @@ void setup()
 
   text_size = (int) (width * 0.021);
   title_size= (int) (width*0.042);
-  
+
   Title_font = createFont("Font1.otf", title_size);
   Text_font = createFont("Font2.otf", text_size); 
   Credit_font = createFont("Font3.otf", 34);
 
-  
+
 
   minim = new Minim(this);
   // this loads mysong.wav from the data folder
@@ -62,8 +62,6 @@ void setup()
   File dataFolder = new File(path);
   fileList= dataFolder.list();
   song.setGain(-15);
-  
-  
 }// end setup
 
 // Global declaration area
@@ -465,11 +463,13 @@ void keyPressed()
     if ( key=='a' )
     {
       character.left = 1;
+      character.angle_left=true;
     }
 
     if ( key=='d')
     {
       character.right = 1;
+      character.angle_right=true;
     }
     if ( key=='w' && character.jump_cond==true && character.up_released == true && character.fall_cond == 0  ) 
     {
@@ -490,11 +490,13 @@ void keyReleased()
     if ( key=='a')
     {
       character.left = 0;
+      character.angle_left=false;
     }
 
     if ( key=='d')
     {
       character.right = 0;
+      character.angle_right=false;
     }
 
     if ( key=='w')

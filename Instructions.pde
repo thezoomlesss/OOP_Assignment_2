@@ -6,12 +6,12 @@ class Instructions extends Body implements Screens
   void display()
   {
     backgr();
-    
+
     title("I n s t r u c t i o n s", 0.5, 0.12, 0);
-    
+
     textFont(Text_font);
     textSize(text_size);
-    
+
     // The WASD instruction
     strokeText("W", width * 0.1, height * 0.23);
     strokeText("A", width * 0.07, height * 0.28);
@@ -28,11 +28,11 @@ class Instructions extends Body implements Screens
     // The character modes instruction
     draw_c(false, width * 0.9, height * 0.219, 80, colour);
     draw_c(true, width * 0.9, height * 0.47, 80, colour);
-    
+
     strokeText("Climb mode -", width * 0.76, height * 0.265);
     strokeText("Push mode -", width * 0.755, height * 0.516);
-    
-    
+
+
     button("Start", 0.73, 0.83);
     button("Back", 0.85, 0.95);
   }
