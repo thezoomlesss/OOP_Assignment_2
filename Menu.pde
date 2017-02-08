@@ -7,11 +7,15 @@ class Menu extends Design implements Screens
 
   void display()
   {
-    backgr();  // This shouldn't be here
+    backgr();  
   }
 
-  void title()
+  void title()   
   {
+    /*
+      Here we don't use the function that I wrote in the abstract class because we want the text to be coloured
+      We can't do this with that function because it uses strokeText which works only with black and white (I defined it that way)
+    */
     textFont(Title_font);
     textAlign(CENTER);
     textSize(100);
@@ -19,14 +23,20 @@ class Menu extends Design implements Screens
     text("  Stack Challenge", width * 0.5, height * 0.2);
   }
 
-  void buttons()
+  void buttons()  // The buttons of the menu
   {
     int menu_box_margin=40;
+    
+    /*
+        Not using the defined functions from the absctact class cause these buttons are bigger 
+    */
+    
     textFont(Text_font);
     stroke(25, 45, 120);    
     strokeWeight(4);
     fill(10, 8, 15);
 
+    // The box where the buttons will be placed
     beginShape();
     vertex(width * 0.5f - button_width - menu_box_margin, height * pos  - button_height - menu_box_margin);
     vertex(width * 0.5f - button_width - menu_box_margin, height * pos + 6 * button_height + button_height + menu_box_margin);
@@ -34,6 +44,7 @@ class Menu extends Design implements Screens
     vertex(width * 0.5f + button_width + menu_box_margin, height * pos  - button_height - menu_box_margin);
     endShape(CLOSE);
 
+    // for loop that draws the buttons
     for (int index=0; index<9; index+=3)
     {
       // Here we check if the buttons are being hovered
@@ -66,6 +77,7 @@ class Menu extends Design implements Screens
       endShape(CLOSE);
     }
    
+    // The text for the buttons
     textSize(23);
     strokeText("New Game", width * 0.5f, height * pos + 0.2 * button_height);
     strokeText("Leaderboards", width * 0.5f, height * pos + 3.2 * button_height);

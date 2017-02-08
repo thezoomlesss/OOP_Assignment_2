@@ -1,15 +1,11 @@
 class Box implements Objects
 {
-  // x position in the array and held=1 means that it's held by the machine
   float x_pos, y_pos; 
-  int x, y, held, box_size=80;
-  Box()
-  {
-      }
-
+  int x, y, held, box_size=80; 
+  
   void disp()
   {
-    // Remmber to work on the colors here
+    // Drawing the boxes
     strokeWeight(1);
     stroke(255,0,0);
     noFill();
@@ -22,25 +18,24 @@ class Box implements Objects
     vertex(x_pos + box_size, y_pos);
     vertex(x_pos, y_pos + box_size);
     endShape(CLOSE);
-  } 
+  } // end disp
 
   void move_b()
   {
-    if (held==1)
+    if (held==1) // if the box is held then move horizontally
     {
-      // move horizontally
+      // If the mech is moving then follow it
       if (mechs.get(mech_index).move_cond==1)
       {
+        // Just a small check to fix where the box is displayed while being carried
         if ( mechs.get(mech_index).m_x_pos < background.width_margin+ 10 +(mechs.get(mech_index).new_rand_i*box.box_size) )
         {
           x_pos +=game_speed;
         } else
         {
           x_pos -=game_speed;
-          //if( mech.m_x_pos == background.width_margin+ 10 +(mech.new_rand_i*box.box_size) ) x_pos++;
-          // Why do I have this?
         } // end else
-      } else
+      } else  // Mech not moving anymore
       {
         x_pos+=game_speed;
         held=0;
@@ -52,6 +47,7 @@ class Box implements Objects
   {
     /* 
      Here the boxes will move vertically
+     If the box is no longer held
      I am first putting the value 1 in the array of boxes to mark the current position of the box
      checking if it's not on the last line already and if the next line is free so it can keep falling
      check if it's above the floor and lowering the box
@@ -68,7 +64,7 @@ class Box implements Objects
           y_pos +=game_speed;
           
           /* 
-                We check if the pos of the character is not inside the box
+                We check if the pos of the character is inside the area of the box
                 If the character is inside it means that we have to display the death screen
           */
           if( character.c_x_pos + character.c_size *0.5 <= x_pos + box_size && character.c_x_pos + character.c_size *0.5 >= x_pos && character.c_y_pos >= y_pos && character.c_y_pos<= y_pos+box_size) state=4;
@@ -82,6 +78,6 @@ class Box implements Objects
           }// end inner if
         } // end middle if
       } // end outer if
-    }
-  }
+    } // end if held == 0
+  } // end function fall
 }// end box class

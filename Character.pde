@@ -12,7 +12,7 @@ class Char extends Body implements Objects
     this.c_y=y;
     this.c_x_pos=background.width_margin + (c_x * c_size);
     this.c_y_pos=background.width_margin +  (c_y * c_size) + 5;
-    this.in_air=1;
+    this.in_air=1;    // This is 1 cause the character will always spawn a tiny bit above the ground
   }
 
 
@@ -32,6 +32,15 @@ class Char extends Body implements Objects
 
   void c_move()
   {
+    /*
+        Update for character's position
+        We check the places next to the character to see if they're free
+        
+        ONE REALLY IMPORTANT THING:
+        I AM USING X FOR THE COLUMNS AND Y FOR THE ROWS
+        
+     */
+
     if (right - left > 0)  // going right
     {
       // Not at the limit
@@ -40,15 +49,16 @@ class Char extends Body implements Objects
         // Not the last column  
         if ( c_x  != background.no_boxes   )  
         { 
+          // Small check if we have the right index
           if ( character.c_x_pos - character.c_size *0.38 < background.width_margin + (box.box_size * character.c_x) )
           {
             // If there is no box blocking our path
             if ( array_rows[c_y][c_x-1] == 0)
             {
               character.c_x_pos += (character.right - character.left) * 2*game_speed;
-            } else
-            {
-              if (move_box==true)
+            } else // There is a box blocking our path
+            { 
+              if (move_box==true) // We are in the pushing mode
               {
                 // We are not on the right limit and  There's no box after the box that we want to move (right)
                 if ( c_x < background.no_boxes    && array_rows[c_y][c_x] == 0) 
@@ -61,12 +71,12 @@ class Char extends Body implements Objects
                     {
                       for (int index4=0; index4< mechs.get(index3).m_no_box; index4++)
                       {
-                        // if the box from the boxs has the position we're looking for
+                        // if the box from the boxs has the position we're looking for then move it one position to the right
                         if (mechs.get(index3).boxs.get(index4).x == c_x - 1 && mechs.get(index3).boxs.get(index4).y == c_y)
                         {
                           array_rows[mechs.get(index3).boxs.get(index4).y][mechs.get(index3).boxs.get(index4).x]=0;
-                          mechs.get(index3).boxs.get(index4).x++;//= c_x;
-                          mechs.get(index3).boxs.get(index4).x_pos= background.width_margin + ((mechs.get(index3).boxs.get(index4).x+1) * box.box_size); // was x+1
+                          mechs.get(index3).boxs.get(index4).x++;
+                          mechs.get(index3).boxs.get(index4).x_pos= background.width_margin + ((mechs.get(index3).boxs.get(index4).x+1) * box.box_size); 
                           array_rows[mechs.get(index3).boxs.get(index4).y][mechs.get(index3).boxs.get(index4).x]=1;
                           break;
                         } // end inner if
@@ -76,12 +86,12 @@ class Char extends Body implements Objects
                 } // end mid if
               }// end  if move_box==true
             } // end else there is no box to the right blocking us
-          } else
+          } else // change the index value
           {
             character.c_x++;
           }
-        } // else we are at the last col
-        else    
+        } 
+        else // else we are at the last col    
         {
           // if there is no box on the last position then keep going
           if (array_rows[c_y][c_x-1] == 0) c_x_pos += (right - left) * 2*game_speed;
@@ -99,43 +109,45 @@ class Char extends Body implements Objects
           // Not on the first  column  
           if ( c_x != 0   )  
           { 
+            // small index check to see if it needs to be updated
             if ( character.c_x_pos + character.c_size *0.38 > background.width_margin + (box.box_size * character.c_x) )
             {
               // If there is no box blocking our path
               if ( array_rows[c_y][c_x-1] == 0)
               {
                 character.c_x_pos += (character.right - character.left) * 2*game_speed;
-              } else
+              } else // There is a box blocking our path
               {
-                if (move_box==true)
+                if (move_box==true) // In pushing mode
                 {
-                  // We are not on the right limit and  There's no box after the box that we want to move (left)
+                  // We are not on the left limit for pushing and  There's no box after the box that we want to move (left)
                   if ( c_x > 1    && array_rows[c_y][c_x-2] == 0) 
                   {
                     // if there is no box on top of our box
                     if ( array_rows[c_y-1][c_x-1]==0)
                     {
+                      // Finding the box in the arraylists
                       for (int index3=0; index3< mechs.size(); index3++)
                       {
                         // Checking for the box in the boxs arraylist
                         for (int index4=0; index4< mechs.get(index3).m_no_box; index4++)
                         {
-                          // if the box from the boxs has the position we're looking for
+                          // if the box from the boxs has the position we're looking for then move it one position to the left
                           if (mechs.get(index3).boxs.get(index4).x == c_x - 1 && mechs.get(index3).boxs.get(index4).y == c_y)
                           {
                             array_rows[mechs.get(index3).boxs.get(index4).y][mechs.get(index3).boxs.get(index4).x]=0;
-                            mechs.get(index3).boxs.get(index4).x--;//= c_x;
-                            mechs.get(index3).boxs.get(index4).x_pos= background.width_margin + ((mechs.get(index3).boxs.get(index4).x+1) * box.box_size); // was x+1
+                            mechs.get(index3).boxs.get(index4).x--;
+                            mechs.get(index3).boxs.get(index4).x_pos= background.width_margin + ((mechs.get(index3).boxs.get(index4).x+1) * box.box_size); 
                             array_rows[mechs.get(index3).boxs.get(index4).y][mechs.get(index3).boxs.get(index4).x]=1;
                             break;
                           } // end inner if
                         } // end for used for boxs arraylist
                       }// end for used for mechs arraylist
-                    }
+                    } // end if there is no box on top 
                   } // end mid if
                 }// end  if move_box==true
               } // end else there is no box to the right blocking us
-            } else
+            } else // update the index
             {
               character.c_x--;
             }
@@ -158,14 +170,13 @@ class Char extends Body implements Objects
      If on the floor/bottom then make the fall conditio = 0 so we know when we can jump again
      */
     if (c_y == background.vert_no_boxes-1)
-      //if(c_y_pos + character.c_size>= height-background.height_margin*2+6)
     {
       fall_cond=0;
     }  // If in the air and we have a box underneath us
     else if (array_rows[c_y+1][c_x-1]==1)
     {
       fall_cond=0;
-    } else
+    } else // Keep falling
     {
       fall_cond=1;
     }  

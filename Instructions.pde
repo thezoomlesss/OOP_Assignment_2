@@ -1,14 +1,13 @@
 class Instructions extends Body implements Screens
 {
   color colour= color(random(0, 255), random(0, 255), random(0, 255));
-  ; 
+   
 
   void display()
   {
     backgr();
-
     title("I n s t r u c t i o n s", 0.5, 0.12, 0);
-
+    
     textFont(Text_font);
     textSize(text_size);
 
@@ -35,5 +34,5 @@ class Instructions extends Body implements Screens
 
     button("Start", 0.73, 0.83);
     button("Back", 0.85, 0.95);
-  }
-}
+  } // end display
+} // end class Instructions

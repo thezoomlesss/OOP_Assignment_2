@@ -61,7 +61,6 @@ class Profile extends Design implements Screens
   {
     backgr();
 
-    // Use string.indexOf('a') for the permitted characters
 
     // The title
     textAlign(CENTER);
@@ -82,7 +81,7 @@ class Profile extends Design implements Screens
     {
 
       delay(200);
-      if (key!=BACKSPACE && key!=ENTER)// && allowed_chars.indexOf(key) > 0)
+      if (key!=BACKSPACE && key!=ENTER && allowed_chars.indexOf(key) > 0)
       {
         name+=Character.toUpperCase(key);
         name_index++;
@@ -155,7 +154,8 @@ class Profile extends Design implements Screens
         score=order_temp.score;
       } // end for used to add the new score in
     } 
-
+    
+    // Writing the new leaderboards text file
     PrintWriter leader_txt;   
     leader_txt = createWriter(dataPath("Leaderboards.txt"));
 

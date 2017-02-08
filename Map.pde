@@ -9,9 +9,9 @@ class Map
   {
     background(0, 0, 17);
     no_boxes=(width- width_margin*2 - box.box_size * 2)/box.box_size;
-    no_vert_lines= (height-height_margin*2)/20;    // It's devided by 20 cause that's the distance we want between our vert lines
+    no_vert_lines= (height-height_margin*2)/20;             // It's devided by 20 cause that's the distance we want between our vert lines
     vert_no_boxes= (height-height_margin*2)/box.box_size;  // variable used to define the size of the array
-  }
+  } // end grid_initial()
 
   void score()
   {
@@ -22,10 +22,8 @@ class Map
     strokeText(String.valueOf(score), character.c_x_pos + character.c_size/2, character.c_y_pos - character.c_size/4);
   }
 
-  void grid()
+  void grid() // grid lines
   { 
-    // grid lines
-
     background(0, 0, 17);
     // this for loop draws the grey background lines and the little white lines that can be found on the floor
     for (int i=2; i<no_boxes+1; i++)

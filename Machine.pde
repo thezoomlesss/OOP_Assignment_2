@@ -7,14 +7,15 @@ class Mech
   float mech_size=60, wheel_size=20;
   ArrayList<Box> boxs=new ArrayList<Box>();
   Box box_obj=new Box();
+
   Mech()
   {
-    this.mech_colour= color(random(0, 255), random(0, 255), random(0, 255));
+    this.mech_colour= color(random(0, 255), random(0, 255), random(0, 255));   // Random colour for the mech
   }
 
   void spawn_box()
   {
-    if (holding_box == 0)
+    if (holding_box == 0)  // If the mech is not holding a box then it should spawn one
     {
       box_obj=new Box();
       boxs.add(box_obj);
@@ -32,29 +33,31 @@ class Mech
         Here we are spawning one machine
      it will randomize an index where it wants to spawn
      it will mark that index as occupied 
-     it will display at the location of width_margin + the index multiplied by the size of a single box + *** 10 pixels so the box will be alligned ***
+     it will display at the location of width_margin + the index multiplied by the size of a single box 
      */
     rand_i=(int)random(1, background.no_boxes);
     array_index=rand_i;
     m_x_pos=background.width_margin + (rand_i*box.box_size);
-    m_y_pos=background.track_height - 1;  // -1 so it goes a little over the track
+    m_y_pos=background.track_height - 1;        // -1 so it goes a little over the track
     move_cond=0;
     exists_move_cond=0;
 
     mechs.add(mech);
-  }
+  }// end spawn_m
+
   void move_m()
   {
     if (move_cond==1) // If the mech should move
     {
+      // if we should go right
       if ( m_x_pos < background.width_margin+ 10 +( new_rand_i*box.box_size) )
       {
         m_x_pos +=game_speed;
-        theta -=0.07f;
+        theta -=0.07f;   // angle used for the wheels
 
+        // If we reached the position that we wanted
         if (m_x_pos > background.width_margin+ 10 +( new_rand_i*box.box_size)) 
         {
-
           m_x_pos =background.width_margin + game_speed +( new_rand_i*box.box_size);
           move_cond=0;
           /*
@@ -63,13 +66,14 @@ class Mech
           boxs.get(m_no_box-1).x=(int) m_x_pos/box.box_size - 1;
           boxs.get(m_no_box-1).y= 0; 
           holding_box=0;
-          time = millis();
+          time = millis();   // Calling the timer
         }
-      } else
+      } else  // we should go left
       {
         m_x_pos -=game_speed;
-        theta +=0.07f;
+        theta +=0.07f;      // angle used for the wheels
 
+        // if we reached the destination
         if (m_x_pos < background.width_margin+ 10 +(new_rand_i*box.box_size)) 
         {
           m_x_pos =background.width_margin+ game_speed +(new_rand_i*box.box_size);
@@ -80,7 +84,7 @@ class Mech
           boxs.get(m_no_box-1).x=(int) m_x_pos/box.box_size - 1;
           boxs.get(m_no_box-1).y= 0; 
           holding_box=0;
-          time = millis();
+          time = millis();    // Calling the timer
         }
       } // end else
     } // end outer if
@@ -118,34 +122,22 @@ class Mech
     }
   } // end move_b()
 
-  /* 
-   For loop that goes through the ArrayList and displays all the boxs
-   */
+
 
   void disp_boxs()
   {
+    /* 
+     For loop that goes through the ArrayList and displays all the boxs
+     */
     for (int index2=0; index2 < boxs.size(); index2++)
     {
-      /*
-      if((deleted==1) && (mech.boxs.get(index2).y== background.vert_no_boxs-1))
-       {
-       stroke(0,255,0);
-       println("Green");
-       }
-       else
-       {
-       stroke(255,0,0);
-       }
-       */
-
       boxs.get(index2).disp();
     }
-  }
+  } // end disp_boxs
 
 
   void draw_m()
   {
-    //spawn_box();
     // Body of the mech
     stroke(mech_colour);
     strokeWeight(1);
@@ -203,8 +195,6 @@ class Mech
 
     /* Wheels of the mech
      m_y_pos + 4 so the wheel is exactly in the middle of the bar of the mech
-     
-     Change this to PI and make them move
      */
     fill(0, 80, 20);
     stroke(0, 255, 0);
@@ -224,5 +214,5 @@ class Mech
       line(m_x_pos, m_y_pos + 4, m_x_pos + sin(theta + (wheel_index*PI/2)) *10, m_y_pos + 4 + cos(theta + (wheel_index*PI/2))*10);
       line(m_x_pos +mech_size, m_y_pos + 4, m_x_pos + mech_size + sin(theta + (wheel_index*PI/2)) *10, m_y_pos + 4 + cos(theta + (wheel_index*PI/2))*10);
     }
-  }
-}
+  } // end draw_m
+} // end class Mech
