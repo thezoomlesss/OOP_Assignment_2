@@ -51,3 +51,5 @@ I chose Stack Challenge because it involves a lot of collision and I felt like i
 * Inheritance is also present
 * The use of abstract classes (twice)
 * A lot of code refacturing goes on 
+* Two modes to use the character in (push and climb)
+* Screen scaling and the game gets progressively more difficult
