@@ -11,7 +11,7 @@ class Char extends Body implements Objects
     this.c_x=x;
     this.c_y=y;
     this.c_x_pos=background.width_margin + (c_x * c_size);
-    this.c_y_pos=background.width_margin +  (c_y * c_size);
+    this.c_y_pos=background.width_margin +  (c_y * c_size) + 5;
     this.in_air=1;
   }
 

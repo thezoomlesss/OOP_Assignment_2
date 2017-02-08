@@ -20,7 +20,7 @@ abstract class Body extends Design
     
     // Here we also do the rotation of the character
     pushMatrix();
-    translate(b  + d *0.5, c + d * 0.5 - 5);
+    translate(b  + d *0.5, c + d * 0.5 - 10);
     rotate(r);
     
     beginShape();

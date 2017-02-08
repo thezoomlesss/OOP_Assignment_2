@@ -66,14 +66,19 @@ class Box implements Objects
         if (y_pos < height-background.height_margin*2 - box_size + 4) 
         {
           y_pos +=game_speed;
+          
+          /* 
+                We check if the pos of the character is not inside the box
+                If the character is inside it means that we have to display the death screen
+          */
+          if( character.c_x_pos + character.c_size *0.5 <= x_pos + box_size && character.c_x_pos + character.c_size *0.5 >= x_pos && character.c_y_pos >= y_pos && character.c_y_pos<= y_pos+box_size) state=4;
+          
+          //  If it is not yet on the last line then it keeps falling
           if ( y_pos > height-background.height_margin*2 - box_size * (background.vert_no_boxes-y-1) + 4) 
           {
             array_rows[y][x]=0;
             y++;
-            // if we are on the same column and 
-            // this or the next pos is the character
-            // and the box is not about to land then kill the character
-            if ( x == character.c_x-1  && (y + 1 == character.c_y || y == character.c_y) && ( y_pos < height-background.height_margin*2 - box_size -60 ) ) state=4;
+            
           }// end inner if
         } // end middle if
       } // end outer if

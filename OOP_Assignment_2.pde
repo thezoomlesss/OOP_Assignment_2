@@ -61,7 +61,7 @@ void setup()
   String path = "C:\\Users\\Mushy\\Documents\\GitHub\\OOP_Assignment_2" + "/data/songs";
   File dataFolder = new File(path);
   fileList= dataFolder.list();
-  song.setGain(-15);
+  song.setGain(-13);
 }// end setup
 
 // Global declaration area
@@ -158,7 +158,7 @@ void game_state(int state)
       {
         mechs.get(mech_index).move_b();       // This updates the position of the boxes
       }          
-
+      
       // 10 points for every second staying alive
       if (frameCount%60==1) score+=10;
       break;
@@ -233,11 +233,13 @@ void setup_song()   // Function to get to the next song
         song_index++;
         song = minim.loadFile("songs/song"+song_index+".wav");
         song.play();
+        song.setGain(-13);
         if (song_index > fileList.length - 1) song_index=1;
       } else
       {
         //song.rewind();
         song.play();
+        song.setGain(-13);
         settings.playing=true;
       }
     } else
