@@ -119,6 +119,7 @@ void game_state(int state) // The game state function
         mech=new Mech();
         mech.spawn_m();
         
+        
         /*
             Spawning the boxes for the two mechs
             I have it in a for loop just so it's not hardcoded and ugly

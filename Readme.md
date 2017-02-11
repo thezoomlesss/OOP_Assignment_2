@@ -4,11 +4,17 @@
 # Stack Challenge
 [![Video](http://img.youtube.com/vi/-xkhMPUjuis/0.jpg)](https://www.youtube.com/watch?v=-xkhMPUjuis)
 # Concept
-For the 2nd year assignment I figured out that I have to create something that shows that I put a lot of effort into and that I am capable of writing great code.
-Therefore, I started trying to find difficult tasks that I can face and tackle.
+For the 2nd year assignment I figured out that I have to create something that shows that I capable of writing good functioning code and implement more difficult techniques used in programming.
+Therefore, I started trying to find difficult tasks that I can tackle.
 
 # Why
-I chose Stack Challenge because it involves a lot of collision and I felt like it was suitable for what I wanted to create and it was a difficult enough task. Therefore, it would be visible that I put effort into it.
+I chose Stack Challenge because it involves a lot of collision and I felt like it was suitable for what I wanted to create and it was a difficult enough task. Therefore, the work I put in would be easily visible.
+
+# Intructions
+
+* The character (you) must dodge the falling boxes. You would be able to push the boxes around once they will land
+* You'll have to swap between the two modes: Pushing and climbing in order to get the highest score possible
+* Making a full line of boxes will clear them and grant you points.
 
 #Controls
 
@@ -19,18 +25,19 @@ I chose Stack Challenge because it involves a lot of collision and I felt like i
 # Features
 
 * Screens
-  * Name-Input
+  * Name Input
   * Menu
   * Instructions
   * Leaderboards	
   * Settings
   * Credits
-
+  * Death screen
+  
 * Gameplay
   * Collision
   * Pushing objects
   * Gravity
-  * Teleportation
+  * Teleportation (must enable the cheats from the settings)
   * Climbing objects
 
 * Other features
