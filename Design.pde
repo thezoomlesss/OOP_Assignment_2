@@ -18,8 +18,7 @@ abstract class Design
       strokeWeight(6);
     } else
     {
-      //fill(10, 8, 25);     // Not hovered
-      fill(200,0,0);
+      fill(10, 8, 25);     // Not hovered
       strokeWeight(4);
       stroke(25, 45, 120);
     }
